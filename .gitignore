@@ -1,3 +1,5 @@
+# Ignore node.js module.
+node_module
 
 # Created by https://www.gitignore.io/api/windows,csharp
 
