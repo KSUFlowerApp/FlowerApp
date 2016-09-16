@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/arunksu/FlowerApp/issues"
   },
-  "homepage": "https://github.com/arunksu/FlowerApp"
+  "homepage": "https://github.com/arunksu/FlowerApp",
+  "dependencies": {
+    "body-parser": "1.15.2",
+    "ejs": "2.5.2",
+    "express": "4.14.0",
+    "mysql": "2.11.1"
+  }
 }
