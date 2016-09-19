@@ -1,0 +1,25 @@
+{
+  "name": "FlowerApp",
+  "version": "1.0.0",
+  "description": "A web app for a flower shop.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arunksu/FlowerApp.git"
+  },
+  "author": "Tyler Lentz, Arun P, Eric Johnson",
+  "license": "Open Source",
+  "bugs": {
+    "url": "https://github.com/arunksu/FlowerApp/issues"
+  },
+  "homepage": "https://github.com/arunksu/FlowerApp",
+  "dependencies": {
+    "body-parser": "1.15.2",
+    "ejs": "2.5.2",
+    "express": "4.14.0",
+    "mysql": "2.11.1"
+  }
+}
