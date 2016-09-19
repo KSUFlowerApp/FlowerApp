@@ -12,7 +12,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  res.redirect('login');
 });
 
 app.get('/home', function(req, res) {

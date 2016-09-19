@@ -1,17 +1,26 @@
-<html>
-	<body>
-		<form action="/login" method="post">
-			<div>
-				<label>Username:</label>
-				<input type="text" name="username" />
-				<br />
-			</div>
-				<label>Password:</label>
-				<input type="password" name="password" />
-			</div>
-			<div>
-				<input type="submit" value="Submit" />
-			</div>
-		</form>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Log In</title>
+   </head>
+   <body>
+      <h2>Log In Form</h2>
+      <form method="post" action="/login">
+         <p>
+            <label for="username">username</label>
+            <input type="text" name="username" id="username"
+               placeholder="username" required="true"/>
+         </p>
+         <p>
+            <label for="password">password</label>
+            <input type="text" name="password" id="password"
+               placeholder="password" required="true"/>
+         </p>
+         <p>
+            <input type="submit" name="signin" id="signin" value="sign in"/> 
+            <a href="/signup" title="register">register</a>
+         </p>
+			
+      </form>
+   </body>
 </html>
