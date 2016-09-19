@@ -15,6 +15,10 @@ app.get('/home', function(req, res) {
   res.render('home');
 });
 
+app.get('/login', function(req, res) {
+	res.sendfile('views/login.html');
+});
+
 app.post('/home', urlencodedParser, function(req,res) {
 	res.send(req.body);
 });
