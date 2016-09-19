@@ -15,15 +15,11 @@ app.get('/home', function(req, res) {
   res.render('home');
 });
 
-app.post('/home', urlencodedParser, function(req,res) {
-	res.send(req.body);
-});
-
 app.get('/login', function(req, res) {
-	res.render('login');
+	res.sendfile('views/login.html');
 });
 
-app.post('/login', urlencodedParser, function(req,res) {
+app.post('/home', urlencodedParser, function(req,res) {
 	res.send(req.body);
 });
 
