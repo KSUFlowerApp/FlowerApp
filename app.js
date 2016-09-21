@@ -3,6 +3,25 @@ var bodyParser = require('body-parser');
 var app = express();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var mysql = require('mysql');
+
+/*
+use your own login credentials for sql connection
+*/
+var connection = mysql.createConnection({
+  host     : 'mysql.cis.ksu.edu',
+  user     : '',
+  password : '',
+  database : 'proj_flowerapp'
+});
+
+connection.connect(function(err) {
+  if(!err) {
+    console.log("Database is connected");
+  } else {
+    console.log("Error connecting to database");
+  }
+});
 
 app.set('view engine', 'ejs');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
