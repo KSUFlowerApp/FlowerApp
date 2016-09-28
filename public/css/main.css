@@ -1,9 +1,8 @@
-<style>
 * {
 	margin: 0;
 }
 .header {
-	width: 100%;
+	width: 100vw;
 	height: 40px;
 	background-color: #ddd;
 	display: table;
@@ -29,8 +28,9 @@
 	width: 80%;
 }
 .container {
-	height: calc(100% - 40px);
-	background-color: pink;
+	height: calc(100vh - 40px);
+	width: 100vw;
+	background-color: #FFC0CB;
 }
 .left-side-bar, .right-side-bar {
 	height: 100%;
@@ -49,7 +49,7 @@
 	width: calc(80% - 2px);
 	display: inline-block;
 	float: left;
-	margin-auto;
+	margin: auto;
 }
 .tile {
 	width: calc(50% - 50px);
@@ -64,7 +64,7 @@
 }
 .tile h1{
 	padding-top: 25%;
-	display: table-rows;
+	display: table-row;
 	width: 100%;
 	height: 80%;
 	vertical-align: middle;
@@ -86,49 +86,3 @@ p {
 	width: 100%;
 	border-bottom: dotted 1px black;
 }
-</style>
-
-<!DOCTYPE html>
-<html>
-<body>
-<div class='header'>
-	<div class='logo'>Logo</div>
-	<div class='title'>Title</div>
-	<div class='logout'>Logout</div>
-</div>
-<div class='container'>
-	<div class='left-side-bar'>
-		<p>Left Side Bar</p>
-		<div class='side-tile'></div>
-		<div class='side-tile'></div>
-		<div class='side-tile'></div>
-	</div>
-	<div class='middle-content'>
-		<div class='tile'>
-			<h1>Admin</h1>
-		</div>
-		<div class='tile'>
-			<h1>Inventory</h1>
-			<button class='tile-view'>View</button>
-			<button class='tile-add'>Add</button>
-		</div>
-		<div class='tile'>
-			<h1>Clients</h1>
-			<button class='tile-view'>View</button>
-			<button class='tile-add'>Add</button>
-		</div>
-		<div class='tile'>
-			<h1>Events</h1>
-			<button class='tile-view'>View</button>
-			<button class='tile-add'>Add</button>
-		</div>
-	</div>
-	<div class='right-side-bar'>
-		<p>Right Side Bar</p>
-		<div class='side-tile'></div>
-		<div class='side-tile'></div>
-		<div class='side-tile'></div>
-	</div>
-</div>
-</body>
-</html>

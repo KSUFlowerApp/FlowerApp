@@ -1,27 +1,37 @@
 var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
+var flash = require('connect-flash');
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var mysql = require('mysql');
+
+// Init App
 var app = express();
 
-app.set('view engine', 'ejs');
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-app.use(express.static('public'));
-
-app.get('/', function (req, res) {
-  res.send('Hello World!');
+/*
+use your own login credentials for sql connection
+*/
+var connection = mysql.createConnection({
+  host     : 'mysql.cis.ksu.edu',
+  user     : 'projusr_flower',
+  password : 'rosesarenotredKSU',
+  database : 'proj_flowerapp'
 });
 
-app.get('/home', function(req, res) {
-  res.render('home');
+connection.connect(function(err) {
+  if(!err) {
+    console.log("Database is connected");
+  } else {
+    console.error(err);
+    console.log("Error connecting to database");
+  }
 });
 
-app.get('/login', function(req, res) {
-	res.sendfile('views/login.html');
-});
-
-app.post('/home', urlencodedParser, function(req,res) {
-	res.send(req.body);
-});
+app.set('db',connection);
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
