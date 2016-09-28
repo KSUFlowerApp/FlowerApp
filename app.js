@@ -26,6 +26,7 @@ connection.connect(function(err) {
   if(!err) {
     console.log("Database is connected");
   } else {
+    console.error(err);
     console.log("Error connecting to database");
   }
 });
