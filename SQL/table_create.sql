@@ -7,7 +7,7 @@ CREATE TABLE proj_flowerapp.roles (
 CREATE TABLE proj_flowerapp.users (
   id     INT NOT NULL AUTO_INCREMENT,
   username     VARCHAR(45) NOT NULL,
-  password     VARCHAR(100) NOT NULL,
+  password     VARCHAR(256) NOT NULL,
   salt         VARCHAR(16)  NOT NULL,
   firstName    VARCHAR(45) NOT NULL,
   lastName     VARCHAR(45) NOT NULL,
