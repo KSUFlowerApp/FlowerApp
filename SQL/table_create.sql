@@ -22,6 +22,14 @@ CREATE TABLE proj_flowerapp.inventory_types (
   PRIMARY KEY(id)
 );
 
+CREATE TABLE proj_flowerapp.markups (
+  id      INT NOT NULL AUTO_INCREMENT,
+  type    INT NOT NULL,
+  markup  DECIMAL(3,2),
+  PRIMARY KEY(id),
+  FOREIGN KEY(type) REFERENCES proj_flowerapp.inventory_types(id)
+);
+
 CREATE TABLE proj_flowerapp.inventory (
   id     INT NOT NULL AUTO_INCREMENT,
   name   VARCHAR(45) NOT NULL,
