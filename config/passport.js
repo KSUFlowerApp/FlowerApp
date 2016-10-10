@@ -51,7 +51,8 @@ module.exports = function(passport) {
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
         function(req, username, password, done) {
-
+						var firstName = req.body.firstName;
+						var lastName = req.body.lastName;
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
             connection.query("SELECT * FROM users WHERE username = '" + username + "'", function(err, rows) {
@@ -69,6 +70,9 @@ module.exports = function(passport) {
 
                     newUserMysql.username = username;
                     newUserMysql.password = password; // use the generateHash function in our user model
+										newUserMysql.firstName = firstName;
+										newUserMysql.lastName = lastName;
+										//console.log(firstName + " " + lastName);
 
 										// create salt
 										var salt = crypto.randomBytes(16).toString('hex');
@@ -80,7 +84,7 @@ module.exports = function(passport) {
 										//process.exit();
 
 										// by default insert role = 0
-                    var insertQuery = "INSERT INTO users (username, password, salt, role ) values ('" + username + "','" + hashedPassword + "','" + salt + "',0)";
+                    var insertQuery = "INSERT INTO users (username, password, salt, firstName, lastName, role ) values ('" + username + "','" + hashedPassword + "','" + salt + "','" + firstName + "','" + lastName + "',0)";
                     console.log(insertQuery);
                     connection.query(insertQuery, function(err, rows) {
                         newUserMysql.id = rows.insertId;
