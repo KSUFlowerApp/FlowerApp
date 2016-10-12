@@ -1,0 +1,10 @@
+Library called request
+Library called mocha
+
+
+Login System Tests
+  - Sign up
+  - Sign In
+  - logout
+  - sign up with used username
+  - sign in with wrong password

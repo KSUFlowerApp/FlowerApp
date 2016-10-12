@@ -7,7 +7,8 @@ CREATE TABLE proj_flowerapp.roles (
 CREATE TABLE proj_flowerapp.users (
   id     INT NOT NULL AUTO_INCREMENT,
   username     VARCHAR(45) NOT NULL,
-  password     VARCHAR(45) NOT NULL,
+  password     VARCHAR(256) NOT NULL,
+  salt         VARCHAR(16)  NOT NULL,
   firstName    VARCHAR(45) NOT NULL,
   lastName     VARCHAR(45) NOT NULL,
   role         INT NOT NULL,
@@ -19,6 +20,14 @@ CREATE TABLE proj_flowerapp.inventory_types (
   id     INT NOT NULL AUTO_INCREMENT,
   type   VARCHAR(45) NOT NULL,
   PRIMARY KEY(id)
+);
+
+CREATE TABLE proj_flowerapp.markups (
+  id      INT NOT NULL AUTO_INCREMENT,
+  type    INT NOT NULL,
+  markup  DECIMAL(3,2),
+  PRIMARY KEY(id),
+  FOREIGN KEY(type) REFERENCES proj_flowerapp.inventory_types(id)
 );
 
 CREATE TABLE proj_flowerapp.inventory (
