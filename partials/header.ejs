@@ -1,19 +1,32 @@
 <!-- views/partials/header.ejs -->
+<!DOCTYPE html>
+<html lang="en">
 
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
+<head>
+  <meta charset="UTF-8">
+  <title>Kistner's Flowers</title>
 
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-                <span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
-                SPANKTRAIN
-            </a>
-        </div>
+  <!-- CSS (load bootstrap from a CDN) -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> <!--- load bootstrap css -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+</head>
 
-        <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-        </ul>
-
-    </div>
-</nav>
+<body class="container">
+<header>
+  <nav class="navbar navbar-static-top" role="navigation">
+      <div class="container-fluid">
+          <div class="navbar-header">
+              <a class="navbar-brand" href="#">
+                  <span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
+                  Kistner's Flowers
+              </a>
+          </div>
+          <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/login">Login</a></li>
+          </ul>
+      </div>
+  </nav>
+</header>
+<main>

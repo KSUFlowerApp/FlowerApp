@@ -13,6 +13,11 @@ module.exports = function(app, passport) {
 			res.render('about.ejs');
 	});
 
+	// home
+	app.get('/home', function(req, res) {
+		res.render('home.ejs');
+	});
+
 	// =====================================
 	// LOGIN ===============================
 	// =====================================
