@@ -1,24 +1,26 @@
-<!-- views/index.ejs -->
-<!doctype html>
-<html>
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>Node Authentication</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-	<style>
-		body 		{ padding-top:80px; }
-	</style>
+    <% include ../partials/head %>
 </head>
-<body>
-    <div class="container">
-        <div class="jumbotron text-center">
-            <h1><span class="fa fa-lock"></span> Node Authentication</h1>
+<body class="container">
 
-            <p>Login or Register with:</p>
+    <header>
+        <% include ../partials/header %>
+    </header>
 
-            <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
-            <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>
+    <main>
+        <div class="jumbotron">
+            <h1>This is great</h1>
+            <p>Welcome to templating using EJS</p>
         </div>
-    </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+
 </body>
 </html>
