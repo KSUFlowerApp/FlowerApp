@@ -1,3 +1,23 @@
+<style>
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
+</style>
 <!-- views/partials/header.ejs -->
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +29,10 @@
   <!-- CSS (load bootstrap from a CDN) -->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> <!--- load bootstrap css -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- bootstrap JavaScript -->
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body class="container">
@@ -16,17 +40,60 @@
   <nav class="navbar navbar-static-top" role="navigation">
       <div class="container-fluid">
           <div class="navbar-header">
-              <a class="navbar-brand" href="#">
+              <a class="navbar-brand" href="/">
                   <span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
                   Kistner's Flowers
               </a>
           </div>
+
           <ul class="nav navbar-nav">
-              <li><a href="/">Home</a></li>
               <li><a href="/about">About</a></li>
-              <li><a href="/login">Login</a></li>
           </ul>
-      </div>
+
+            <ul class="nav navbar-nav navbar-right">
+              <% if (user) { %>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <strong><%= user.firstName %></strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-left"><strong><%= user.firstName + " " + user.lastName %></strong></p>
+                                        <p class="text-left small"><%= user.username %></p>
+                                        <p class="text-left">
+                                            <a href="/profile" class="btn btn-primary btn-block btn-sm">Profile</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider navbar-login-session-bg"></li>
+                        <li><a href="/profile">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+                        <li class="divider"></li>
+                        <!--<li><a href="#">User stats <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Messages <span class="badge pull-right"> 42 </span></a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Favourites Snippets <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+                        <li class="divider"></li>-->
+                        <li><a href="/logout">Log Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+                    </ul>
+                </li>
+                <% } else { %>
+                  <li><a href="/login"><strong>Login </strong><span class="glyphicon glyphicon-log-in"></span></a></li>
+                <% } %>
+            </ul>
   </nav>
 </header>
 <main>
+<div class="row">
