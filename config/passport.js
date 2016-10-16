@@ -87,7 +87,6 @@ module.exports = function(passport) {
 
 										// by default insert role = 0
                     var insertQuery = "INSERT INTO users (username, password, salt, firstName, lastName, role ) values ('" + username + "','" + hashedPassword + "','" + salt + "','" + firstName + "','" + lastName + "',0)";
-                    console.log(insertQuery);
                     connection.query(insertQuery, function(err, rows) {
                         newUserMysql.id = rows.insertId;
 

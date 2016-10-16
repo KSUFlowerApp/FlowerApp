@@ -48,6 +48,11 @@
               </a>
           </div>
 
+          <% if (user && user.role == 1) { %>
+            <ul class="nav navbar-nav">
+              <li><a href="/admin">Admin</a></li>
+            </ul>
+          <% } %>
           <ul class="nav navbar-nav">
               <li><a href="/about">About</a></li>
           </ul>
@@ -98,4 +103,4 @@
   </nav>
 </header>
 <main>
-<div class="row">
+<div class="container">

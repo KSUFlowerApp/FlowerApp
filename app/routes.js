@@ -18,6 +18,20 @@ module.exports = function(app, passport) {
 		res.render('home.ejs');
 	});
 
+	// 404
+	app.get('/404', isLoggedIn, function(req, res) {
+		res.render('404.ejs');
+	});
+
+	// Admin
+	app.get('/admin', isLoggedIn, function(req,res) {
+		if(req.app.locals.user.role != 1) {
+			res.redirect('/404');
+		} else {
+			res.render('admin.ejs');
+		}
+	});
+
 	// =====================================
 	// LOGIN ===============================
 	// =====================================

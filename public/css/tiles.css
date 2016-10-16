@@ -1,0 +1,34 @@
+/*$color_purple: #5133AB;
+$color_red: #AC193D;
+$color_orange: #DC572E;
+$color_green: #00A600;
+$color_blue: #2672EC;*/
+
+.tile {
+  width: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
+}
+
+.tile > .title {
+  margin-top: 0px;
+}
+
+.tile-primary {
+  background-color: #83052b;
+  color: #f2ebd0;
+}
+
+.tile:hover {
+  filter: brightness(120%);
+}
+
+.tile h3 {
+  color: #c9b66f;
+}
