@@ -17,7 +17,6 @@ var connection = mysql.createConnection({
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
-
     // =========================================================================
     // passport session setup ==================================================
     // =========================================================================
@@ -53,15 +52,18 @@ module.exports = function(passport) {
         function(req, username, password, done) {
 						var firstName = req.body.firstName;
 						var lastName = req.body.lastName;
+            var password = req.body.password;
+            var confirmPassword = req.body.confirmPassword;
+
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
             connection.query("SELECT * FROM users WHERE username = '" + username + "'", function(err, rows) {
-                console.log(rows);
-                console.log("above row object");
                 if (err)
                     return done(err);
                 if (rows.length) {
                     return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+                } else if (password != confirmPassword) {
+                  return done(null, false, req.flash('signupMessage', 'Passwords do not match.'));
                 } else {
 
                     // if there is no user with that email

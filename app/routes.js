@@ -9,12 +9,12 @@ module.exports = function(app, passport) {
 	});
 
 	// about page
-	app.get('/about', function(req, res) {
+	app.get('/about', isLoggedIn, function(req, res) {
 			res.render('about.ejs');
 	});
 
 	// home
-	app.get('/home', function(req, res) {
+	app.get('/home', isLoggedIn, function(req, res) {
 		res.render('home.ejs');
 	});
 
@@ -22,10 +22,9 @@ module.exports = function(app, passport) {
 	// LOGIN ===============================
 	// =====================================
 	// show the login form
-	app.get('/login', function(req, res) {
-
+	app.get('/login', isLoggedIn, function(req, res) {
 		// render the page and pass in any flash data if it exists
-		res.render('login.ejs', { message: req.flash('loginMessage'), user: undefined });
+		res.render('login.ejs', { message: req.flash('loginMessage')});
 	});
 
 	// process the login form
@@ -35,8 +34,6 @@ module.exports = function(app, passport) {
             failureFlash : true // allow flash messages
 		}),
         function(req, res) {
-            console.log("hello");
-
             if (req.body.remember) {
               req.session.cookie.maxAge = 1000 * 60 * 3;
             } else {
@@ -45,13 +42,14 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
 
+
 	// =====================================
 	// SIGNUP ==============================
 	// =====================================
 	// show the signup form
-	app.get('/signup', function(req, res) {
+	app.get('/signup', isLoggedIn, function(req, res) {
 		// render the page and pass in any flash data if it exists
-		res.render('signup.ejs', { message: req.flash('signupMessage'), user: undefined });
+		res.render('signup.ejs', {message: req.flash('signupMessage')});
 	});
 
 	// process the signup form
@@ -62,33 +60,40 @@ module.exports = function(app, passport) {
 	}));
 
 	// =====================================
-	// PROFILE SECTION =========================
+	// PROFILE ===============================
 	// =====================================
-	// we will want this protected so you have to be logged in to visit
-	// we will use route middleware to verify this (the isLoggedIn function)
+	// pass isLoggedIn function to make sure a user is logged in
 	app.get('/profile', isLoggedIn, function(req, res) {
 		res.render('profile.ejs');
 	});
 
 	// =====================================
-	// LOGOUT ==============================
+	// LOGOUT ===============================
 	// =====================================
+	// once logged out, redirected to login page
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/login');
 	});
 };
 
-// route middleware to make sure
+// =====================================
+// ISLOGGEDIN ===============================
+// =====================================
+// route middleware to make sure that a user is logged in
 function isLoggedIn(req, res, next) {
 
-	// if user is authenticated in the session, carry on
+	// if user is logged in continue
 	if (req.isAuthenticated()) {
 		req.app.locals.user = req.user;
 		return next();
+	} else if(req.route.path != '/login' && req.route.path != '/signup') {
+		// otherwise redirect to the login page if not going to login or signup
+		req.app.locals.user = undefined;
+		res.redirect('/login')
+	} else {
+		// set user to undefined because we are going to a login or signup page without being logged in
+		req.app.locals.user = undefined;
+		return next();
 	}
-
-
-	// if they aren't redirect them to the home page
-	res.redirect('/login');
 }
