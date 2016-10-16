@@ -7,6 +7,7 @@ var session  = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var path = require('path');
 var app      = express();
 var port     = process.env.PORT || 3000;
 var passport = require('passport');
@@ -17,7 +18,6 @@ var flash    = require('connect-flash');
 
 require('./config/passport')(passport); // pass passport for configuration
 app.use(express.static(__dirname + '/public'));
-
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console

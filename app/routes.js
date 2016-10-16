@@ -23,12 +23,25 @@ module.exports = function(app, passport) {
 		res.render('404.ejs');
 	});
 
-	// Admin
+	// =====================================
+	// ADMIN ===============================
+	// =====================================
 	app.get('/admin', isLoggedIn, function(req,res) {
 		if(req.app.locals.user.role != 1) {
 			res.redirect('/404');
 		} else {
 			res.render('admin.ejs');
+		}
+	});
+
+	// =====================================
+	// ADMIN - USERS =======================
+	// =====================================
+	app.get('/admin/users', isLoggedIn, function(req,res) {
+		if(req.app.locals.user.role != 1) {
+			res.redirect('/404');
+		} else {
+			res.render('admin/users.ejs');
 		}
 	});
 
