@@ -19,7 +19,13 @@ module.exports = function(passport, db) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        db.query("select * from users where id = " + id, function(err, rows) {
+      // reuturn user row as well as the rolename
+      var query = "SELECT u.*, r.role as 'roleName'" +
+                  "FROM users u " +
+                  "JOIN roles r " +
+                  "ON u.role = r.id " +
+                  "WHERE u.id = '"+id+"'";
+        db.query(query, function(err, rows) {
             done(err, rows[0]);
         });
     });
@@ -74,8 +80,8 @@ module.exports = function(passport, db) {
 										//console.log("Encrypted password: " + hashedPassword);
 										//process.exit();
 
-										// by default insert role = 0
-                    var insertQuery = "INSERT INTO users (username, password, salt, firstName, lastName, role ) values ('" + username + "','" + hashedPassword + "','" + salt + "','" + firstName + "','" + lastName + "',0)";
+										// by default insert role = 3 (Employee)
+                    var insertQuery = "INSERT INTO users (username, password, salt, firstName, lastName, role ) values ('" + username + "','" + hashedPassword + "','" + salt + "','" + firstName + "','" + lastName + "',3)";
                     db.query(insertQuery, function(err, rows) {
                         newUserMysql.id = rows.insertId;
 
@@ -99,8 +105,10 @@ module.exports = function(passport, db) {
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
         function(req, username, password, done) { // callback with email and password from our form
-
-            db.query("SELECT * FROM `users` WHERE `username` = '" + username + "'", function(err, rows) {
+            var query = "SELECT * FROM users " +
+                        "WHERE username = '"+username+"'";
+            db.query(query, function(err, rows) {
+            //db.query("SELECT * FROM users WHERE username = '" + username + "'", function(err, rows) {
                 if (err)
                     return done(err);
                 if (!rows.length) {

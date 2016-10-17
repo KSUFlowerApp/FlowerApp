@@ -5,7 +5,7 @@ module.exports = function(app, passport, db) {
 	// HOME PAGE (with login links) ========
 	// =====================================
 	app.get('/', isLoggedIn, function(req, res) {
-		res.render('user/profile.ejs');
+		res.render('staff.ejs');
 	});
 
 	// about page
@@ -21,6 +21,20 @@ module.exports = function(app, passport, db) {
 	// 404
 	app.get('/404', isLoggedIn, function(req, res) {
 		res.render('404.ejs');
+	});
+
+	// =====================================
+	// STAFF ===============================
+	// =====================================
+	app.get('/staff', isLoggedIn, function(req,res) {
+			res.render('staff.ejs');
+	});
+
+	// =====================================
+	// ADMIN - USERS =======================
+	// =====================================
+	app.get('/staff/inventory', isLoggedIn, function(req,res) {
+			res.render('staff/inventory.ejs');
 	});
 
 	// =====================================
@@ -90,7 +104,7 @@ module.exports = function(app, passport, db) {
 
 	// process the login form
 	app.post('/login', passport.authenticate('local-login', {
-            successRedirect : '/user/profile', // redirect to the secure profile section
+            successRedirect : '/staff', // redirect to the secure profile section
             failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
 		}),
@@ -115,7 +129,7 @@ module.exports = function(app, passport, db) {
 
 	// process the signup form
 	app.post('/signup', passport.authenticate('local-signup', {
-		successRedirect : '/user/profile', // redirect to the secure profile section
+		successRedirect : '/staff', // redirect to the secure profile section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
@@ -124,9 +138,9 @@ module.exports = function(app, passport, db) {
 	// USER = PROFILE ===============================
 	// =====================================
 	// pass isLoggedIn function to make sure a user is logged in
-	app.get('/user/profile', isLoggedIn, function(req, res) {
+	/*app.get('/user/profile', isLoggedIn, function(req, res) {
 		res.render('user/profile.ejs');
-	});
+	});*/
 
 	// =====================================
 	// USER = SETTINGS ===============================

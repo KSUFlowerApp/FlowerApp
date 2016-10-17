@@ -57,6 +57,9 @@
             </ul>
           <% } %>
           <ul class="nav navbar-nav">
+              <li><a href="/staff">Staff</a></li>
+          </ul>
+          <ul class="nav navbar-nav">
               <li><a href="/about">About</a></li>
           </ul>
 
@@ -81,7 +84,11 @@
                                         <p class="text-left"><strong><%= user.firstName + " " + user.lastName %></strong></p>
                                         <p class="text-left small"><%= user.username %></p>
                                         <p class="text-left">
-                                            <a href="/user/profile" class="btn btn-primary btn-block btn-sm">Profile</a>
+                                            <% if(user.role == 1) { %>
+                                              <a href="/admin" class="btn btn-primary btn-block btn-sm"><%= user.roleName %></a>
+                                            <% } else { %>
+                                              <a href="/staff" class="btn btn-primary btn-block btn-sm"><%= user.roleName %></a>
+                                            <% } %>
                                         </p>
                                     </div>
                                 </div>
