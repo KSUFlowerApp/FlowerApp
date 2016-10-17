@@ -1,11 +1,11 @@
 // app/routes.js
-module.exports = function(app, passport) {
+module.exports = function(app, passport, db) {
 
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
 	app.get('/', isLoggedIn, function(req, res) {
-		res.render('profile.ejs');
+		res.render('user/profile.ejs');
 	});
 
 	// about page
@@ -46,6 +46,39 @@ module.exports = function(app, passport) {
 	});
 
 	// =====================================
+	// ADMIN - INVENTORY =======================
+	// =====================================
+	app.get('/admin/inventory', isLoggedIn, function(req,res) {
+		if(req.app.locals.user.role != 1) {
+			res.redirect('/404');
+		} else {
+			res.render('admin/inventory.ejs');
+		}
+	});
+
+	// =====================================
+	// ADMIN - INVENTORY TYPES =======================
+	// =====================================
+	app.get('/admin/inventoryTypes', isLoggedIn, function(req,res) {
+		if(req.app.locals.user.role != 1) {
+			res.redirect('/404');
+		} else {
+			res.render('admin/inventoryTypes.ejs');
+		}
+	});
+
+	// =====================================
+	// ADMIN - MARKUPS =======================
+	// =====================================
+	app.get('/admin/markups', isLoggedIn, function(req,res) {
+		if(req.app.locals.user.role != 1) {
+			res.redirect('/404');
+		} else {
+			res.render('admin/markups.ejs');
+		}
+	});
+
+	// =====================================
 	// LOGIN ===============================
 	// =====================================
 	// show the login form
@@ -56,7 +89,7 @@ module.exports = function(app, passport) {
 
 	// process the login form
 	app.post('/login', passport.authenticate('local-login', {
-            successRedirect : '/profile', // redirect to the secure profile section
+            successRedirect : '/user/profile', // redirect to the secure profile section
             failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
 		}),
@@ -81,17 +114,53 @@ module.exports = function(app, passport) {
 
 	// process the signup form
 	app.post('/signup', passport.authenticate('local-signup', {
-		successRedirect : '/profile', // redirect to the secure profile section
+		successRedirect : '/user/profile', // redirect to the secure profile section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
 
 	// =====================================
-	// PROFILE ===============================
+	// USER = PROFILE ===============================
 	// =====================================
 	// pass isLoggedIn function to make sure a user is logged in
-	app.get('/profile', isLoggedIn, function(req, res) {
-		res.render('profile.ejs');
+	app.get('/user/profile', isLoggedIn, function(req, res) {
+		res.render('user/profile.ejs');
+	});
+
+	// =====================================
+	// USER = SETTINGS ===============================
+	// =====================================
+	app.get('/user/settings', isLoggedIn, function(req, res) {
+		res.render('user/settings.ejs', {message: req.flash('settingsMessage')});
+	});
+
+	// UPDATE PASSWORD
+	app.post('/user/settings', isLoggedIn, function(req, res) {
+		var currentPassword = req.body.currentPassword;
+		var newPassword = req.body.newPassword;
+		var confirmNewPassword = req.body.confirmNewPassword;
+
+		var crypto = require('crypto');
+		db.query("SELECT * FROM users WHERE username = '" + req.app.locals.user.username + "'", function(err, rows) {
+			if(err) {
+				throw err;
+			} else {
+				if(newPassword != confirmNewPassword) {
+					req.flash('settingsMessage', 'Oops! Passwords do not match.'); // create the loginMessage and save it to session as flashdata
+				} else if (!(rows[0].password == crypto.createHmac('sha256',rows[0].salt).update(currentPassword).digest('hex'))) {
+					req.flash('settingsMessage', 'Oops! Wrong password.'); // create the loginMessage and save it to session as flashdata
+				} else {
+					newPassword = crypto.createHmac('sha256',rows[0].salt).update(newPassword).digest('hex');
+					db.query("UPDATE users SET password='" + newPassword + "' WHERE id=" + req.app.locals.user.id, function(err2, rows2) {
+						if(err2) {
+							throw err2;
+						}
+					});
+					req.flash('settingsMessage', 'Password updated successfully!');
+				}
+			}
+			res.redirect('back');
+		});
 	});
 
 	// =====================================
