@@ -20,10 +20,10 @@ var db = require('./config/db');
 require('./config/passport')(passport, db); // pass passport for configuration
 
 // use static files
-app.use(express.static(__dirname + '/public'));
-app.use('/admin', express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public'));
+/*app.use('/admin', express.static(__dirname + '/public'));
 app.use('/user', express.static(__dirname + '/public'));
-app.use('/staff', express.static(__dirname + '/public'));
+app.use('/staff', express.static(__dirname + '/public'));*/
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
