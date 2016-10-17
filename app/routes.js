@@ -52,6 +52,7 @@ module.exports = function(app, passport, db) {
 		if(req.app.locals.user.role != 1) {
 			res.redirect('/404');
 		} else {
+
 			res.render('admin/inventory.ejs');
 		}
 	});

@@ -23,6 +23,7 @@ require('./config/passport')(passport, db); // pass passport for configuration
 app.use(express.static(__dirname + '/public'));
 app.use('/admin', express.static(__dirname + '/public'));
 app.use('/user', express.static(__dirname + '/public'));
+
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
