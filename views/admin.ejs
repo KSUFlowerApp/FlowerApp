@@ -1,0 +1,44 @@
+<!-- views/admin.ejs -->
+<% include ../partials/header %>
+  <link rel="stylesheet" href="css/tiles.css">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-unlock"></span> Admin Page</h1>
+	</div>
+
+
+  <div class="row">
+    <a href="/admin/users">
+      <div class="col-sm-4">
+        <div class="tile tile-primary">
+          <h3 class="title">Users</h3>
+          <p>View, add, or edit users.</p>
+        </div>
+      </div>
+    </a>
+    <a href="/admin/inventory">
+      <div class="col-sm-4">
+        <div class="tile tile-primary">
+          <h3 class="title">Inventory</h3>
+          <p>View, add, or edit items in the inventory.</p>
+        </div>
+      </div>
+    </a>
+    <a href="/admin/markups">
+      <div class="col-sm-4">
+        <div class="tile tile-primary">
+          <h3 class="title">Markups</h3>
+          <p>View, add, or edit markup rates.</p>
+        </div>
+      </div>
+    </a>
+    <a href="/admin/inventoryTypes">
+      <div class="col-sm-4">
+        <div class="tile tile-primary">
+          <h3 class="title">Inventory Types</h3>
+          <p>View, add, or edit item types.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+<% include ../partials/footer %>

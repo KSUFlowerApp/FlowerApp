@@ -2,22 +2,10 @@
 
 // load all the things we need
 var LocalStrategy = require('passport-local').Strategy;
-
-var mysql = require('mysql');
 var crypto = require('crypto');
 
-var connection = mysql.createConnection({
-    host: 'mysql.cis.ksu.edu',
-    user: 'projusr_flower',
-    password: 'rosesarenotredKSU',
-    database: 'proj_flowerapp'
-});
-
-//connection.query('USE vidyawxx_build2');
-
 // expose this function to our app using module.exports
-module.exports = function(passport) {
-
+module.exports = function(passport, db) {
     // =========================================================================
     // passport session setup ==================================================
     // =========================================================================
@@ -31,7 +19,7 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        connection.query("select * from users where id = " + id, function(err, rows) {
+        db.query("select * from users where id = " + id, function(err, rows) {
             done(err, rows[0]);
         });
     });
@@ -53,15 +41,18 @@ module.exports = function(passport) {
         function(req, username, password, done) {
 						var firstName = req.body.firstName;
 						var lastName = req.body.lastName;
+            var password = req.body.password;
+            var confirmPassword = req.body.confirmPassword;
+
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            connection.query("SELECT * FROM users WHERE username = '" + username + "'", function(err, rows) {
-                console.log(rows);
-                console.log("above row object");
+            db.query("SELECT * FROM users WHERE username = '" + username + "'", function(err, rows) {
                 if (err)
                     return done(err);
                 if (rows.length) {
                     return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+                } else if (password != confirmPassword) {
+                  return done(null, false, req.flash('signupMessage', 'Passwords do not match.'));
                 } else {
 
                     // if there is no user with that email
@@ -85,8 +76,7 @@ module.exports = function(passport) {
 
 										// by default insert role = 0
                     var insertQuery = "INSERT INTO users (username, password, salt, firstName, lastName, role ) values ('" + username + "','" + hashedPassword + "','" + salt + "','" + firstName + "','" + lastName + "',0)";
-                    console.log(insertQuery);
-                    connection.query(insertQuery, function(err, rows) {
+                    db.query(insertQuery, function(err, rows) {
                         newUserMysql.id = rows.insertId;
 
                         return done(null, newUserMysql);
@@ -110,7 +100,7 @@ module.exports = function(passport) {
         },
         function(req, username, password, done) { // callback with email and password from our form
 
-            connection.query("SELECT * FROM `users` WHERE `username` = '" + username + "'", function(err, rows) {
+            db.query("SELECT * FROM `users` WHERE `username` = '" + username + "'", function(err, rows) {
                 if (err)
                     return done(err);
                 if (!rows.length) {
