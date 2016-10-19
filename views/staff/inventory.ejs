@@ -4,8 +4,14 @@
 		<h1><span class="fa fa-unlock"></span> Staff - Inventory</h1>
 	</div>
 
-<% if (inventory) {
-console.log(inventory[0]);
-}%>
+	<table>
+	<% inventory.forEach(function(item, index){ %>
+	<tr>
+	    <td><%= item.id %></td>
+	    <td><%= item.name %></td>
+	    <td><%= item.price %></td>
+	</tr>
+	<% }); %>
+</table>
 
 <% include ../../partials/footer %>

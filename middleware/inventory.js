@@ -2,24 +2,22 @@ module.exports = exports = {
   getInventory: getInventory
 }
 
+// establish db connection
+var db = require('../config/db');
+
 // =====================================
 // GETINVENTORY ===============================
 // =====================================
 // Get inventory from database.
-function getInventory(req, res, next) {
-    
+function getInventory() {
     var query = "SELECT * " +
     "FROM inventory";
-    
-    console.log(query);
     db.query(query, function(err, rows) {
-    
+
         if (err) {
              throw err;
         } else {
-             console.log(rows);
-             
-             return rows;
+             return JSON.stringify(rows);
         }
     });
 }

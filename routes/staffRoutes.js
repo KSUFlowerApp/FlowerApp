@@ -15,7 +15,7 @@ module.exports = function(app, passport, db) {
   // STAFF - INVENTORY =======================
   // =====================================
   app.get('/staff/inventory', session.isLoggedIn, function(req,res) {
-      var rows = inventory.getInventory;
-          res.render('staff/inventory.ejs', {inventory:rows});
+      var rows = inventory.getInventory();
+      res.render('staff/inventory.ejs', { inventory:rows });
   });
 };
