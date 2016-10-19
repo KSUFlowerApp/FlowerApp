@@ -9,15 +9,14 @@ var db = require('../config/db');
 // GETINVENTORY ===============================
 // =====================================
 // Get inventory from database.
-function getInventory() {
+function getInventory(callback) {
     var query = "SELECT * " +
     "FROM inventory";
     db.query(query, function(err, rows) {
-
         if (err) {
-             throw err;
+             return callback(err, null);
         } else {
-             return JSON.stringify(rows);
+             return callback(null, rows);
         }
     });
 }

@@ -22,6 +22,18 @@ table.dataTable th {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+  padding: 12px 0px 12px 10px;
+}
+table.dataTable th {
+  background-color: #83052b;
+  color: #f2ebd0;
+  font-size: 1.2em;
+}
+table.dataTable tr.odd {
+  background-color: #BFB89D;
+}
+table.dataTable tr.even {
+  background-color: #D9D2B7;
 }
 table.dataTable td.dataTables_empty,
 table.dataTable th.dataTables_empty {
@@ -195,5 +207,3 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:fir
 div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:last-child {
   padding-right: 0;
 }
-
-
