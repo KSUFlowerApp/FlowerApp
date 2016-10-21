@@ -30,7 +30,7 @@ table.dataTable th {
   font-size: 1.2em;
 }
 table.dataTable tr.odd {
-  background-color: #BFB89D;
+  /*background-color: #BFB89D;*/
 }
 table.dataTable tr.even {
   background-color: #D9D2B7;
