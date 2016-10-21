@@ -15,6 +15,7 @@ module.exports = function(app, passport, db) {
   // STAFF - INVENTORY =======================
   // =====================================
   app.get('/staff/inventory', session.isLoggedIn, function(req,res) {
+    // get Inventory table and pass it to ejs
     inventory.getInventory(function(err, inventory) {
       if(err) {
         res.render('staff/inventory.ejs', { inventory:undefined });

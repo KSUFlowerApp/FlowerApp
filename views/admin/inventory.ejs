@@ -3,4 +3,46 @@
 	<div class="page-header text-center">
 		<h1><span class="fa fa-unlock"></span> Admin - Inventory</h1>
 	</div>
+
+	<table id="inventory">
+		<thead>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Edit</th>
+		</thead>
+		<tbody>
+		<% if(inventory) {
+				inventory.forEach(function(item, index) { %>
+					<tr>
+						<td><%= item.name %></td>
+						<td><%= item.price %></td>
+						<td><button class='btn btn-primary' onclick=<%= "editClick("+item.id+")" %>>Edit</button></td>
+					</tr>
+
+				<% });
+			}%>
+	</tbody>
+</table>
+
 <% include ../../partials/footer %>
+
+<style>
+#inventory {
+	width: 100%;
+}
+.itemEdit {
+	display: none;
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+    $("#inventory").DataTable({
+    		"iDisplayLength": 50
+  	});
+});
+
+function editClick(id) {
+	alert(id);
+}
+</script>

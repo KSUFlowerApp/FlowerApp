@@ -1,5 +1,6 @@
 module.exports = exports = {
-  isLoggedIn: isLoggedIn
+  isLoggedIn: isLoggedIn,
+  isAdmin: isAdmin
 }
 
 // =====================================
@@ -7,7 +8,6 @@ module.exports = exports = {
 // =====================================
 // route middleware to make sure that a user is logged in
 function isLoggedIn(req, res, next) {
-
 	// if user is logged in continue
 	if (req.isAuthenticated()) {
 		req.app.locals.user = req.user;
@@ -21,4 +21,12 @@ function isLoggedIn(req, res, next) {
 		req.app.locals.user = undefined;
 		return next();
 	}
+}
+
+function isAdmin(req, res, next) {
+  if(req.app.locals.user.role != 1) {
+    res.redirect('/404');
+  } else {
+    return next();
+  }
 }
