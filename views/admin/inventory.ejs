@@ -15,7 +15,7 @@
 				inventory.forEach(function(item, index) { %>
 					<tr>
 						<td><%= item.name %></td>
-						<td><%= item.price %></td>
+						<td><input type="number" step="0.01" class="form-control itemPrice" value=<%= item.price %>></td>
 						<td><button class='btn btn-primary' onclick=<%= "editClick("+item.id+")" %>>Edit</button></td>
 					</tr>
 
