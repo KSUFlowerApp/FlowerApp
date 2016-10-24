@@ -8,6 +8,7 @@
 				<th>ID</th>
 				<th>Type</th>
 				<th>Markup</th>
+				<th>Edit</th>
 			</thead>
 			<tbody>
 				<% if(markups) {
@@ -16,6 +17,7 @@
 							<td><%= item.id %></td>
 							<td><%= item.inventoryType %></td>
 							<td><%= item.markup %></td>
+							<td><button class='btn btn-primary'>Edit</button></td>
 						</tr>
 					<% });
 				}%>

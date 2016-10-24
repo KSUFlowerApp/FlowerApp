@@ -9,6 +9,7 @@
 				<th>Name</th>
 				<th>Username</th>
 				<th>Role</th>
+				<th>Edit</th>
 			</thead>
 			<tbody>
 				<% if(users) {
@@ -18,6 +19,7 @@
 							<td><%= item.firstName + " " + item.lastName %></td>
 							<td><%= item.username %></td>
 							<td><%= item.roleName %></td>
+							<td><button class='btn btn-primary'>Edit</button></td>
 						</tr>
 					<% });
 				}%>
