@@ -2,6 +2,7 @@
 
 var session = require('../middleware/session.js');
 var inventory = require('../middleware/inventory.js');
+var admin = require('../middleware/admin.js');
 
 module.exports = function(app, passport, db) {
   // =====================================
@@ -19,7 +20,14 @@ module.exports = function(app, passport, db) {
 	// ADMIN - USERS =======================
 	// =====================================
 	app.get('/admin/users', session.isLoggedIn, session.isAdmin, function(req,res) {
-			res.render('admin/users.ejs');
+		// get Users table and pass it to ejs
+		admin.getUsers(function(err, users) {
+			if(err) {
+				res.render('admin/users.ejs', { users:undefined });
+			} else {
+				res.render('admin/users.ejs', { users:users });
+			}
+		});
 	});
 
 	// =====================================
@@ -40,13 +48,27 @@ module.exports = function(app, passport, db) {
 	// ADMIN - INVENTORY TYPES =======================
 	// =====================================
 	app.get('/admin/inventoryTypes', session.isLoggedIn, session.isAdmin, function(req,res) {
-			res.render('admin/inventoryTypes.ejs');
+		// get Inventory Types table and pass it to ejs
+		admin.getInventoryTypes(function(err, inventoryTypes) {
+			if(err) {
+				res.render('admin/inventoryTypes.ejs', { inventoryTypes:undefined });
+			} else {
+				res.render('admin/inventoryTypes.ejs', { inventoryTypes:inventoryTypes });
+			}
+		});
 	});
 
 	// =====================================
 	// ADMIN - MARKUPS =======================
 	// =====================================
 	app.get('/admin/markups', session.isLoggedIn, session.isAdmin, function(req,res) {
-			res.render('admin/markups.ejs');
+		// get Markups table and pass it to ejs
+		admin.getMarkups(function(err, markups) {
+			if(err) {
+				res.render('admin/markups.ejs', { markups:undefined });
+			} else {
+				res.render('admin/markups.ejs', { markups:markups });
+			}
+		});
 	});
 };

@@ -4,18 +4,24 @@
 		<h1><span class="fa fa-unlock"></span> Admin - Inventory</h1>
 	</div>
 
-	<table id="inventory">
+	<table id="inventory" style="width: 100%">
 		<thead>
+			<th>ID</th>
 			<th>Name</th>
 			<th>Price</th>
+			<th>Type</th>
 			<th>Edit</th>
 		</thead>
 		<tbody>
 		<% if(inventory) {
 				inventory.forEach(function(item, index) { %>
 					<tr>
+						<!--<td class="itemName" contenteditable="True"><%= item.name %></td>-->
+						<td><%= item.id %></td>
 						<td><%= item.name %></td>
-						<td><input type="number" step="0.01" class="form-control itemPrice" value=<%= item.price %>></td>
+						<td><%= item.price %></td>
+						<td><%= item.inventoryType %></td>
+						<!--<td><input type="number" step="0.01" class="form-control itemPrice" value=<%= item.price %>></td>-->
 						<td><button class='btn btn-primary' onclick=<%= "editClick("+item.id+")" %>>Edit</button></td>
 					</tr>
 
@@ -26,20 +32,15 @@
 
 <% include ../../partials/footer %>
 
-<style>
-#inventory {
-	width: 100%;
-}
-.itemEdit {
-	display: none;
-}
-</style>
-
 <script>
 $( document ).ready(function() {
     $("#inventory").DataTable({
     		"iDisplayLength": 50
   	});
+
+		/*$(".itemName").on("blur", function() {
+			alert("test");
+		});*/
 });
 
 function editClick(id) {

@@ -2,5 +2,35 @@
 <% include ../../partials/header %>
 	<div class="page-header text-center">
 		<h1><span class="fa fa-unlock"></span> Admin - Users</h1>
+
+		<table id="users" style="width: 100%">
+			<thead>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Username</th>
+				<th>Role</th>
+			</thead>
+			<tbody>
+				<% if(users) {
+						users.forEach(function(item, index) { %>
+						<tr>
+							<td><%= item.id %></td>
+							<td><%= item.firstName + " " + item.lastName %></td>
+							<td><%= item.username %></td>
+							<td><%= item.roleName %></td>
+						</tr>
+					<% });
+				}%>
+			</tbody>
+		</table>
 	</div>
 <% include ../../partials/footer %>
+
+
+<script>
+$( document ).ready(function() {
+		$("#users").DataTable({
+				"iDisplayLength": 50
+		});
+});
+</script>

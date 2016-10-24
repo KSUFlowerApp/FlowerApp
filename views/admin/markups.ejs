@@ -2,5 +2,33 @@
 <% include ../../partials/header %>
 	<div class="page-header text-center">
 		<h1><span class="fa fa-unlock"></span> Admin - Markups</h1>
+
+		<table id="markups" style="width: 100%">
+			<thead>
+				<th>ID</th>
+				<th>Type</th>
+				<th>Markup</th>
+			</thead>
+			<tbody>
+				<% if(markups) {
+						markups.forEach(function(item, index) { %>
+						<tr>
+							<td><%= item.id %></td>
+							<td><%= item.inventoryType %></td>
+							<td><%= item.markup %></td>
+						</tr>
+					<% });
+				}%>
+			</tbody>
+		</table>
 	</div>
 <% include ../../partials/footer %>
+
+
+<script>
+$( document ).ready(function() {
+		$("#markups").DataTable({
+				"iDisplayLength": 50
+		});
+});
+</script>
