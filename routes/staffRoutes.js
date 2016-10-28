@@ -24,4 +24,18 @@ module.exports = function(app, passport, db) {
       }
     });
   });
+
+  // =====================================
+  // STAFF - EVENT FORM =======================
+  // =====================================
+  app.get('/staff/eventForm', session.isLoggedIn, function(req,res) {
+        res.render('staff/eventForm.ejs');
+  });
+
+  // =====================================
+  // STAFF - EVENT FORM - POST =======================
+  // =====================================
+  app.post('/staff/eventForm', session.isLoggedIn, function(req,res) {
+        console.log(req.body);
+  });
 };
