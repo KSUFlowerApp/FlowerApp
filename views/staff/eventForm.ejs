@@ -80,6 +80,7 @@
 			<div class="form-group col-sm-4">
 				<label>Start Time</label>
 				<select class="form-control" name="start-time">
+					<% printTimes(); %>
 				</select>
 			</div>
 		</div>
@@ -92,6 +93,20 @@ $(function() {
     $("#date").datepicker();
 });
 </script>
+
+<% function printTimes() { %>
+	<% var minutes = ["00","15","30","45"]; %>
+	<% for(var i = 0; i <=23; i++) { %>
+		<% for(var j = 0; j < minutes.length; j++) {
+			var suffix = (i >= 12)? 'pm' : 'am';
+			var hours = (i > 12) ? i - 12 : i;
+			if(hours == 0) {
+				hours = 12;
+			} %>
+			<option value="<%= hours + minutes[j] + suffix %>"><%= hours + ":" + minutes[j] + " " + suffix%></option>
+		<% } %>
+	<% } %>
+<% } %>
 
 <style>
 div.ui-datepicker, .ui-datepicker td {
