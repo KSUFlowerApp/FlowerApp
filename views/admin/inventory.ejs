@@ -82,7 +82,7 @@ $( document ).ready(function() {
   	});
 
 		// Display "edit inventory" modal
-		$(".editbtn").click(function() {
+		$("#inventory").on('click', '.editbtn', function() {
 				var row = $(this).closest('tr');
 				var id = row.find('.itemId').text();
 				var name = row.find('.itemName').text();
