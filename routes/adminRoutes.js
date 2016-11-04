@@ -31,21 +31,33 @@ module.exports = function(app, passport, db) {
 	});
 
 	// =====================================
-	// ADMIN - INVENTORY =======================
+	// ADMIN - INVENTORY ===================
 	// =====================================
 	app.get('/admin/inventory', session.isLoggedIn, session.isAdmin, function(req,res) {
 		// get Inventory table and pass it to ejs
     inventory.getInventory(function(err, inventory) {
       if(err) {
-        res.render('admin/inventory.ejs', { inventory:undefined });
+				admin.getInventoryTypes(function(err, inventoryTypes) {
+					if(err) {
+						res.render('admin/inventory.ejs', { inventory:undefined, inventoryTypes:undefined });
+					} else {
+						res.render('admin/inventory.ejs', { inventory:undefined, inventoryTypes:inventoryTypes });
+					}
+				});
       } else {
-        res.render('admin/inventory.ejs', { inventory:inventory });
+				admin.getInventoryTypes(function(err, inventoryTypes) {
+					if(err) {
+						res.render('admin/inventory.ejs', { inventory:inventory, inventoryTypes:undefined });
+					} else {
+						res.render('admin/inventory.ejs', { inventory:inventory, inventoryTypes:inventoryTypes });
+					}
+				});
       }
     });
 	});
 
 	// =====================================
-	// ADMIN - INVENTORY TYPES =======================
+	// ADMIN - INVENTORY TYPES =============
 	// =====================================
 	app.get('/admin/inventoryTypes', session.isLoggedIn, session.isAdmin, function(req,res) {
 		// get Inventory Types table and pass it to ejs
@@ -59,7 +71,7 @@ module.exports = function(app, passport, db) {
 	});
 
 	// =====================================
-	// ADMIN - MARKUPS =======================
+	// ADMIN - MARKUPS =====================
 	// =====================================
 	app.get('/admin/markups', session.isLoggedIn, session.isAdmin, function(req,res) {
 		// get Markups table and pass it to ejs
