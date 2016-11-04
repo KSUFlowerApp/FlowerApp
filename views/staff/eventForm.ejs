@@ -1,17 +1,11 @@
 <!-- views/admin/users.ejs -->
 <% include ../../partials/header %>
 	<div class="page-header text-center">
-		<h1><span class="fa fa-unlock"></span> Event Form</h1>
+		<h1><span class="fa fa-calendar"></span> Event Form</h1>
 	</div>
 
   <form action="/staff/eventForm" method="post">
 		<h2>General Information</h2>
-		<div class="row">
-			<div class="form-group col-sm-4">
-					<label>Date</label>
-					<input type="text" class="form-control" name="date" id="date">
-			</div>
-		</div>
 		<div class="row">
 			<div class="form-group col-sm-4">
 				<label>Bride's Name</label>
@@ -78,9 +72,77 @@
 		</div>
 		<div class="row">
 			<div class="form-group col-sm-4">
+					<label>Date</label>
+					<input type="text" class="form-control date" name="ceremony-date">
+			</div>
+			<div class="form-group col-sm-4">
 				<label>Start Time</label>
-				<select class="form-control" name="start-time">
+				<select class="form-control" name="ceremony-start-time">
 					<% printTimes(); %>
+				</select>
+			</div>
+		</div>
+
+		<hr>
+
+		<h2>Reception Information</h2>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<label>Address</label>
+				<input type="text" class="form-control" name="reception-address">
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>City</label>
+				<input type="text" class="form-control" name="reception-city">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>State</label>
+				<input type="text" class="form-control" name="reception-state">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Zip</label>
+				<input type="text" class="form-control" name="reception-zip">
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-4">
+					<label>Date</label>
+					<input type="text" class="form-control date" name="reception-date">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Start Time</label>
+				<select class="form-control" name="reception-start-time">
+					<% printTimes(); %>
+				</select>
+			</div>
+		</div>
+
+		<hr>
+
+		<h2>Photography</h2>
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Photographers</label>
+				<input type="text" class="form-control" name="photographers">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Start Time</label>
+				<select class="form-control" name="photograph-start-time">
+					<% printTimes(); %>
+				</select>
+			</div>
+		</div>
+
+		<hr>
+
+		<h2>Flowers</h2>
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Flowers</label>
+				<select class="form-control" name="flowers1">
+					<% printFlowers(flowers); %>
 				</select>
 			</div>
 		</div>
@@ -90,7 +152,7 @@
 
 <script>
 $(function() {
-    $("#date").datepicker();
+    $(".date").datepicker();
 });
 </script>
 
@@ -108,6 +170,14 @@ $(function() {
 	<% } %>
 <% } %>
 
+<% function printFlowers(flowers) { %>
+	<% flowers.forEach(function(item, index) { %>
+			<option value="<%= item.id %>"><%= item.name %></option>
+	<% }); %>
+<% } %>
+
+
+
 <style>
 div.ui-datepicker, .ui-datepicker td {
  	font-size:1.5em;
@@ -124,10 +194,13 @@ Phone number(s)
 Physical Address
 Ceremony Location
 Ceremony start time
+
 Reception Location
 Reception start time
+
 Photographer
 Photographer start time
+
 Delivery time
 
 Recipe Categories: (Recipe, pricing, design notes)

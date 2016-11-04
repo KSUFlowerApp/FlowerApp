@@ -29,7 +29,13 @@ module.exports = function(app, passport, db) {
   // STAFF - EVENT FORM =======================
   // =====================================
   app.get('/staff/eventForm', session.isLoggedIn, function(req,res) {
-        res.render('staff/eventForm.ejs');
+    inventory.getFlowers(function(err, flowers) {
+      if(err) {
+        console.log("Error -- inventory.getFlowers");
+      } else {
+        res.render('staff/eventForm', {flowers:flowers});
+      }
+    });
   });
 
   // =====================================
