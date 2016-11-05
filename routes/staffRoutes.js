@@ -18,7 +18,7 @@ module.exports = function(app, passport, db) {
     // get Inventory table and pass it to ejs
     inventory.getInventory(function(err, inventory) {
       if(err) {
-        res.render('staff/inventory.ejs', { inventory:undefined });
+        console.log(err);
       } else {
         res.render('staff/inventory.ejs', { inventory:inventory });
       }
@@ -31,7 +31,7 @@ module.exports = function(app, passport, db) {
   app.get('/staff/eventForm', session.isLoggedIn, function(req,res) {
     inventory.getFlowers(function(err, flowers) {
       if(err) {
-        console.log("Error -- inventory.getFlowers");
+        console.log(err);
       } else {
         res.render('staff/eventForm', {flowers:flowers});
       }
