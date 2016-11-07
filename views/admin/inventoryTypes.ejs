@@ -2,5 +2,33 @@
 <% include ../../partials/header %>
 	<div class="page-header text-center">
 		<h1><span class="fa fa-unlock"></span> Admin - Inventory Types</h1>
+
+		<table id="inventoryTypes" style="width: 100%">
+			<thead>
+				<th>ID</th>
+				<th>Type</th>
+				<th>Edit</th>
+			</thead>
+			<tbody>
+				<% if(inventoryTypes) {
+						inventoryTypes.forEach(function(item, index) { %>
+						<tr>
+							<td><%= item.id %></td>
+							<td><%= item.type %></td>
+							<td><button class='btn btn-primary'>Edit</button></td>
+						</tr>
+					<% });
+				}%>
+			</tbody>
+		</table>
 	</div>
 <% include ../../partials/footer %>
+
+
+<script>
+$( document ).ready(function() {
+    $("#inventoryTypes").DataTable({
+    		"iDisplayLength": 50
+  	});
+});
+</script>
