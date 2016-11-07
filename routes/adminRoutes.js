@@ -34,26 +34,19 @@ module.exports = function(app, passport, db) {
 	// ADMIN - INVENTORY ===================
 	// =====================================
 	app.get('/admin/inventory', session.isLoggedIn, session.isAdmin, function(req,res) {
+
 		// get Inventory table and pass it to ejs
     inventory.getInventory(function(err, inventory) {
       if(err) {
-				admin.getInventoryTypes(function(err, inventoryTypes) {
-					if(err) {
-						res.render('admin/inventory.ejs', { inventory:undefined, inventoryTypes:undefined });
-					} else {
-						res.render('admin/inventory.ejs', { inventory:undefined, inventoryTypes:inventoryTypes });
-					}
-				});
-      } else {
-				admin.getInventoryTypes(function(err, inventoryTypes) {
-					if(err) {
-						res.render('admin/inventory.ejs', { inventory:inventory, inventoryTypes:undefined });
-					} else {
-						res.render('admin/inventory.ejs', { inventory:inventory, inventoryTypes:inventoryTypes });
-					}
-				});
+				console.error(err.stack);
+  			res.status(500).send('Get inventory did not work!');
       }
-    });
+			else {
+				admin.getInventoryTypes(function(err, inventoryTypes) {
+						res.render('admin/inventory.ejs', { inventory:inventory, inventoryTypes:inventoryTypes });
+				});
+			}
+		});
 	});
 
 	// =====================================

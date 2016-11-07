@@ -29,7 +29,6 @@
 			}%>
 		</tbody>
 	</table>
-
 <!-- Edit Inventory Modal -->
 <div class="container">
 
@@ -53,20 +52,15 @@
             </div>
 						<div class="form-group">
               <label for="inventoryType">Inventory Type</label>
-              <br>
-							<select>
-								<% if(inventoryTypes) {
-										inventoryTypes.forEach(function(item, index) { %>
-											<option><%= item.type %></option>
-									<% });
-								}%>
+							<select class="form-control" name="selectInventoryType" id="selectInventoryType">
+								<% printInventoryTypes(inventoryTypes); %>
 							</select>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
-					<button type="submit" class="btn btn-success btn-default pull-right">Update</button>
+					<button type="submit" class="btn btn-success btn-default pull-right" id="updateInventory">Update</button>
         </div>
       </div>
     </div>
@@ -87,17 +81,38 @@ $( document ).ready(function() {
 				var id = row.find('.itemId').text();
 				var name = row.find('.itemName').text();
 				var price = row.find('.itemPrice').text();
-				var type = row.find('.itemType').text();
+				var type = getInventoryType(row.find('.itemType').text());
 
         $("#mdlEditInventory").modal();
 
-				document.getElementById('inventoryName').value = name;
-				document.getElementById('inventoryPrice').value = price;
-				document.getElementById('inventoryType').value = type;
+			  $("#inventoryName").val(name);
+				$("#inventoryPrice").val(price);
+				$("#selectInventoryType").val(type);
     });
 
 		/*$(".itemName").on("blur", function() {
 			alert("test");
 		});*/
+
+		function getInventoryType(type) {
+			var inventoryTypes = <%- JSON.stringify(inventoryTypes) %>;
+			var val = 0;
+			inventoryTypes.forEach(function(item, index) {
+				if(type == item.type) {
+					val = item.id;
+				}
+			});
+			return val;
+		}
+
+		$("#updateInventory").on('click', function() {
+
+		});
 });
 </script>
+
+<% function printInventoryTypes(inventoryTypes) { %>
+	<% inventoryTypes.forEach(function(item, index) { %>
+			<option value=<%= item.id %>><%= item.type %></option>
+	<% });
+} %>
