@@ -81,7 +81,7 @@ $("#updateType").on('click', function() {
 	event.preventDefault();
 	// Display wait animation if needed.
 	$.ajax({
-		url: '/admin/inventoryType',
+		url: '/admin/inventoryTypes',
 		data: $form.serialize(),
 		method: 'POST',
 		success: function(response) {

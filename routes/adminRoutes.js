@@ -31,6 +31,33 @@ module.exports = function(app, passport, db) {
 		});
 	});
 
+	app.post('/admin/users', function(req, res) {
+		var firstName = req.body.userFirstName;
+		var lastName = req.body.userLastName;
+		var id = req.body.userID;
+
+		console.log(firstName + " " + lastName + " " + id);
+
+		var query = "UPDATE users " +
+								"SET firstName = '"+firstName+"', " +
+								"lastName = '"+lastName+"' " +
+								"WHERE id = "+id;
+
+		db.query(query, function(err, rows) {
+			var response = {
+				status: 200,
+				message: "User updated successfully."
+			}
+			if(err) {
+				response = {
+					status: 500,
+					message: "Error updating user."
+				}
+			}
+			res.end(JSON.stringify(response));
+		});
+	});
+
 	// =====================================
 	// ADMIN - INVENTORY ===================
 	// =====================================
@@ -91,6 +118,31 @@ module.exports = function(app, passport, db) {
 		});
 	});
 
+	app.post('/admin/inventoryTypes', function(req, res) {
+		var name = req.body.typeName
+		var id = req.body.typeID;
+
+		console.log(req.body);
+
+		var query = "UPDATE inventory_types " +
+								"SET type = '"+name+"' " +
+								"WHERE id = "+id;
+
+		db.query(query, function(err, rows) {
+			var response = {
+				status: 200,
+				message: "Type updated successfully."
+			}
+			if(err) {
+				response = {
+					status: 500,
+					message: "Error updating type."
+				}
+			}
+			res.end(JSON.stringify(response));
+		});
+	});
+
 	// =====================================
 	// ADMIN - MARKUPS =====================
 	// =====================================
@@ -102,6 +154,31 @@ module.exports = function(app, passport, db) {
 			} else {
 				res.render('admin/markups.ejs', { markups:markups });
 			}
+		});
+	});
+
+	app.post('/admin/markups', function(req, res) {
+		var type = req.body.markupType;
+		var value = req.body.markupValue;
+		var id = req.body.markupID;
+
+		var query = "UPDATE markups " +
+								"SET type = '"+type+"', " +
+								"markup = "+value+" " +
+								"WHERE id = "+id;
+
+		db.query(query, function(err, rows) {
+			var response = {
+				status: 200,
+				message: "Markup updated successfully."
+			}
+			if(err) {
+				response = {
+					status: 500,
+					message: "Error updating markup."
+				}
+			}
+			res.end(JSON.stringify(response));
 		});
 	});
 };
