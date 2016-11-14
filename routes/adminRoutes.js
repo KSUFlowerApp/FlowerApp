@@ -78,16 +78,29 @@ module.exports = function(app, passport, db) {
 	});
 
 	app.post('/admin/inventory', function(req, res) {
-		var name = req.body.itemName;
-		var price = req.body.itemPrice;
-		var type = req.body.itemType;
 		var id = req.body.itemID;
+		var name = undefined;
+		var price = undefined;
+		var type = undefined;
+		var query = undefined;
 
-		var query = "UPDATE inventory " +
-								"SET name = '"+name+"', " +
-								"price = "+price+", " +
-								"type = "+type+" " +
-								"WHERE id = "+id;
+		if (typeof id === 'undefined' || !id) {
+			var name = req.body.addName;
+			var price = req.body.addPrice;
+			var type = req.body.addType;
+			query = "INSERT INTO inventory(name, price, type) " +
+							"VALUES('"+name+"', "+price+", '"+type+"')";
+		}
+		else {
+			name = req.body.itemName;
+			price = req.body.itemPrice;
+			type = req.body.itemType;
+			query = "UPDATE inventory " +
+							"SET name = '"+name+"', " +
+							"price = "+price+", " +
+							"type = '"+type+"' " +
+							"WHERE id = "+id;
+		}
 
 		db.query(query, function(err, rows) {
 			var response = {

@@ -6,7 +6,7 @@
 	</div>
 
 	<div>
-		<button class='addnewbtn btn btn-primary'>Add New Inventory Item</button>
+		<button class='addnewbtn btn btn-primary' id="addNewInventory">Add New Inventory Item</button>
 	</div>
 
 	<table id="inventory" style="width: 100%">
@@ -33,6 +33,46 @@
 			}%>
 		</tbody>
 	</table>
+
+	<!-- Add Inventory Modal -->
+	<div class="container">
+
+	  <div class="modal fade" id="mdlAddInventory" role="dialog">
+	    <div class="modal-dialog">
+
+	      <div class="modal-content">
+	        <div class="modal-header" style="padding:32px 32px;">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4>Edit Inventory Item</h4>
+	        </div>
+	        <div class="modal-body" style="padding:48px 48px;">
+	          <form name="formEditInventory" role="form" attribute="">
+	            <div class="form-group">
+	              <label>Name</label>
+	              <input name="addName" type="text" class="form-control" id="addName" placeholder="Enter name">
+	            </div>
+	            <div class="form-group">
+	              <label>$ Price</label>
+	              <input name="addPrice" type="number" min="0.00" step="0.01" class="form-control" id="addPrice" placeholder="Enter price">
+	            </div>
+							<div class="form-group">
+	              <label>Inventory Type</label>
+								<select name="addType" class="form-control" id="addType">
+									<% printInventoryTypes(inventoryTypes); %>
+								</select>
+	            </div>
+							<br><br>
+							<div>
+			          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-success btn-default pull-right" id="addInventory">Update</button>
+			        </div>
+	          </form>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
 <!-- Edit Inventory Modal -->
 <div class="container">
 
@@ -84,6 +124,11 @@ $( document ).ready(function() {
 				"bPaginate": false
   	});
 
+		// Display "add inventory" modal.
+		$("#addNewInventory").on('click', function() {
+				$("#mdlAddInventory").modal();
+		});
+
 		// Display "edit inventory" modal
 		$("#inventory").on('click', '.editbtn', function() {
 				var row = $(this).closest('tr');
@@ -114,6 +159,21 @@ $( document ).ready(function() {
 			});
 			return val;
 		}
+
+		$("#addInventory").on('click', function() {
+			var $form = $(this).closest('form');
+			event.preventDefault();
+			// Display wait animation if needed.
+			$.ajax({
+				url: '/admin/inventory',
+				data: $form.serialize(),
+				method: 'POST',
+				success: function(response) {
+					response = JSON.parse(response);
+					alert(response.message);
+				}
+			})
+		});
 
 		$("#updateInventory").on('click', function() {
 			var $form = $(this).closest('form');
