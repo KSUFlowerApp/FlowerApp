@@ -39,10 +39,6 @@
         </div>
         <div class="modal-body" style="padding:48px 48px;">
           <form name="formEditInventory" role="form" attribute="">
-            <div class="form-group">
-              <label>Type</label>
-              <input name="markupType" type="text" class="form-control" id="markupType" placeholder="Enter type">
-            </div>
 						<div>
 							<label>Markup</label>
 							<input name="markupValue" type="number" min="0.00" step="0.01" class="form-control" id="markupValue" placeholder="Enter markup">
@@ -65,7 +61,8 @@
 <script>
 $( document ).ready(function() {
 		$("#markups").DataTable({
-				"iDisplayLength": 50
+				"iDisplayLength": 50,
+				"bPaginate": false
 		});
 });
 
@@ -73,12 +70,10 @@ $( document ).ready(function() {
 $("#markups").on('click', '.editbtn', function() {
 		var row = $(this).closest('tr');
 		var id = row.find('.markupID').text();
-		var type = row.find('.markupType').text();
 		var markupValue = row.find('.markupValue').text();
 
 		$("#mdlEditMarkups").modal();
 
-		$("#markupType").val(type);
 		$("#markupValue").val(markupValue);
 		$("#markupID").val(id);
 });

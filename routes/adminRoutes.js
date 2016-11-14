@@ -119,14 +119,25 @@ module.exports = function(app, passport, db) {
 	});
 
 	app.post('/admin/inventoryTypes', function(req, res) {
-		var name = req.body.typeName
 		var id = req.body.typeID;
+		var type = undefined;
+		var markup = undefined;
+		var query = undefined;
 
-		console.log(req.body);
-
-		var query = "UPDATE inventory_types " +
-								"SET type = '"+name+"' " +
-								"WHERE id = "+id;
+		if (typeof id === 'undefined' || !id) {
+			type = req.body.addName;
+			markup = req.body.addMarkup;
+			query = "INSERT INTO inventory_types(type, markup) " +
+							"VALUES('"+type+"', "+markup+")";
+		}
+		else {
+			type = req.body.typeName;
+			markup = req.body.typeMarkup;
+			query = "UPDATE inventory_types " +
+							"SET type = '"+type+"', " +
+							"markup = "+markup+" " +
+							"WHERE id = "+id;
+		}
 
 		db.query(query, function(err, rows) {
 			var response = {
@@ -158,13 +169,13 @@ module.exports = function(app, passport, db) {
 	});
 
 	app.post('/admin/markups', function(req, res) {
-		var type = req.body.markupType;
 		var value = req.body.markupValue;
 		var id = req.body.markupID;
 
+		console.log(value + " " + id);
+
 		var query = "UPDATE markups " +
-								"SET type = '"+type+"', " +
-								"markup = "+value+" " +
+								"SET markup = "+value+" " +
 								"WHERE id = "+id;
 
 		db.query(query, function(err, rows) {
