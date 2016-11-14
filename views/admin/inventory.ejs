@@ -109,11 +109,10 @@ $( document ).ready(function() {
 				}
 			});
 			return val;
-		}-
+		}
 
 		$("#updateInventory").on('click', function() {
 			var $form = $(this).closest('form');
-			console.log($form);
 			event.preventDefault();
 			// Display wait animation if needed.
 			$.ajax({
