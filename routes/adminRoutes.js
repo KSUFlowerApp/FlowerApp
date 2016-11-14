@@ -3,6 +3,7 @@
 var session = require('../middleware/session.js');
 var inventory = require('../middleware/inventory.js');
 var admin = require('../middleware/admin.js');
+var mysql = require('mysql');
 
 module.exports = function(app, passport, db) {
   // =====================================
@@ -46,6 +47,33 @@ module.exports = function(app, passport, db) {
 						res.render('admin/inventory.ejs', { inventory:inventory, inventoryTypes:inventoryTypes });
 				});
 			}
+		});
+	});
+
+	app.post('/admin/inventory', function(req, res) {
+		var name = req.body.itemName;
+		var price = req.body.itemPrice;
+		var type = req.body.itemType;
+		var id = req.body.itemID;
+
+		var query = "UPDATE inventory " +
+								"SET name = '"+name+"', " +
+								"price = "+price+", " +
+								"type = "+type+" " +
+								"WHERE id = "+id;
+
+		db.query(query, function(err, rows) {
+			var response = {
+				status: 200,
+				message: "Item updated successfully."
+			}
+			if(err) {
+				response = {
+					status: 500,
+					message: "Error updating item."
+				}
+			}
+			res.end(JSON.stringify(response));
 		});
 	});
 

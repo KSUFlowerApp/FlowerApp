@@ -6,7 +6,7 @@ module.exports = exports = {
 var db = require('../config/db');
 
 // =====================================
-// GETINVENTORY ===============================
+// GETINVENTORY ========================
 // =====================================
 // Get inventory from database.
 function getInventory(callback) {
