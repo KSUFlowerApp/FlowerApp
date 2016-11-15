@@ -36,26 +36,22 @@ module.exports = function(app, passport, db) {
 	});
 
 	app.post('/admin/users', function(req, res) {
-		var firstName = req.body.userFirstName;
-		var lastName = req.body.userLastName;
 		var id = req.body.userID;
-
-		console.log(firstName + " " + lastName + " " + id);
+		var role = req.body.userRole;
 
 		var query = "UPDATE users " +
-								"SET firstName = '"+firstName+"', " +
-								"lastName = '"+lastName+"' " +
-								"WHERE id = "+id;
+						"SET role = '"+role+"' " +
+						"WHERE id = "+id;
 
 		db.query(query, function(err, rows) {
 			var response = {
 				status: 200,
-				message: "User updated successfully."
+				message: "Item updated successfully."
 			}
 			if(err) {
 				response = {
 					status: 500,
-					message: "Error updating user."
+					message: "Error updating item."
 				}
 			}
 			res.end(JSON.stringify(response));
@@ -88,9 +84,9 @@ module.exports = function(app, passport, db) {
 		var query = undefined;
 
 		if (typeof id === 'undefined' || !id) {
-			var name = req.body.addName;
-			var price = req.body.addPrice;
-			var type = req.body.addType;
+			name = req.body.addName;
+			price = req.body.addPrice;
+			type = req.body.addType;
 			query = "INSERT INTO inventory(name, price, type) " +
 							"VALUES('"+name+"', "+price+", '"+type+"')";
 		}

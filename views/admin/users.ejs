@@ -48,6 +48,9 @@
 								<% printUserRoles(userRoles); %>
 							</select>
             </div>
+						<div class="form-group">
+              <input type="text" name="userID" id="userID" style="display:none">
+            </div>
 						<br><br>
 						<div>
 		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
@@ -72,12 +75,11 @@ $( document ).ready(function() {
 $("#users").on('click', '.editbtn', function() {
 		var row = $(this).closest('tr');
 		var id = row.find('.userID').text();
-		var firstName = row.find('.userFirstName').text();
-		var lastName = row.find('.userLastName').text();
 		var role = getUserRole(row.find('.userRole').text());
 
 		$("#mdlEditUsers").modal();
 
+		$("#userID").val(id);
 		$("#userRole").val(role);
 });
 
