@@ -23,10 +23,14 @@ module.exports = function(app, passport, db) {
 	app.get('/admin/users', session.isLoggedIn, session.isAdmin, function(req,res) {
 		// get Users table and pass it to ejs
 		admin.getUsers(function(err, users) {
-			if(err) {
-				res.render('admin/users.ejs', { users:undefined });
-			} else {
-				res.render('admin/users.ejs', { users:users });
+      if(err) {
+				console.error(err.stack);
+  			res.status(500).send('Get users did not work!');
+      }
+			else {
+				admin.getRoles(function(err, userRoles) {
+						res.render('admin/users.ejs', { users:users, userRoles:userRoles });
+				});
 			}
 		});
 	});
@@ -62,7 +66,6 @@ module.exports = function(app, passport, db) {
 	// ADMIN - INVENTORY ===================
 	// =====================================
 	app.get('/admin/inventory', session.isLoggedIn, session.isAdmin, function(req,res) {
-
 		// get Inventory table and pass it to ejs
     inventory.getInventory(function(err, inventory) {
       if(err) {

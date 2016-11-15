@@ -7,8 +7,7 @@
 		<table id="users" style="width: 100%">
 			<thead>
 				<th>ID</th>
-				<th>First Name</th>
-				<th>Last Name</th>
+				<th>Name</th>
 				<th>Username</th>
 				<th>Role</th>
 				<th>Edit</th>
@@ -18,8 +17,7 @@
 						users.forEach(function(item, index) { %>
 						<tr>
 							<td class="userID"><%= item.id %></td>
-							<td class="userFirstName"><%= item.firstName %></td>
-							<td class="userLastName"><%= item.lastName %></td>
+							<td class="userFullName"><%= item.firstName + " " + item.lastName %></td>
 							<td class="userName"><%= item.username %></td>
 							<td class="userRole"><%= item.roleName %></td>
 							<td><button class='editbtn btn btn-primary'>Edit</button></td>
@@ -44,16 +42,11 @@
         </div>
         <div class="modal-body" style="padding:48px 48px;">
           <form name="formEditInventory" role="form" attribute="">
-            <div class="form-group">
-              <label>First Name</label>
-              <input name="userFirstName" type="text" class="form-control" id="userFirstName" placeholder="Enter name">
-            </div>
 						<div class="form-group">
-              <label>Last Name</label>
-              <input name="userLastName" type="text" class="form-control" id="userLastName" placeholder="Enter name">
-            </div>
-						<div class="form-group">
-              <input type="text" name="userID" id="userID" style="display:none">
+              <label>User's Role</label>
+							<select name="userRole" class="form-control" id="userRole">
+								<% printUserRoles(userRoles); %>
+							</select>
             </div>
 						<br><br>
 						<div>
@@ -75,19 +68,30 @@ $( document ).ready(function() {
 		});
 });
 
-// Display "edit type" modal
+// Display "edit user" modal
 $("#users").on('click', '.editbtn', function() {
 		var row = $(this).closest('tr');
 		var id = row.find('.userID').text();
 		var firstName = row.find('.userFirstName').text();
 		var lastName = row.find('.userLastName').text();
+		var role = getUserRole(row.find('.userRole').text());
 
 		$("#mdlEditUsers").modal();
 
-		$("#userFirstName").val(firstName);
-		$("#userLastName").val(lastName);
-		$("#userID").val(id);
+		$("#userRole").val(role);
 });
+
+function getUserRole(role) {
+	var userRoles = <%- JSON.stringify(userRoles) %>;
+	var val = 0;
+	console.log(role);
+	userRoles.forEach(function(item, index) {
+		if(role == item.role) {
+			val = item.id;
+		}
+	});
+	return val;
+}
 
 $("#updateUser").on('click', function() {
 	var $form = $(this).closest('form');
@@ -104,3 +108,9 @@ $("#updateUser").on('click', function() {
 	})
 });
 </script>
+
+<% function printUserRoles(userRoles) { %>
+	<% userRoles.forEach(function(item, index) { %>
+			<option value=<%= item.id %>><%= item.role %></option>
+	<% });
+} %>
