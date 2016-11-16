@@ -1,5 +1,6 @@
 module.exports = exports = {
-  getInventory: getInventory
+  getInventory: getInventory,
+  getFlowers: getFlowers
 }
 
 // establish db connection
@@ -21,4 +22,18 @@ function getInventory(callback) {
              return callback(null, rows);
         }
     });
+}
+
+function getFlowers(callback) {
+  var query = "SELECT * " +
+  "FROM inventory " +
+  "WHERE type = 1 " +
+  "ORDER BY name ASC";
+  db.query(query, function(err, rows) {
+    if (err) {
+      return callback(err, null);
+    } else {
+      return callback(null, rows);
+    }
+  });
 }
