@@ -1,0 +1,44 @@
+<!-- views/staff/inventory.ejs -->
+<% include ../../partials/header %>
+	<div class="page-header text-center">
+		<h1><span class="fa fa-unlock"></span> Staff - Inventory</h1>
+	</div>
+
+	<table id="inventory">
+		<thead>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Type</th>
+		</thead>
+		<tbody>
+		<% if(inventory) {
+				inventory.forEach(function(item, index) { %>
+					<tr>
+						<!--<td class="itemName" contenteditable="True"><%= item.name %></td>-->
+						<td><%= item.id %></td>
+						<td><%= item.name %></td>
+						<td><%= item.price %></td>
+						<td><%= item.inventoryType %></td>
+					</tr>
+
+				<% });
+			}%>
+	</tbody>
+	</table>
+
+<% include ../../partials/footer %>
+
+<style>
+#inventory {
+	width: 100%;
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+    $("#inventory").DataTable({
+    		"iDisplayLength": 50
+  	});
+});
+</script>

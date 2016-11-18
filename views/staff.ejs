@@ -1,0 +1,29 @@
+<!-- views/admin.ejs -->
+<% include ../partials/header %>
+  <link rel="stylesheet" href="/public/css/tiles.css">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-unlock"></span> Staff Panel</h1>
+	</div>
+
+
+  <div class="row">
+    <a href="/staff/inventory">
+      <div class="col-sm-4">
+        <div class="tile tile-primary">
+          <h3 class="title">Inventory</h3>
+          <p>View items in the inventory.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="/staff/eventForm">
+      <div class="col-sm-4">
+        <div class="tile tile-primary">
+          <h3 class="title">New Event</h3>
+          <p>Create a new event for a customer.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+<% include ../partials/footer %>

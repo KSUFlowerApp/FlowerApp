@@ -3,4 +3,120 @@
 	<div class="page-header text-center">
 		<h1><span class="fa fa-unlock"></span> Admin - Users</h1>
 	</div>
+<<<<<<< HEAD
 <% include ../../partials/footer %>
+=======
+
+		<table id="users" style="width: 100%">
+			<thead>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Username</th>
+				<th>Role</th>
+				<th>Edit</th>
+			</thead>
+			<tbody>
+				<% if(users) {
+						users.forEach(function(item, index) { %>
+						<tr>
+							<td class="userID"><%= item.id %></td>
+							<td class="userFullName"><%= item.firstName + " " + item.lastName %></td>
+							<td class="userName"><%= item.username %></td>
+							<td class="userRole"><%= item.roleName %></td>
+							<td><button class='editbtn btn btn-primary'>Edit</button></td>
+						</tr>
+					<% });
+				}%>
+			</tbody>
+		</table>
+
+<% include ../../partials/footer %>
+
+<!-- Edit Users Modal -->
+<div class="container">
+
+  <div class="modal fade" id="mdlEditUsers" role="dialog">
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+        <div class="modal-header" style="padding:32px 32px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4>Edit User</h4>
+        </div>
+        <div class="modal-body" style="padding:48px 48px;">
+          <form name="formEditInventory" role="form" attribute="">
+						<div class="form-group">
+              <label>User's Role</label>
+							<select name="userRole" class="form-control" id="userRole">
+								<% printUserRoles(userRoles); %>
+							</select>
+            </div>
+						<div class="form-group">
+              <input type="text" name="userID" id="userID" style="display:none">
+            </div>
+						<br><br>
+						<div>
+		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-success btn-default pull-right" id="updateUser">Update</button>
+		        </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$( document ).ready(function() {
+		$("#users").DataTable({
+				"iDisplayLength": 50,
+				"bPaginate": false
+		});
+});
+
+// Display "edit user" modal
+$("#users").on('click', '.editbtn', function() {
+		var row = $(this).closest('tr');
+		var id = row.find('.userID').text();
+		var role = getUserRole(row.find('.userRole').text());
+
+		$("#mdlEditUsers").modal();
+
+		$("#userID").val(id);
+		$("#userRole").val(role);
+});
+
+function getUserRole(role) {
+	var userRoles = <%- JSON.stringify(userRoles) %>;
+	var val = 0;
+	console.log(role);
+	userRoles.forEach(function(item, index) {
+		if(role == item.role) {
+			val = item.id;
+		}
+	});
+	return val;
+}
+
+$("#updateUser").on('click', function() {
+	var $form = $(this).closest('form');
+	event.preventDefault();
+	// Display wait animation if needed.
+	$.ajax({
+		url: '/admin/users',
+		data: $form.serialize(),
+		method: 'POST',
+		success: function(response) {
+			response = JSON.parse(response);
+			alert(response.message);
+		}
+	})
+});
+</script>
+
+<% function printUserRoles(userRoles) { %>
+	<% userRoles.forEach(function(item, index) { %>
+			<option value=<%= item.id %>><%= item.role %></option>
+	<% });
+} %>
+>>>>>>> Sprint3ArunTylerV2
