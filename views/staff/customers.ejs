@@ -1,0 +1,345 @@
+<!-- views/staff/customers.ejs -->
+<% include ../../partials/header %>
+	<div class="page-header text-center">
+		<h1><span class="fa fa-unlock"></span> Staff - Customers</h1>
+	</div>
+
+	<div>
+		<button class='addnewbtn btn btn-primary' id="addNewCustomer">Add New Customer</button>
+	</div>
+
+	<table id="customers">
+		<thead>
+			<th style='display: none;'>ID</td>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Phone</th>
+			<th>E-Mail</th>
+			<th>Street Address</th>
+			<th>City</th>
+			<th>State</th>
+			<th>Zip</th>
+			<th>Edit</th>
+		</thead>
+		<tbody>
+		<% if(customers) {
+				customers.forEach(function(item, index) { %>
+					<tr>
+						<!--<td class="itemName" contenteditable="True"><%= item.name %></td>-->
+						<td class = 'customerID' style='display:none;'><%= item.id %></td>
+						<td class = 'customerFirstName'><%= item.firstName %></td>
+						<td class = 'customerLastName'><%= item.lastName %></td>
+						<td class = 'customerPhone'><%= item.phone %></td>
+						<td class = 'customerEmail'><%= item.e_mail %></td>
+						<td class = 'customerStreetAddr'><%= item.street_addr %></td>
+						<td class = 'customerCity'><%= item.city %></td>
+						<td class = 'customerState'><%= item.state %></td>
+						<td class = 'customerZip'><%= item.zip %></td>
+						<td><button class='editbtn btn btn-primary'>Edit</button></td>
+					</tr>
+				<% });
+			}%>
+	</tbody>
+	</table>
+
+	<!-- Add Customer Modal -->
+	<div class="container">
+
+	  <div class="modal fade" id="mdlAddCustomer" role="dialog">
+	    <div class="modal-dialog">
+
+	      <div class="modal-content">
+	        <div class="modal-header" style="padding:32px 32px;">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4>Add Customer</h4>
+	        </div>
+	        <div class="modal-body" style="padding:48px 48px;">
+	          <form name="formEditCustomer" role="form" attribute="">
+	            <div class="form-group">
+	              <label>First Name</label>
+	              <input name="addFirstName" type="text" class="form-control" id="addFirstName" placeholder="Enter first name">
+	            </div>
+							<div class="form-group">
+	              <label>Last Name</label>
+	              <input name="addLastName" type="text" class="form-control" id="addLastName" placeholder="Enter last name">
+	            </div>
+							<div class="form-group">
+	              <label>Phone</label>
+	              <input name="addPhone" type="text" class="form-control" id="addPhone" placeholder="Enter phone number">
+	            </div>
+							<div class="form-group">
+	              <label>E-Mail</label>
+	              <input name="addEmail" type="text" class="form-control" id="addEmail" placeholder="Enter e-mail address">
+	            </div>
+							<div class="form-group">
+	              <label>Street Address</label>
+	              <input name="addAddr" type="text" class="form-control" id="addAddr" placeholder="Enter street address">
+	            </div>
+							<div class="form-group">
+	              <label>City</label>
+	              <input name="addCity" type="text" class="form-control" id="addCity" placeholder="Enter city">
+	            </div>
+							<div class="form-group">
+	              <label>State</label>
+								<select name="addState" class="form-control" id="addState">
+									<option value="AL">AL</option>
+		<option value="AK">AK</option>
+		<option value="AZ">AZ</option>
+		<option value="AR">AR</option>
+		<option value="CA">CA</option>
+		<option value="CO">CO</option>
+		<option value="CT">CT</option>
+		<option value="DE">DE</option>
+		<option value="DC">DC</option>
+		<option value="FL">FL</option>
+		<option value="GA">GA</option>
+		<option value="HI">HI</option>
+		<option value="ID">ID</option>
+		<option value="IL">IL</option>
+		<option value="IN">IN</option>
+		<option value="IA">IA</option>
+		<option value="KS">KS</option>
+		<option value="KY">KY</option>
+		<option value="LA">LA</option>
+		<option value="ME">ME</option>
+		<option value="MD">MD</option>
+		<option value="MA">MA</option>
+		<option value="MI">MI</option>
+		<option value="MN">MN</option>
+		<option value="MS">MS</option>
+		<option value="MO">MO</option>
+		<option value="MT">MT</option>
+		<option value="NE">NE</option>
+		<option value="NV">NV</option>
+		<option value="NH">NH</option>
+		<option value="NJ">NJ</option>
+		<option value="NM">NM</option>
+		<option value="NY">NY</option>
+		<option value="NC">NC</option>
+		<option value="ND">ND</option>
+		<option value="OH">OH</option>
+		<option value="OK">OK</option>
+		<option value="OR">OR</option>
+		<option value="PA">PA</option>
+		<option value="RI">RI</option>
+		<option value="SC">SC</option>
+		<option value="SD">SD</option>
+		<option value="TN">TN</option>
+		<option value="TX">TX</option>
+		<option value="UT">UT</option>
+		<option value="VT">VT</option>
+		<option value="VA">VA</option>
+		<option value="WA">WA</option>
+		<option value="WV">WV</option>
+		<option value="WI">WI</option>
+		<option value="WY">WY</option>
+								</select>
+	            </div>
+							<div class="form-group">
+	              <label>Zip</label>
+	              <input name="addZip" type="text" class="form-control" id="addZip" placeholder="Enter zip code">
+	            </div>
+							<br><br>
+							<div>
+			          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-success btn-default pull-right" id="addCustomers">Update</button>
+			        </div>
+	          </form>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Edit Customers Modal -->
+<div class="container">
+
+  <div class="modal fade" id="mdlEditCustomers" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="padding:32px 32px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4>Edit Customer</h4>
+        </div>
+        <div class="modal-body" style="padding:48px 48px;">
+          <form name="formEditCustomers" role="form" attribute="">
+            <div class="form-group">
+              <label>First Name</label>
+              <input name="customerFirstName" type="text" class="form-control" id="customerFirstName" placeholder="Enter first name">
+            </div>
+						<div class="form-group">
+              <label>Last Name</label>
+              <input name="customerLastName" type="text" class="form-control" id="customerLastName" placeholder="Enter last name">
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input name="customerPhone" type="text" class="form-control" id="customerPhone" placeholder="Enter phone number">
+            </div>
+						<div class="form-group">
+              <label>E-Mail</label>
+              <input name="customerEmail" type="text" class="form-control" id="customerEmail" placeholder="Enter e-mail address">
+            </div>
+						<div class="form-group">
+              <label>Street Address</label>
+              <input name="customerStreetAddr" type="text" class="form-control" id="customerStreetAddr" placeholder="Enter street address">
+            </div>
+						<div class="form-group">
+              <label>City</label>
+              <input name="customerCity" type="text" class="form-control" id="customerCity" placeholder="Enter city">
+            </div>
+						<div class="form-group">
+              <label>State</label>
+							<select name="customerState" class="form-control" id="customerState">
+								<option value="AL">AL</option>
+              	<option value="AK">AK</option>
+              	<option value="AZ">AZ</option>
+              	<option value="AR">AR</option>
+              	<option value="CA">CA</option>
+              	<option value="CO">CO</option>
+              	<option value="CT">CT</option>
+              	<option value="DE">DE</option>
+              	<option value="DC">DC</option>
+              	<option value="FL">FL</option>
+              	<option value="GA">GA</option>
+              	<option value="HI">HI</option>
+              	<option value="ID">ID</option>
+              	<option value="IL">IL</option>
+              	<option value="IN">IN</option>
+              	<option value="IA">IA</option>
+              	<option value="KS">KS</option>
+              	<option value="KY">KY</option>
+              	<option value="LA">LA</option>
+              	<option value="ME">ME</option>
+              	<option value="MD">MD</option>
+              	<option value="MA">MA</option>
+              	<option value="MI">MI</option>
+              	<option value="MN">MN</option>
+              	<option value="MS">MS</option>
+              	<option value="MO">MO</option>
+              	<option value="MT">MT</option>
+              	<option value="NE">NE</option>
+              	<option value="NV">NV</option>
+              	<option value="NH">NH</option>
+              	<option value="NJ">NJ</option>
+              	<option value="NM">NM</option>
+              	<option value="NY">NY</option>
+              	<option value="NC">NC</option>
+              	<option value="ND">ND</option>
+              	<option value="OH">OH</option>
+              	<option value="OK">OK</option>
+              	<option value="OR">OR</option>
+              	<option value="PA">PA</option>
+              	<option value="RI">RI</option>
+              	<option value="SC">SC</option>
+              	<option value="SD">SD</option>
+              	<option value="TN">TN</option>
+              	<option value="TX">TX</option>
+              	<option value="UT">UT</option>
+              	<option value="VT">VT</option>
+              	<option value="VA">VA</option>
+              	<option value="WA">WA</option>
+              	<option value="WV">WV</option>
+              	<option value="WI">WI</option>
+              	<option value="WY">WY</option>
+							</select>
+            </div>
+						<div class="form-group">
+              <label>Zip Code</label>
+              <input name="customerZip" type="text" class="form-control" id="customerZip" placeholder="Enter zip code">
+            </div>
+						<div class="form-group">
+              <input type="text" name="customerID" id="customerID" style="display:none">
+            </div>
+						<br><br>
+						<div>
+		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-success btn-default pull-right" id="updateCustomers">Update</button>
+		        </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ../../partials/footer %>
+
+<style>
+#customers {
+	width: 100%;
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+    $("#customers").DataTable({
+    		"iDisplayLength": 50,
+				"bPaginate": false
+  	});
+
+		// Display "add inventory" modal.
+		$("#addNewCustomer").on('click', function() {
+				$("#mdlAddCustomer").modal();
+		});
+
+		$("#addCustomers").on('click', function() {
+			var $form = $(this).closest('form');
+			event.preventDefault();
+			// Display wait animation if needed.
+			$.ajax({
+				url: '/staff/customers',
+				data: $form.serialize(),
+				method: 'POST',
+				success: function(response) {
+					response = JSON.parse(response);
+					alert(response.message);
+				}
+			})
+		});
+
+		// Display "edit Customers" modal
+		$("#customers").on('click', '.editbtn', function() {
+				var row = $(this).closest('tr');
+				var id = row.find('.customerID').text();
+				var firstName = row.find('.customerFirstName').text();
+				var lastName = row.find('.customerLastName').text();
+				var phone = row.find('.customerPhone').text();
+				var email = row.find('.customerEmail').text();
+				var addr = row.find('.customerStreetAddr').text();
+				var city = row.find('.customerCity').text();
+				var state = row.find('.customerState').text();
+				var zip = row.find('.customerZip').text();
+
+        $("#mdlEditCustomers").modal();
+				$("#customerID").val(id);
+			  $("#customerFirstName").val(firstName);
+				$("#customerLastName").val(lastName);
+				$("#customerPhone").val(phone);
+				$("#customerEmail").val(email);
+				$("#customerStreetAddr").val(addr);
+				$("#customerCity").val(city);
+				$("#customerState").val(state);
+				$("#customerZip").val(zip);
+    });
+
+		/*$(".itemName").on("blur", function() {
+			alert("test");
+		});*/
+
+		$("#updateCustomers").on('click', function() {
+			var $form = $(this).closest('form');
+			event.preventDefault();
+			// Display wait animation if needed.
+			$.ajax({
+				url: '/staff/customers',
+				data: $form.serialize(),
+				method: 'POST',
+				success: function(response) {
+					response = JSON.parse(response);
+					alert(response.message);
+					location.href = location.href;
+				}
+			})
+		});
+});
+</script>
