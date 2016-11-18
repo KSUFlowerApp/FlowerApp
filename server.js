@@ -20,10 +20,9 @@ var db = require('./config/db');
 require('./config/passport')(passport, db); // pass passport for configuration
 
 // use static files
-app.use('/public', express.static(__dirname + '/public'));
-/*app.use('/admin', express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
+app.use('/admin', express.static(__dirname + '/public'));
 app.use('/user', express.static(__dirname + '/public'));
-app.use('/staff', express.static(__dirname + '/public'));*/
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -47,10 +46,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 // routes ======================================================================
-require('./routes/routes.js')(app, passport, db); // load general routes (login, logout, etc)
-require('./routes/adminRoutes.js')(app, passport, db); // load admin routes
-require('./routes/staffRoutes.js')(app, passport, db); // load staff routes
-require('./routes/userRoutes.js')(app, passport, db); // load user routes
+require('./app/routes.js')(app, passport, db); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
 app.listen(port);
