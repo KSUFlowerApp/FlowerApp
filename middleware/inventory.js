@@ -6,12 +6,14 @@ module.exports = exports = {
 var db = require('../config/db');
 
 // =====================================
-// GETINVENTORY ===============================
+// GETINVENTORY ========================
 // =====================================
 // Get inventory from database.
 function getInventory(callback) {
-    var query = "SELECT * " +
-    "FROM inventory";
+    var query = "SELECT i.*, t.type as 'inventoryType' " +
+    "FROM inventory i " +
+    "JOIN inventory_types t " +
+    "ON i.type = t.id";
     db.query(query, function(err, rows) {
         if (err) {
              return callback(err, null);
