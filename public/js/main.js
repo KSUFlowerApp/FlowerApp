@@ -1,7 +1,12 @@
 $( document ).ready(function() {
-  $("input[type='number']").on('change keyup', function() {
-    var sanitized = $(this).val().replace(/[^0-9.]/g, '');
-    sanitized = sanitized.replace(/\.(?=.*\.)/, '');
+
+  $(".currency").on('change', function() {
+    // no characters can be typed
+    // price is always 2 decminal points
+    var sanitized = parseFloat($(this).val().replace(/,/g, ""))
+                    .toFixed(2);
+                    //.toString()
+                    //.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     $(this).val(sanitized);
   });
 });
