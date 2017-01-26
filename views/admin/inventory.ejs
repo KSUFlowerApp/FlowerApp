@@ -49,7 +49,7 @@
 	          <form name="formEditInventory" role="form" attribute="">
 	            <div class="form-group">
 	              <label>Name</label>
-	              <input name="addName" type="text" class="form-control" id="addName" placeholder="Enter name">
+	              <input name="mdlName" type="text" class="form-control" id="mdlName" placeholder="Enter name">
 	            </div>
 	            <div class="form-group">
 	              <label>$ Price</label>
@@ -84,7 +84,7 @@ $( document ).ready(function() {
 
 		// Display "add inventory" modal.
 		$("#btnAddInventory").on('click', function() {
-			$("#addName").val('');
+			$("#mdlName").val('');
 			$("#addPrice").val('');
 			$("#addType").val('');
 			$("#addID").val('');
@@ -101,7 +101,7 @@ $( document ).ready(function() {
 
         $("#mdlInventory").modal();
 
-			  $("#addName").val(name);
+			  $("#mdlName").val(name);
 				$("#addPrice").val(price);
 				$("#addType").val(type);
 				$("#addID").val(id);
