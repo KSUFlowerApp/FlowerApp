@@ -21,6 +21,7 @@ require('./config/passport')(passport, db); // pass passport for configuration
 
 // use static files
 app.use('/public', express.static(__dirname + '/public'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 /*app.use('/admin', express.static(__dirname + '/public'));
 app.use('/user', express.static(__dirname + '/public'));
 app.use('/staff', express.static(__dirname + '/public'));*/
