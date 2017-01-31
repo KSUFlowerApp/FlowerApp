@@ -31,37 +31,16 @@ module.exports = function(app, passport, db) {
   // STAFF - EVENT FORM =======================
   // =====================================
   app.get('/staff/eventForm', session.isLoggedIn, function(req,res) {
-
-    /*async.parallel([
-      getFlowersFunction,
-      getCustomersFunction
+    async.parallel([
+      inventory.getFlowers,
+      customers.getCustomers
     ], function(err, results) {
-      res.render('/staff/eventForm', { flowers : results[0], customers : results[1] });
-    });*/
-
-    res.render('staff/eventForm.ejs', {flowers: getFlowersFunction, customers: getCustomersFunction});
-
-    var getFlowersFunction = inventory.getFlowers(function(err, data) {
       if(err) {
-        console.log(err);
+        console.log(err)
       } else {
-        return data;
+        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1] });
       }
     });
-
-    var getCustomersFunction = customers.getCustomers(function(err, data) {
-      if(err) {
-        console.log(err);
-      } else {
-        return data;
-      }
-    });
-
-    /*if(flowerList == undefined || customerList == undefined) {
-      console.log("ERR: flowers or customers are undefined when rendering event form.");
-    } else {
-      res.redner('staff/eventForm', {flowers: flowerList, customers: customerList});
-    }*/
   });
 
   // =====================================

@@ -15,10 +15,14 @@ textarea {
 	</div>
 
   <form action="/staff/eventForm" method="post">
-		<% if(flowers) { %> Flowers Exists <% } %>
-		<% if(customers) { %> Customers Exists <% } %>
 		<h2>General Information</h2>
 		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Customer</label>
+				<select class="form-control" name="customer">
+					<% printCustomers(customers); %>
+				</select>
+			</div>
 			<div class="form-group col-sm-4">
 				<label>Bride's Name</label>
 				<input type="text" class="form-control" name="brides-name">
@@ -28,6 +32,7 @@ textarea {
 				<input type="text" class="form-control" name="grooms-name">
 			</div>
 		</div>
+		<!--
 		<div class="row">
 			<div class="form-group col-sm-4">
 				<label>Email</label>
@@ -57,7 +62,7 @@ textarea {
 				<label>Zip</label>
 				<input type="text" class="form-control" name="zip">
 			</div>
-		</div>
+		</div> -->
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Colors</label><br>
@@ -240,6 +245,12 @@ $(function() {
 <% function printFlowers(flowers) { %>
 	<% flowers.forEach(function(item, index) { %>
 			<option value="<%= item.id %>"><%= item.name %></option>
+	<% }); %>
+<% } %>
+
+<% function printCustomers(customers) { %>
+	<% customers.forEach(function(item, index) { %>
+			<option value="<%= item.id %>"><%= item.lastName + ', ' + item.firstName %></option>
 	<% }); %>
 <% } %>
 
