@@ -53,18 +53,21 @@
 	            </div>
 	            <div class="form-group">
 	              <label>$ Price</label>
-	              <input name="addPrice" type="number" min="0.00" step="0.01" class="form-control currency" id="addPrice" placeholder="Enter price">
+	              <input name="mdlPrice" type="number" min="0.00" step="0.01" class="form-control currency" id="mdlPrice" placeholder="Enter price">
 	            </div>
 							<div class="form-group">
 	              <label>Inventory Type</label>
-								<select name="addType" class="form-control" id="addType">
+								<select name="mdlType" class="form-control" id="mdlType">
 									<% printInventoryTypes(inventoryTypes); %>
 								</select>
 	            </div>
+							<div class="form-group">
+              	<input type="text" name="mdlID" id="mdlID" style="display:none">
+            	</div>
 							<br><br>
 							<div>
 			          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
-								<button type="submit" class="btn btn-success btn-default pull-right" id="addInventory">Update</button>
+								<button type="submit" class="btn btn-success btn-default pull-right" id="updateInventory">Update</button>
 			        </div>
 	          </form>
 	        </div>
@@ -85,9 +88,9 @@ $( document ).ready(function() {
 		// Display "add inventory" modal.
 		$("#btnAddInventory").on('click', function() {
 			$("#mdlName").val('');
-			$("#addPrice").val('');
-			$("#addType").val('');
-			$("#addID").val('');
+			$("#mdlPrice").val('');
+			$("#mdlType").val('');
+			$("#mdlID").val('');
 			$("#mdlInventory").modal();
 		});
 
@@ -102,9 +105,9 @@ $( document ).ready(function() {
         $("#mdlInventory").modal();
 
 			  $("#mdlName").val(name);
-				$("#addPrice").val(price);
-				$("#addType").val(type);
-				$("#addID").val(id);
+				$("#mdlPrice").val(price);
+				$("#mdlType").val(type);
+				$("#mdlID").val(id);
     });
 
 		/*$(".itemName").on("blur", function() {

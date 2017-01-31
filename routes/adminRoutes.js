@@ -77,23 +77,25 @@ module.exports = function(app, passport, db) {
 	});
 
 	app.post('/admin/inventory', function(req, res) {
-		var id = req.body.itemID;
+		var id = req.body.mdlID;
 		var name = undefined;
 		var price = undefined;
 		var type = undefined;
 		var query = undefined;
 
-		if (typeof id === 'undefined' || !id) {
-			name = req.body.addName;
-			price = req.body.addPrice;
-			type = req.body.addType;
+		// Add new inventory.
+		if (typeof id == 'undefined' || !id) {
+			name = req.body.mdlName;
+			price = req.body.mdlPrice;
+			type = req.body.mdlType;
 			query = "INSERT INTO inventory(name, price, type) " +
 							"VALUES('"+name+"', "+price+", '"+type+"')";
 		}
+		// Update existing inventory.
 		else {
-			name = req.body.itemName;
-			price = req.body.itemPrice;
-			type = req.body.itemType;
+			name = req.body.mdlName;
+			price = req.body.mdlPrice;
+			type = req.body.mdlType;
 			query = "UPDATE inventory " +
 							"SET name = '"+name+"', " +
 							"price = "+price+", " +
