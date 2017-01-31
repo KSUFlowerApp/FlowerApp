@@ -31,39 +31,6 @@
 
 <% include ../../partials/footer %>
 
-<!-- Add Type Modal -->
-<div class="container">
-
-  <div class="modal fade" id="mdlAddInventoryTypes" role="dialog">
-    <div class="modal-dialog">
-
-      <div class="modal-content">
-        <div class="modal-header" style="padding:32px 32px;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4>Add New Inventory Type</h4>
-        </div>
-        <div class="modal-body" style="padding:48px 48px;">
-          <form name="formAddType" role="form" attribute="">
-            <div class="form-group">
-              <label>Name</label>
-              <input name="addName" type="text" class="form-control" id="addName" placeholder="Enter name">
-            </div>
-						<div class="form-group">
-              <label>Markup</label>
-              <input name="addMarkup" type="text" class="form-control" id="addMarkup" placeholder="Enter name">
-            </div>
-						<br><br>
-						<div>
-		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-success btn-default pull-right" id="addType">Update</button>
-		        </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Edit Type Modal -->
 <div class="container">
 
@@ -110,7 +77,11 @@ $( document ).ready(function() {
 
 // Display "add type" modal.
 $("#addNewType").on('click', function() {
-		$("#mdlAddInventoryTypes").modal();
+		$("#mdlEditInventoryTypes").modal();
+
+		$("#typeID").val('');
+		$("#typeName").val('');
+		$("#typeMarkup").val('');
 });
 
 // Display "edit type" modal

@@ -139,8 +139,8 @@ module.exports = function(app, passport, db) {
 		var query = undefined;
 
 		if (typeof id === 'undefined' || !id) {
-			type = req.body.addName;
-			markup = req.body.addMarkup;
+			type = req.body.typeName;
+			markup = req.body.typeMarkup;
 			query = "INSERT INTO inventory_types(type, markup) " +
 							"VALUES('"+type+"', "+markup+")";
 		}
