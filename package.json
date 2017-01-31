@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/arunksu/FlowerApp",
   "dependencies": {
+    "async": "2.1.4",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "1.15.2",
     "bower": "1.7.9",
