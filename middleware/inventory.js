@@ -1,7 +1,6 @@
 module.exports = exports = {
   getInventory: getInventory,
-  getFlowers: getFlowers,
-  getFlowersQuery: getFlowersQuery
+  getFlowers: getFlowers
 }
 
 // establish db connection
