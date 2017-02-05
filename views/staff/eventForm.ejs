@@ -250,6 +250,24 @@ textarea {
 				<input type="text" class="form-control" name="reception-zip">
 			</div>
 		</div>
+		<hr class="dotted">
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Reception Items</label>
+				<select class="form-control" name="reception-flowers"><% printFlowers(flowers); %></select><br>
+				<input name="reception-total" min="0.00" class="form-control" id="reception-total" placeholder="Reception Total">
+				<br>
+				<button class='btn btn-primary' id="addReceptionItem">Add Reception Item</button>
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Quantity of Item</label>
+				<input name="reception-qty" type="number" min="0.00" step="1" class="form-control" id="reception-qty" placeholder="Quantity">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
+			</div>
+		</div>
 
 		<hr>
 
