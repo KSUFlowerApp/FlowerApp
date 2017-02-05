@@ -126,6 +126,96 @@ textarea {
 				<input type="text" class="form-control" name="ceremony-zip">
 			</div>
 		</div>
+		<hr class="dotted">
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Altar</label>
+				<select class="form-control" name="altar-flowers"><% printFlowers(flowers); %></select><br>
+				<input name="altar-total" min="0.00" class="form-control" id="altar-total" placeholder="Altar Total">
+				<br>
+				<button class='btn btn-primary' id="addAltarItem">Add Altar Item</button>
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Quantity of Item</label>
+				<input name="altar-qty" type="number" min="0.00" step="1" class="form-control" id="altar-qty" placeholder="Quantity">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Notes</label>
+				<textarea name="altar-notes"></textarea>
+			</div>
+		</div>
+		<hr class="dotted">
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Candleabras</label>
+				<select class="form-control" name="candleabras-flowers"><% printFlowers(flowers); %></select><br>
+				<input name="candleabras-total" min="0.00" class="form-control" id="candleabras-total" placeholder="Candleabras Total">
+				<br>
+				<button class='btn btn-primary' id="addCandleabrasItem">Add Candleabras Item</button>
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Quantity of Item</label>
+				<input name="candleabra-qty" type="number" min="0.00" step="1" class="form-control" id="candleabra-qty" placeholder="Quantity">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Notes</label>
+				<textarea name="candleabras-notes"></textarea>
+			</div>
+		</div>
+		<hr class="dotted">
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Unity Candle</label>
+				<select class="form-control" name="unitycandle-flowers"><% printFlowers(flowers); %></select><br>
+				<input name="unitycandle-total" min="0.00" class="form-control" id="unitycandle-total" placeholder="Unity Candle Total">
+				<br>
+				<button class='btn btn-primary' id="addUnityCandleItem">Add Unity Candle Item</button>
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Quantity of Item</label>
+				<input name="unitycandle-qty" type="number" min="0.00" step="1" class="form-control" id="unitycandle-qty" placeholder="Quantity">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Notes</label>
+				<textarea name="unitycandle-notes"></textarea>
+			</div>
+		</div>
+		<hr class="dotted">
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Pew Decorations</label>
+				<select class="form-control" name="pewdecorations-flowers"><% printFlowers(flowers); %></select><br>
+				<input name="pewdecorations-total" min="0.00" class="form-control" id="pewdecorations-total" placeholder="Pew Decorations Total">
+				<br>
+				<button class='btn btn-primary' id="addPewDecorationsItem">Add Pew Decoration Item</button>
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Quantity of Item</label>
+				<input name="pewdecorations-qty" type="number" min="0.00" step="1" class="form-control" id="pewdecorations-qty" placeholder="Quantity">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Notes</label>
+				<textarea name="pewdecorations-notes"></textarea>
+			</div>
+		</div>
+		<hr class="dotted">
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Other Decorations</label>
+				<select class="form-control" name="otherdecorations-flowers"><% printFlowers(flowers); %></select><br>
+				<input name="otherdecorations-total" min="0.00" class="form-control" id="otherdecorations-total" placeholder="Other Decorations Total">
+				<br>
+				<button class='btn btn-primary' id="addOtherDecorationsItem">Add Other Decoration Item</button>
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Quantity of Item</label>
+				<input name="otherdecorations-qty" type="number" min="0.00" step="1" class="form-control" id="otherdecorations-qty" placeholder="Quantity">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Notes</label>
+				<textarea name="otherdecorations-notes"></textarea>
+			</div>
+		</div>
 
 		<hr>
 
@@ -163,7 +253,7 @@ textarea {
 
 		<hr>
 
-		<h2>Photography, Planners, & Delivery</h2>
+		<h2>Photography, Planner, & Delivery</h2>
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Photographers</label>
@@ -284,14 +374,11 @@ textarea {
 		<div class="row">
 
 			<!-- Groom Left -->
-			<div class="form-group col-sm-6">
+			<div class="form-group col-sm-4">
 				<label>Groom</label>
 				<select class="form-control" name="corsages-groom"><% printFlowers(flowers); %></select>
 			</div>
 			<!-- Groom Right -->
-			<div class="form-group col-sm-6">
-
-			</div>
 			<div class="form-group col-sm-4">
 				<label>Groomsman #1</label>
 				<select class="form-control" name="corsages-groomsman1"><% printFlowers(flowers); %></select>
