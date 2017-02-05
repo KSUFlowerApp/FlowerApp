@@ -20,7 +20,7 @@ textarea {
 	</div>
 
   <form action="/staff/eventForm" method="post">
-		<h2>General Information</h2>
+		<h2>Customer & General Info</h2>
 		<div class="row">
 			<div class="form-group col-sm-4">
 				<label>Customer</label>
@@ -35,6 +35,20 @@ textarea {
 			<div class="form-group col-sm-4">
 				<label>Groom's Name</label>
 				<input type="text" class="form-control" name="grooms-name">
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Email</label>
+				<input type="text" class="form-control" name="customer-email">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Address</label>
+				<input type="text" class="form-control" name="customer-address">
+			</div>
+			<div class="form-group col-sm-4">
+				<label>Phone</label>
+				<input type="text" class="form-control" name="customer-phone">
 			</div>
 		</div>
 		<!--
@@ -81,7 +95,7 @@ textarea {
 
 		<hr>
 
-		<h2>Ceremony Information</h2>
+		<h2>Ceremony Info</h2>
 		<div class="row">
 			<div class="form-group col-sm-6">
 					<label>Date</label>
@@ -95,21 +109,19 @@ textarea {
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group col-sm-12">
+			<div class="form-group col-sm-3">
 				<label>Address</label>
 				<input type="text" class="form-control" name="ceremony-address">
 			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-3">
 				<label>City</label>
 				<input type="text" class="form-control" name="ceremony-city">
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-3">
 				<label>State</label>
 				<input type="text" class="form-control" name="ceremony-state">
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-3">
 				<label>Zip</label>
 				<input type="text" class="form-control" name="ceremony-zip">
 			</div>
@@ -117,7 +129,7 @@ textarea {
 
 		<hr>
 
-		<h2>Reception Information</h2>
+		<h2>Reception Info</h2>
 		<div class="row">
 			<div class="form-group col-sm-6">
 					<label>Date</label>
@@ -131,21 +143,19 @@ textarea {
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group col-sm-12">
+			<div class="form-group col-sm-3">
 				<label>Address</label>
 				<input type="text" class="form-control" name="reception-address">
 			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-3">
 				<label>City</label>
 				<input type="text" class="form-control" name="reception-city">
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-3">
 				<label>State</label>
 				<input type="text" class="form-control" name="reception-state">
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-3">
 				<label>Zip</label>
 				<input type="text" class="form-control" name="reception-zip">
 			</div>
@@ -153,23 +163,41 @@ textarea {
 
 		<hr>
 
-		<h2>Other</h2>
+		<h2>Photography, Planners, & Delivery</h2>
 		<div class="row">
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-6">
 				<label>Photographers</label>
 				<input type="text" class="form-control" name="photographers">
 			</div>
-			<div class="form-group col-sm-4">
-				<label>Start Time</label>
+			<div class="form-group col-sm-6">
+				<label>Photography Start Time</label>
 				<select class="form-control" name="photograph-start-time">
 					<% printTimes(); %>
 				</select>
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-12">
 				<label>Wedding Planner</label>
 				<input type="text" class="form-control" name="wedding-planner">
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-3">
+				<label>Delivery Address</label>
+				<input type="text" class="form-control" name="deliver-address">
+			</div>
+			<div class="form-group col-sm-3">
+				<label>City</label>
+				<input type="text" class="form-control" name="deliver-city">
+			</div>
+			<div class="form-group col-sm-3">
+				<label>State</label>
+				<input type="text" class="form-control" name="deliver-state">
+			</div>
+			<div class="form-group col-sm-3">
+				<label>Zip</label>
+				<input type="text" class="form-control" name="deliver-zip">
 			</div>
 		</div>
 
