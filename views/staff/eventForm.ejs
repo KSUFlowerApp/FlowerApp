@@ -13,6 +13,30 @@ textarea {
 	width: 80%;
 	color: #c9b66f;
 }
+
+.itemTable th,
+.itemTable td {
+	-webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  padding: 12px 0px 12px 10px;
+}
+
+.itemTable	th {
+	background-color: #83052b;
+  color: #f2ebd0;
+  font-size: 1.2em;
+}
+
+.itemTable {
+	margin-top: 5px;
+}
+
+
+
+.itemTable tbody tr:nth-child(even) {
+	background-color: #D9D2B7;
+}
 </style>
 
 	<div class="page-header text-center">
@@ -35,20 +59,6 @@ textarea {
 			<div class="form-group col-sm-4">
 				<label>Groom's Name</label>
 				<input type="text" class="form-control" name="grooms-name">
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<label>Email</label>
-				<input type="text" class="form-control" name="customer-email">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Address</label>
-				<input type="text" class="form-control" name="customer-address">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Phone</label>
-				<input type="text" class="form-control" name="customer-phone">
 			</div>
 		</div>
 		<!--
@@ -82,16 +92,6 @@ textarea {
 				<input type="text" class="form-control" name="zip">
 			</div>
 		</div> -->
-		<div class="row">
-			<div class="form-group col-sm-6">
-				<label>Colors</label><br>
-				<textarea name="color-notes"></textarea>
-			</div>
-			<div class="form-group col-sm-6">
-				<label>Theme</label><br>
-				<textarea name="theme-notes"></textarea>
-			</div>
-		</div>
 
 		<hr>
 
@@ -126,99 +126,18 @@ textarea {
 				<input type="text" class="form-control" name="ceremony-zip">
 			</div>
 		</div>
-		<hr class="dotted">
 		<div class="row">
-			<div class="form-group col-sm-4">
-				<label>Altar</label>
-				<select class="form-control" name="altar-flowers"><% printFlowers(flowers); %></select><br>
-				<input name="altar-total" min="0.00" class="form-control" id="altar-total" placeholder="Altar Total">
-				<br>
-				<button class='btn btn-primary' id="addAltarItem">Add Altar Item</button>
+			<div class="form-group col-sm-6">
+				<label>Colors</label><br>
+				<textarea name="color-notes"></textarea>
 			</div>
-			<div class="form-group col-sm-4">
-				<label>Quantity of Item</label>
-				<input name="altar-qty" type="number" min="0.00" step="1" class="form-control" id="altar-qty" placeholder="Quantity">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Notes</label>
-				<textarea name="altar-notes"></textarea>
-			</div>
-		</div>
-		<hr class="dotted">
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<label>Candleabras</label>
-				<select class="form-control" name="candleabras-flowers"><% printFlowers(flowers); %></select><br>
-				<input name="candleabras-total" min="0.00" class="form-control" id="candleabras-total" placeholder="Candleabras Total">
-				<br>
-				<button class='btn btn-primary' id="addCandleabrasItem">Add Candleabras Item</button>
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Quantity of Item</label>
-				<input name="candleabra-qty" type="number" min="0.00" step="1" class="form-control" id="candleabra-qty" placeholder="Quantity">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Notes</label>
-				<textarea name="candleabras-notes"></textarea>
-			</div>
-		</div>
-		<hr class="dotted">
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<label>Unity Candle</label>
-				<select class="form-control" name="unitycandle-flowers"><% printFlowers(flowers); %></select><br>
-				<input name="unitycandle-total" min="0.00" class="form-control" id="unitycandle-total" placeholder="Unity Candle Total">
-				<br>
-				<button class='btn btn-primary' id="addUnityCandleItem">Add Unity Candle Item</button>
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Quantity of Item</label>
-				<input name="unitycandle-qty" type="number" min="0.00" step="1" class="form-control" id="unitycandle-qty" placeholder="Quantity">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Notes</label>
-				<textarea name="unitycandle-notes"></textarea>
-			</div>
-		</div>
-		<hr class="dotted">
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<label>Pew Decorations</label>
-				<select class="form-control" name="pewdecorations-flowers"><% printFlowers(flowers); %></select><br>
-				<input name="pewdecorations-total" min="0.00" class="form-control" id="pewdecorations-total" placeholder="Pew Decorations Total">
-				<br>
-				<button class='btn btn-primary' id="addPewDecorationsItem">Add Pew Decoration Item</button>
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Quantity of Item</label>
-				<input name="pewdecorations-qty" type="number" min="0.00" step="1" class="form-control" id="pewdecorations-qty" placeholder="Quantity">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Notes</label>
-				<textarea name="pewdecorations-notes"></textarea>
-			</div>
-		</div>
-		<hr class="dotted">
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<label>Other Decorations</label>
-				<select class="form-control" name="otherdecorations-flowers"><% printFlowers(flowers); %></select><br>
-				<input name="otherdecorations-total" min="0.00" class="form-control" id="otherdecorations-total" placeholder="Other Decorations Total">
-				<br>
-				<button class='btn btn-primary' id="addOtherDecorationsItem">Add Other Decoration Item</button>
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Quantity of Item</label>
-				<input name="otherdecorations-qty" type="number" min="0.00" step="1" class="form-control" id="otherdecorations-qty" placeholder="Quantity">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Notes</label>
-				<textarea name="otherdecorations-notes"></textarea>
+			<div class="form-group col-sm-6">
+				<label>Theme</label><br>
+				<textarea name="theme-notes"></textarea>
 			</div>
 		</div>
 
 		<hr>
-
 		<!-- RECEPTION -->
 
 		<h2>Reception Info</h2>
@@ -252,74 +171,51 @@ textarea {
 				<input type="text" class="form-control" name="reception-zip">
 			</div>
 		</div>
-		<hr class="dotted">
-		<div class="row">
-			<div class="form-group col-sm-6">
-				<label>Reception Items</label>
-				<br>
-				<input type="button" class='btn btn-primary' id="addReceptionItem" value="Add" />
-				<table class="itemTable" id="receptionTable" cellspacing="0" width="100%">
-					<thead>
-						<th>Item</th>
-						<th>Quantity</th>
-						<th>Price</th>
-						<th>Remove</th>
-					</thead>
-					<tbody>
-					<tr>
-						<td class='receptionItem'><b>Total<b></td>
-						<td class='receptionQty'></td>
-						<td class='receptionPrice'><b>$0.00<b></td>
-						<td class='receptionRemoveItem'></td>
-					</tr>
-				</tbody>
-				</table>
-			</div>
-			<div class="form-group col-sm-6">
-				<label>Notes</label>
-				<textarea name="reception-notes"></textarea>
-			</div>
-		</div>
 
-		<hr>
-
-		<h2>Photography, Planner, & Delivery</h2>
-		<div class="row">
-			<div class="form-group col-sm-6">
-				<label>Photographers</label>
-				<input type="text" class="form-control" name="photographers">
-			</div>
-			<div class="form-group col-sm-6">
-				<label>Photography Start Time</label>
-				<select class="form-control" name="photograph-start-time">
-					<% printTimes(); %>
-				</select>
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-12">
-				<label>Wedding Planner</label>
-				<input type="text" class="form-control" name="wedding-planner">
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-3">
-				<label>Delivery Address</label>
-				<input type="text" class="form-control" name="deliver-address">
-			</div>
-			<div class="form-group col-sm-3">
-				<label>City</label>
-				<input type="text" class="form-control" name="deliver-city">
-			</div>
-			<div class="form-group col-sm-3">
-				<label>State</label>
-				<input type="text" class="form-control" name="deliver-state">
-			</div>
-			<div class="form-group col-sm-3">
-				<label>Zip</label>
-				<input type="text" class="form-control" name="deliver-zip">
-			</div>
-		</div>
+<hr>
+<h2>Photography, Planner, & Delivery</h2>
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Photographers</label>
+		<input type="text" class="form-control" name="photographers">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Photography Start Time</label>
+		<select class="form-control" name="photograph-start-time">
+			<% printTimes(); %>
+		</select>
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Wedding Planner</label>
+		<input type="text" class="form-control" name="wedding-planner">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Delivery Time</label>
+		<select class="form-control" name="delivery-time">
+			<% printTimes(); %>
+		</select>
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-sm-3">
+		<label>Delivery Address</label>
+		<input type="text" class="form-control" name="deliver-address">
+	</div>
+	<div class="form-group col-sm-3">
+		<label>City</label>
+		<input type="text" class="form-control" name="deliver-city">
+	</div>
+	<div class="form-group col-sm-3">
+		<label>State</label>
+		<input type="text" class="form-control" name="deliver-state">
+	</div>
+	<div class="form-group col-sm-3">
+		<label>Zip</label>
+		<input type="text" class="form-control" name="deliver-zip">
+	</div>
+</div>
 
 		<hr>
 
@@ -328,11 +224,33 @@ textarea {
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Bridal</label>
-				<select class="form-control" name="bouquet-bridal"><% printFlowers(flowers); %></select><br>
+				<br>
+
+				<input type="button" class='btn btn-primary' id="add-bouquet-bridal" value="Add" />
+				<table class="itemTable" id="bouquet-bridal-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='bouquet-bridal-item'><b>Total<b></td>
+						<td class='bouquet-bridal-qty'></td>
+						<td class='bouquet-bridal-price'><b>$0.00<b></td>
+						<td class='bouquet-bridal-remove'></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" class="form-control" name="bridal-bouquet-qty">
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Notes</label>
-				<textarea name="boquet-bridal-notes"></textarea>
+				<textarea name="reception-notes"></textarea>
 			</div>
 		</div>
 
@@ -497,13 +415,13 @@ textarea {
 $( document ).ready(function() {
 	$(".date").datepicker();
 
-	$("#receptionTable").DataTable({
+	/*$("#bouquet-bridal-table").DataTable({
 			"searching": false,
 			"bPaginate": false
-	});
+	});*/
 
 	// Display "add inventory" modal.
-	$("#addReceptionItem").on('click', function() {
+	$("#add-bouquet-bridal").on('click', function() {
 			$("#mdlAddItem").modal();
 	});
 });
