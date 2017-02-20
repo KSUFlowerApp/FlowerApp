@@ -1,46 +1,7 @@
 <!-- views/admin/users.ejs -->
 <% include ../../partials/header %>
-<!--<script src='/public/bgrins-spectrum/spectrum.js'></script>
-<link rel='stylesheet' href='/public/bgrins-spectrum/spectrum.css' />-->
-<style>
-textarea {
-	width: 100%;
-	height: 100px;
-	resize: none;
-}
-.dotted {
-	border-top: 2px dotted;
-	width: 80%;
-	color: #c9b66f;
-}
-
-.itemTable th,
-.itemTable td {
-	-webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  padding: 12px 0px 12px 10px;
-}
-
-.itemTable	th {
-	background-color: #83052b;
-  color: #f2ebd0;
-  font-size: 1.2em;
-}
-
-.itemTable {
-	margin-top: 5px;
-}
-
-.remove-item-btn	{
-	width: 30px;
-	height: 30px;
-}
-
-.itemTable tbody tr:nth-child(even) {
-	background-color: #D9D2B7;
-}
-</style>
+<!--<script src='/public/js/eventForm.js'></script>-->
+<link rel='stylesheet' href='/public/css/eventForm.css' />
 <% getPrices(flowers); %>
 
 	<div class="page-header text-center">
@@ -65,37 +26,6 @@ textarea {
 				<input type="text" class="form-control" name="grooms-name">
 			</div>
 		</div>
-		<!--
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<label>Email</label>
-				<input type="text" class="form-control" name="email">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Phone</label>
-				<input type="text" class="form-control" name="phone">
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-12">
-				<label>Address</label>
-				<input type="text" class="form-control" name="address">
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<label>City</label>
-				<input type="text" class="form-control" name="city">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>State</label>
-				<input type="text" class="form-control" name="state">
-			</div>
-			<div class="form-group col-sm-4">
-				<label>Zip</label>
-				<input type="text" class="form-control" name="zip">
-			</div>
-		</div> -->
 
 		<hr>
 
@@ -205,8 +135,16 @@ textarea {
 
 		<hr>
 
+		<%
+			printRecipeSection("Bouquets",["Bridal","Bridesmaids","Throw"]);
+			printRecipeSection("Boutonnieres",["Groom","Groomsmen","Ushers","Fathers","Grandfathers","Ring Bearers","Officiant","Vocalist","Hosts","Reader","Musician","Other"]);
+			printRecipeSection("Corsages",["Mothers","Guest Book","Cake Cutter","Reader","Vocalist","Hostess","Musician","Flower Girl","Other"]);
+			printRecipeSection("Ceremony Decorations",["Altar","Aisle","Guest Book","Unity Candle","Other"]);
+			printRecipeSection("Reception Decorations",["Centerpieces","Head Table","Bar Flowers","Guest book","Cake Flowers","Other"]);
+		%>
+
+<!--
 		<h2>Bouquets</h2>
-		<!-- Bridal -->
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Bridal</label>
@@ -278,7 +216,6 @@ textarea {
 		<hr>
 
 		<h2>Boutonnieres</h2>
-		<!-- Groom -->
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Groom</label>
@@ -314,7 +251,6 @@ textarea {
 
 		<hr class="dotted">
 
-		<!-- Groomsmen -->
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Groomsmen</label><br>
@@ -350,7 +286,6 @@ textarea {
 
 		<hr class="dotted">
 
-		<!-- Ushers -->
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Ushers</label><br>
@@ -389,7 +324,6 @@ textarea {
 		<h2>Corsages</h2>
 		<div class="row">
 
-			<!-- Groom Left -->
 			<div class="form-group col-sm-6">
 				<label>Groom</label>
 				<br>
@@ -424,7 +358,6 @@ textarea {
 
 		<hr class="dotted">
 
-			<!-- Groom Right -->
 			<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Groomsman #1</label>
@@ -705,7 +638,7 @@ textarea {
 			</div>
 		</div>
 
-		<hr>
+		<hr> -->
 
 		<!-- Add Item Modal -->
 		<div class="container">
@@ -740,9 +673,171 @@ textarea {
 				</div>
 			</div>
 		</div>
+
+		<div class="row" style="float: right">
+			<input class="btn btn-primary" type="submit" value="Save"></input>
+			<input class="btn btn-primary" type="submit" value="Submit"></input>
+		</div>
   </form>
 
   <% include ../../partials/footer %>
+
+<% function printTimes() { %>
+	<% var minutes = ["00","15","30","45"]; %>
+	<% for(var i = 0; i <=23; i++) { %>
+		<% for(var j = 0; j < minutes.length; j++) {
+			var suffix = (i >= 12)? 'pm' : 'am';
+			var hours = (i > 12) ? i - 12 : i;
+			if(hours == 0) {
+				hours = 12;
+			} %>
+			<option value="<%= hours + minutes[j] + suffix %>"><%= hours + ":" + minutes[j] + " " + suffix%></option>
+		<% } %>
+	<% } %>
+<% } %>
+
+<% function printFlowers(flowers) { %>
+	<option value="">Select Flower...</option>
+	<% flowers.forEach(function(item, index) { %>
+			<option value="<%= item.id %>"><%= item.name %></option>
+	<% }); %>
+<% } %>
+
+<% function printCustomers(customers) { %>
+	<% customers.forEach(function(item, index) { %>
+			<option value="<%= item.id %>"><%= item.lastName + ', ' + item.firstName %></option>
+	<% }); %>
+<% } %>
+
+<% function getPrices(flowers) { %>
+	<script>
+		var prices = {};
+	</script>
+	<% flowers.forEach(function(item, index) { %>
+			<script>
+				prices['<%= item.name %>'] = <%= item.price %>;
+			</script>
+	<% }); %>
+<% } %>
+
+<% function printRecipeSection(heading, subSections) { %>
+	<h2><%= heading %></h2>
+	<% strippedHeading = heading.replace(/\s+/g, ''); %>
+
+	<% for(var i = 0; i < subSections.length; i++) { %>
+		<% strippedSubSection = subSections[i].replace(/\s+/g, ''); %>
+		<div class="row">
+			<div class="form-group col-sm-6">
+				<label><%= subSections[i] %></label><br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-<%= strippedHeading %>-<%= strippedSubSection %>" value="Add" />
+				<table class="itemTable" id="<%= strippedHeading %>-<%= strippedSubSection %>-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item'><b>Total<b></td>
+						<td class='qty'></td>
+						<td class='price'><b>$0.00<b></td>
+						<td class='remove'></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="<%= strippedHeading %>-<%= strippedSubSection %>-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="<%= strippedHeading %>-<%= strippedSubSection %>-notes"></textarea>
+			</div>
+		</div>
+
+		<% if(i < subSections.length - 1) { %><hr class="dotted"><% } %>
+
+	<% } %>
+
+	<hr>
+<% } %>
+
+<!--
+<h2>Bouquets</h2>
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Bridal</label>
+		<br>
+
+		<input type="button" class='add-btn btn btn-primary' id="add-bouquet-bridal" value="Add" />
+		<table class="itemTable" id="bouquet-bridal-table" cellspacing="0" width="100%">
+			<thead>
+				<th>Item</th>
+				<th>Quantity</th>
+				<th>Price (each)</th>
+				<th>Remove</th>
+			</thead>
+			<tbody>
+			<tr>
+				<td class='item' id='bouquet-bridal-item'><b>Total<b></td>
+				<td class='qty' id='bouquet-bridal-qty'></td>
+				<td class='price' id='bouquet-bridal-price'><b>$0.00<b></td>
+				<td class='remove' id='bouquet-bridal-remove'></td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Qty</label>
+		<input type="number" min="0" class="form-control" name="bridal-bouquet-qty">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Notes</label>
+		<textarea name="reception-notes"></textarea>
+	</div>
+</div>
+
+<hr class="dotted">
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Bridesmaids</label><br>
+		<br>
+
+		<input type="button" class='add-btn btn btn-primary' id="add-bouquet-bridesmaids" value="Add" />
+		<table class="itemTable" id="bouquet-bridesmaids-table" cellspacing="0" width="100%">
+			<thead>
+				<th>Item</th>
+				<th>Quantity</th>
+				<th>Price (each)</th>
+				<th>Remove</th>
+			</thead>
+			<tbody>
+			<tr>
+				<td class='item' id='bouquet-bridesmaids-item'><b>Total<b></td>
+				<td class='qty' id='bouquet-bridesmaids-qty'></td>
+				<td class='price' id='bouquet-bridesmaids-price'><b>$0.00<b></td>
+				<td class='remove' id='bouquet-bridesmaids-remove'></td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Qty</label>
+		<input type="number" min="0" class="form-control" name="bridesmaids-bouquet-qty">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Notes</label>
+		<textarea name="reception-notes"></textarea>
+	</div>
+</div>
+
+<hr>
+-->
+
 
 <script>
 $( document ).ready(function() {
@@ -820,100 +915,7 @@ $( document ).ready(function() {
 			rowClicked.remove();
 		}
 	});
-
-$(function() {
-
-		/*<!-- enable spectrum color picker on color1-4 input fields -->
-		$("#color1, #color2, #color3, #color4").spectrum({
-		    color: "#ECC",
-		    showInput: true,
-		    className: "full-spectrum",
-		    showInitial: true,
-		    showPalette: true,
-		    showSelectionPalette: true,
-		    maxSelectionSize: 10,
-		    preferredFormat: "hex",
-		    localStorageKey: "spectrum.demo",
-		    move: function (color) {
-
-		    },
-		    show: function () {
-
-		    },
-		    beforeShow: function () {
-
-		    },
-		    hide: function () {
-
-		    },
-		    change: function() {
-
-		    },
-		    palette: [
-		        ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
-		        "rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
-		        ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
-		        "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
-		        ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)",
-		        "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)",
-		        "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
-		        "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)",
-		        "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
-		        "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
-		        "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
-		        "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
-		        "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)",
-						"rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
-		    ]
-		});*/
-
-});
 </script>
-
-<% function printTimes() { %>
-	<% var minutes = ["00","15","30","45"]; %>
-	<% for(var i = 0; i <=23; i++) { %>
-		<% for(var j = 0; j < minutes.length; j++) {
-			var suffix = (i >= 12)? 'pm' : 'am';
-			var hours = (i > 12) ? i - 12 : i;
-			if(hours == 0) {
-				hours = 12;
-			} %>
-			<option value="<%= hours + minutes[j] + suffix %>"><%= hours + ":" + minutes[j] + " " + suffix%></option>
-		<% } %>
-	<% } %>
-<% } %>
-
-<% function printFlowers(flowers) { %>
-	<option value="">Select Flower...</option>
-	<% flowers.forEach(function(item, index) { %>
-			<option value="<%= item.id %>"><%= item.name %></option>
-	<% }); %>
-<% } %>
-
-<% function printCustomers(customers) { %>
-	<% customers.forEach(function(item, index) { %>
-			<option value="<%= item.id %>"><%= item.lastName + ', ' + item.firstName %></option>
-	<% }); %>
-<% } %>
-
-<% function getPrices(flowers) { %>
-	<script>
-		var prices = {};
-	</script>
-	<% flowers.forEach(function(item, index) { %>
-			<script>
-				prices['<%= item.name %>'] = <%= item.price %>;
-			</script>
-	<% }); %>
-<% } %>
-
-
-<style>
-div.ui-datepicker, .ui-datepicker td {
- 	font-size:1.5em;
-}
-</style>
 
 <!--
 General information:
