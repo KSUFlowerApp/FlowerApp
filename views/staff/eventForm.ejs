@@ -32,7 +32,10 @@ textarea {
 	margin-top: 5px;
 }
 
-
+.remove-item-btn	{
+	width: 30px;
+	height: 30px;
+}
 
 .itemTable tbody tr:nth-child(even) {
 	background-color: #D9D2B7;
@@ -199,24 +202,6 @@ textarea {
 		</select>
 	</div>
 </div>
-<div class="row">
-	<div class="form-group col-sm-3">
-		<label>Delivery Address</label>
-		<input type="text" class="form-control" name="deliver-address">
-	</div>
-	<div class="form-group col-sm-3">
-		<label>City</label>
-		<input type="text" class="form-control" name="deliver-city">
-	</div>
-	<div class="form-group col-sm-3">
-		<label>State</label>
-		<input type="text" class="form-control" name="deliver-state">
-	</div>
-	<div class="form-group col-sm-3">
-		<label>Zip</label>
-		<input type="text" class="form-control" name="deliver-zip">
-	</div>
-</div>
 
 		<hr>
 
@@ -227,7 +212,7 @@ textarea {
 				<label>Bridal</label>
 				<br>
 
-				<input type="button" class='btn btn-primary' id="add-bouquet-bridal" value="Add" />
+				<input type="button" class='add-btn btn btn-primary' id="add-bouquet-bridal" value="Add" />
 				<table class="itemTable" id="bouquet-bridal-table" cellspacing="0" width="100%">
 					<thead>
 						<th>Item</th>
@@ -237,17 +222,17 @@ textarea {
 					</thead>
 					<tbody>
 					<tr>
-						<td class='bouquet-bridal-item'><b>Total<b></td>
-						<td class='bouquet-bridal-qty'></td>
-						<td class='bouquet-bridal-price'><b>$0.00<b></td>
-						<td class='bouquet-bridal-remove'></td>
+						<td class='item' id='bouquet-bridal-item'><b>Total<b></td>
+						<td class='qty' id='bouquet-bridal-qty'></td>
+						<td class='price' id='bouquet-bridal-price'><b>$0.00<b></td>
+						<td class='remove' id='bouquet-bridal-remove'></td>
 					</tr>
 				</tbody>
 				</table>
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Qty</label>
-				<input type="number" class="form-control" name="bridal-bouquet-qty">
+				<input type="number" min="0" class="form-control" name="bridal-bouquet-qty">
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Notes</label>
@@ -260,13 +245,33 @@ textarea {
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Bridesmaids</label><br>
-				<b>Qty:</b>
-				<input type="number" name="bridesmaids-bouquet-count" style="width: 40px"></input><br><br>
-				<select class="form-control" name="bridesmaids-bouquet"><% printFlowers(flowers); %></select><br>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-bouquet-bridesmaids" value="Add" />
+				<table class="itemTable" id="bouquet-bridesmaids-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='bouquet-bridesmaids-item'><b>Total<b></td>
+						<td class='qty' id='bouquet-bridesmaids-qty'></td>
+						<td class='price' id='bouquet-bridesmaids-price'><b>$0.00<b></td>
+						<td class='remove' id='bouquet-bridesmaids-remove'></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="bridesmaids-bouquet-qty">
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Notes</label>
-				<textarea name="bridesmaids-bouquet-notes"></textarea>
+				<textarea name="reception-notes"></textarea>
 			</div>
 		</div>
 
@@ -277,11 +282,33 @@ textarea {
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Groom</label>
-				<select class="form-control" name="corsages-groom"><% printFlowers(flowers); %></select><br>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-boutonniere-groom" value="Add" />
+				<table class="itemTable" id="boutonniere-groom-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='boutonniere-groom-item'><b>Total<b></td>
+						<td class='qty' id='boutonniere-groom-qty'></td>
+						<td class='price' id='boutonniere-groom-price'><b>$0.00<b></td>
+						<td class='remove' id='boutonniere-groom-remove'></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groom-boutonniere-qty">
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Notes</label>
-				<textarea name="groom-notes"></textarea>
+				<textarea name="reception-notes"></textarea>
 			</div>
 		</div>
 
@@ -291,13 +318,33 @@ textarea {
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Groomsmen</label><br>
-				<b>Qty:</b>
-				<input type="number" name="groomsmen-count" style="width: 40px"></input><br><br>
-				<select class="form-control" name="corsages-groomsmen"><% printFlowers(flowers); %></select><br>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-boutonniere-groomsmen" value="Add" />
+				<table class="itemTable" id="boutonniere-groomsmen-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='boutonniere-groomsmen-item'><b>Total<b></td>
+						<td class='qty' id='boutonniere-groomsmen-qty'></td>
+						<td class='price' id='boutonniere-groomsmen-price'><b>$0.00<b></td>
+						<td class='remove' id='boutonniere-groomsmen-remove'></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groomsmen-boutonniere-qty">
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Notes</label>
-				<textarea name="groomsmen-notes"></textarea>
+				<textarea name="reception-notes"></textarea>
 			</div>
 		</div>
 
@@ -307,13 +354,33 @@ textarea {
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<label>Ushers</label><br>
-				<b>Qty:</b>
-				<input type="number" name="ushers-count" style="width: 40px"></input><br><br>
-				<select class="form-control" name="corsages-ushers"><% printFlowers(flowers); %></select><br>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-boutonniere-ushers" value="Add" />
+				<table class="itemTable" id="boutonniere-ushers-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='boutonniere-ushers-item'><b>Total<b></td>
+						<td class='qty' id='boutonniere-ushers-qty'></td>
+						<td class='price' id='boutonniere-ushers-price'><b>$0.00<b></td>
+						<td class='remove' id='boutonniere-ushers-remove'></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="ushers-boutonniere-qty">
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Notes</label>
-				<textarea name="ushers-notes"></textarea>
+				<textarea name="reception-notes"></textarea>
 			</div>
 		</div>
 
@@ -390,12 +457,13 @@ textarea {
 						<div class="modal-body" style="padding:48px 48px;">
 							<form name="formEditInventory" role="form" attribute="">
 								<div class="form-group">
+									<input class="modal-hidden-table" id="modal-table-id" type="hidden" value="" />
 									<label>Item</label>
 									<select class="form-control" name="altar-flowers" id="altar-flowers" style="width: 200px; display: inline;"><% printFlowers(flowers); %></select>&nbsp;
 									<label style="display: inline;">Quantity</label>&nbsp;
-									<input name="addQuanitiy" id="addQuantity" type="number" step="1" style="width: 40px; display: inline;" />
+									<input name="addQuanitiy" id="addQuantity" type="number" min="1" step="1" style="width: 40px; display: inline;" />
 									<label style="display: inline;">$ Price</label>&nbsp;
-									<input name="addPrice" id="addPrice" style="width: 75; display: inline;" type="number" min="0.00" step="0.01" class="form-control";>
+									<input name="addPrice" id="addPrice" style="width: 75; display: inline;" type="number" min="0" min="0.00" step="0.01" class="form-control";>
 								</div>
 								<br><br>
 								<div>
@@ -416,37 +484,77 @@ textarea {
 $( document ).ready(function() {
 	$(".date").datepicker();
 
-	/*$("#bouquet-bridal-table").DataTable({
-			"searching": false,
-			"bPaginate": false
-	});*/
-
 	// Display "add inventory" modal.
-	$("#add-bouquet-bridal").on('click', function() {
+	$(".add-btn").on('click', function() {
+			var tblID = $(this).next('table').attr('id');
+			$('#modal-table-id').val(tblID);
 			$("#mdlAddItem").modal();
 	});
 
-	$("#altar-flowers ").on('change', function()	{
+	// Load price on item select
+	$("#altar-flowers").on('change', function()	{
 		if ($(this).prop('selectedIndex') != 0)	{
 			var name = $("option:selected", this).text();
 			var price = prices[name];
 			$(this).siblings('#addPrice').val(price);
+			$(this).siblings('#addQuantity').val(1);
 		}
 		else {
 			$(this).siblings('#addPrice').val(price);
+			$(this).siblings('#addQuantity').val(null);
 		}
 	});
 });
 
+	// Add new item to recipe table
 	$("#addItem").on('click', function()	{
-		var $form = $(this).closest('form');
+		if ($("#altar-flowers").prop("selectedIndex") != 0)	{
+			event.preventDefault();
+
+			var $form = $(this).closest('form');
+			var item = $form.find('#altar-flowers option:selected').text();
+			var qty = $form.find('#addQuantity').val();
+			var price = $form.find('#addPrice').val();
+			var tblID = $form.find('#modal-table-id').val();
+			var tbl = $("#" + tblID);
+			tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price + "</td><td><center><input type='button' class='remove-item-btn' value='x' /></ center></td></tr>");
+			var qtyPrice = parseFloat(qty) * parseFloat(price);
+			var tblTotal = tbl.find('.price');
+			var initPrice = tblTotal.text();
+			initPrice = initPrice.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+			totalToDisp = parseFloat(initPrice) + parseFloat(qtyPrice);
+			tblTotal.html("<b>$" + totalToDisp.toFixed(2) + "</b>");
+			$("#mdlAddItem").modal('hide');
+		}
+		else {
+			event.preventDefault();
+			alert("Please select a valid item.");
+		}
+	});
+
+	// Remove item from recipe table
+	$(document).on("click", ".remove-item-btn", function ()	{
 		event.preventDefault();
-
-		var item = $form.find('#altar-flowers option:selected').text();
-		var qty = $form.find('#addQuantity').val();
-		var price = $form.find('#addPrice').val();
-
-		alert('the item is: ' + item + ' the qty is: ' + qty + ' the price is: ' + price);
+		var parentTbl = $(this).closest('table');
+		var rowClicked = $(this).closest('tr');
+		var initQty = $(this).closest('td').prev('td').prev('td').text();
+		initQty = initQty.substr(0, 1);
+		initQty = parseFloat(initQty);
+		var pricePerItem = $(this).closest('td').prev('td').text();
+		pricePerItem = pricePerItem.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		pricePerItem = parseFloat(pricePerItem);
+		var currTblTotal = parentTbl.find('.price').text();
+		currTblTotal = currTblTotal.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		currTblTotal = parseFloat(currTblTotal);
+		var newTotal = currTblTotal - pricePerItem;
+		parentTbl.find('.price').html('<b>$' + newTotal.toFixed(2) + '</b>');
+		if (initQty > 1)	{
+			var newQty = initQty - 1;
+			$(this).closest('td').prev('td').prev('td').text(newQty + ' x');
+		}
+		else {
+			rowClicked.remove();
+		}
 	});
 
 $(function() {
