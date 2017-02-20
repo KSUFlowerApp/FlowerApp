@@ -390,18 +390,106 @@ textarea {
 		<div class="row">
 
 			<!-- Groom Left -->
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-6">
 				<label>Groom</label>
-				<select class="form-control" name="corsages-groom"><% printFlowers(flowers); %></select>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-corsage-groom" value="Add" />
+				<table class="itemTable" id="corsage-groom-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='corsage-groom-item'><b>Total<b></td>
+						<td class='qty' id='corsage-groom-qty'></td>
+						<td class='price' id='corsage-groom-price'><b>$0.00<b></td>
+						<td class='remove' id='corsage-groom-remove'></td>
+					</tr>
+				</tbody>
+				</table>
 			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groom-corsage-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
+			</div>
+		</div>
+
+		<hr class="dotted">
+
 			<!-- Groom Right -->
-			<div class="form-group col-sm-4">
+			<div class="row">
+			<div class="form-group col-sm-6">
 				<label>Groomsman #1</label>
-				<select class="form-control" name="corsages-groomsman1"><% printFlowers(flowers); %></select>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-corsage-groomsman1" value="Add" />
+				<table class="itemTable" id="corsage-groomsman1-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='corsage-groomsman1-item'><b>Total<b></td>
+						<td class='qty' id='corsage-groomsman1-qty'></td>
+						<td class='price' id='corsage-groomsman1-price'><b>$0.00<b></td>
+						<td class='remove' id='corsage-groomsman1-remove'></td>
+					</tr>
+				</tbody>
+				</table>
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groomsman1-corsage-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
+			</div>
+		</div>
+
+		<hr class="dotted">
+
+		<div class="row">
+			<div class="form-group col-sm-6">
 				<label>Groomsman #2</label>
-				<select class="form-control" name="corsages-groomsman2"><% printFlowers(flowers); %></select>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-corsage-groomsman2" value="Add" />
+				<table class="itemTable" id="corsage-groomsman2-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='corsage-groomsman2-item'><b>Total<b></td>
+						<td class='qty' id='corsage-groomsman2-qty'></td>
+						<td class='price' id='corsage-groomsman2-price'><b>$0.00<b></td>
+						<td class='remove' id='corsage-groomsman2-remove'></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groomsman2-corsage-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
 			</div>
 		</div>
 
@@ -409,17 +497,105 @@ textarea {
 
 		<h2>Ceremony Decorations</h2>
 		<div class="row">
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-6">
 				<label>Groom</label>
-				<select class="form-control" name="corsages-groom"><% printFlowers(flowers); %></select>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-ceremony-groom" value="Add" />
+				<table class="itemTable" id="ceremony-groom-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='ceremony-groom-item'><b>Total<b></td>
+						<td class='qty' id='ceremony-groom-qty'></td>
+						<td class='price' id='ceremony-groom-price'><b>$0.00<b></td>
+						<td class='remove' id='ceremony-groom-remove'></td>
+					</tr>
+				</tbody>
+				</table>
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groom-ceremony-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
+			</div>
+		</div>
+
+	 <hr class="dotted">
+
+	 	<div class="row">
+			<div class="form-group col-sm-6">
 				<label>Groomsman #1</label>
-				<select class="form-control" name="corsages-groomsman1"><% printFlowers(flowers); %></select>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-ceremony-groomsman1" value="Add" />
+				<table class="itemTable" id="ceremony-groomsman1-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='ceremony-groomsman1-item'><b>Total<b></td>
+						<td class='qty' id='ceremony-groomsman1-qty'></td>
+						<td class='price' id='ceremony-groomsman1-price'><b>$0.00<b></td>
+						<td class='remove' id='ceremony-groomsman1-remove'></td>
+					</tr>
+				</tbody>
+				</table>
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groomsman1-ceremony-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
+			</div>
+		</div>
+
+		<hr class="dotted">
+
+		<div class="row">
+			<div class="form-group col-sm-6">
 				<label>Groomsman #2</label>
-				<select class="form-control" name="corsages-groomsman2"><% printFlowers(flowers); %></select>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-ceremony-groomsman2" value="Add" />
+				<table class="itemTable" id="ceremony-groomsman2-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='ceremony-groomsman2-item'><b>Total<b></td>
+						<td class='qty' id='ceremony-groomsman2-qty'></td>
+						<td class='price' id='ceremony-groomsman2-price'><b>$0.00<b></td>
+						<td class='remove' id='ceremony-groomsman2-remove'></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groomsman2-ceremony-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
 			</div>
 		</div>
 
@@ -427,17 +603,105 @@ textarea {
 
 		<h2>Reception Decorations</h2>
 		<div class="row">
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-6">
 				<label>Groom</label>
-				<select class="form-control" name="corsages-groom"><% printFlowers(flowers); %></select>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-recipe-groom" value="Add" />
+				<table class="itemTable" id="recipe-groom-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='recipe-groom-item'><b>Total<b></td>
+						<td class='qty' id='recipe-groom-qty'></td>
+						<td class='price' id='recipe-groom-price'><b>$0.00<b></td>
+						<td class='remove' id='recipe-groom-remove'></td>
+					</tr>
+				</tbody>
+				</table>
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groom-recipe-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
+			</div>
+		</div>
+
+		<hr class="dotted">
+
+		<div class="row">
+			<div class="form-group col-sm-6">
 				<label>Groomsman #1</label>
-				<select class="form-control" name="corsages-groomsman1"><% printFlowers(flowers); %></select>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-recipe-groomsman1" value="Add" />
+				<table class="itemTable" id="recipe-groomsman1-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='recipe-groomsman1-item'><b>Total<b></td>
+						<td class='qty' id='recipe-groomsman1-qty'></td>
+						<td class='price' id='recipe-groomsman1-price'><b>$0.00<b></td>
+						<td class='remove' id='recipe-groomsman1-remove'></td>
+					</tr>
+				</tbody>
+				</table>
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groomsman1-recipe-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
+			</div>
+		</div>
+
+		<hr class="dotted">
+
+		<div class="row">
+			<div class="form-group col-sm-6">
 				<label>Groomsman #2</label>
-				<select class="form-control" name="corsages-groomsman2"><% printFlowers(flowers); %></select>
+				<br>
+
+				<input type="button" class='add-btn btn btn-primary' id="add-recipe-groomsman2" value="Add" />
+				<table class="itemTable" id="recipe-groomsman2-table" cellspacing="0" width="100%">
+					<thead>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price (each)</th>
+						<th>Remove</th>
+					</thead>
+					<tbody>
+					<tr>
+						<td class='item' id='recipe-groomsman2-item'><b>Total<b></td>
+						<td class='qty' id='recipe-groomsman2-qty'></td>
+						<td class='price' id='recipe-groomsman2-price'><b>$0.00<b></td>
+						<td class='remove' id='recipe-groomsman2-remove'></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Qty</label>
+				<input type="number" min="0" class="form-control" name="groomsman2-recipe-qty">
+			</div>
+			<div class="form-group col-sm-6">
+				<label>Notes</label>
+				<textarea name="reception-notes"></textarea>
 			</div>
 		</div>
 
