@@ -182,10 +182,15 @@
 			<input class="btn btn-primary" type="submit" value="Submit"></input>
 		</div>
 
-		<div class="floatingTotal" id="floatingTotal">
-			<label>Total</label>
-			<br>
-			<input class="grandTotalInput" id="grandTotalInput" placeholder="$0.00" readonly/>
+		<div id="floatingTotal">
+			<table class="itemTable" id="grand-total-table" cellspacing="0" width="100%">
+				<thead>
+					<th>Grand Total</th>
+				</thead>
+				<tbody>
+					<td id="grand-total" style="text-align: center">$0.00</td>
+				</tbody>
+			</table>
 		</div>
 
   </form>
@@ -288,7 +293,7 @@ $( document ).ready(function() {
 	$("#altar-flowers").on('change', function()	{
 		if ($(this).prop('selectedIndex') != 0)	{
 			var name = $("option:selected", this).text();
-			var price = prices[name];
+			var price = parseFloat(prices[name]).toFixed(2);
 			$(this).siblings('#addPrice').val(price);
 			$(this).siblings('#addQuantity').val(1);
 		}
@@ -297,7 +302,6 @@ $( document ).ready(function() {
 			$(this).siblings('#addQuantity').val(null);
 		}
 	});
-});
 
 	// Add new item to recipe table
 	$("#addItem").on('click', function()	{
@@ -308,9 +312,10 @@ $( document ).ready(function() {
 			var item = $form.find('#altar-flowers option:selected').text();
 			var qty = $form.find('#addQuantity').val();
 			var price = $form.find('#addPrice').val();
+			price = parseFloat(price);
 			var tblID = $form.find('#modal-table-id').val();
 			var tbl = $("#" + tblID);
-			tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price + "</td><td><center><input type='button' class='remove-item-btn' value='x' /></ center></td></tr>");
+			tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price.toFixed(2) + "</td><td><center><input type='button' class='remove-item-btn' value='x' /></ center></td></tr>");
 			var qtyPrice = parseFloat(qty) * parseFloat(price);
 			var tblTotal = tbl.find('.price');
 			var initPrice = tblTotal.text();
@@ -318,6 +323,8 @@ $( document ).ready(function() {
 			totalToDisp = parseFloat(initPrice) + parseFloat(qtyPrice);
 			tblTotal.html("<b>$" + totalToDisp.toFixed(2) + "</b>");
 			$("#mdlAddItem").modal('hide');
+
+			updateGrandTotal(totalToDisp, "add")
 		}
 		else {
 			event.preventDefault();
@@ -330,8 +337,7 @@ $( document ).ready(function() {
 		event.preventDefault();
 		var parentTbl = $(this).closest('table');
 		var rowClicked = $(this).closest('tr');
-		var initQty = $(this).closest('td').prev('td').prev('td').text();
-		initQty = initQty.substr(0, 1);
+		var initQty = $(this).closest('td').prev('td').prev('td').text().replace(" x","");
 		initQty = parseFloat(initQty);
 		var pricePerItem = $(this).closest('td').prev('td').text();
 		pricePerItem = pricePerItem.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
@@ -341,6 +347,7 @@ $( document ).ready(function() {
 		currTblTotal = parseFloat(currTblTotal);
 		var newTotal = currTblTotal - pricePerItem;
 		parentTbl.find('.price').html('<b>$' + newTotal.toFixed(2) + '</b>');
+		updateGrandTotal(pricePerItem, "subtract")
 		if (initQty > 1)	{
 			var newQty = initQty - 1;
 			$(this).closest('td').prev('td').prev('td').text(newQty + ' x');
@@ -349,6 +356,20 @@ $( document ).ready(function() {
 			rowClicked.remove();
 		}
 	});
+
+	function updateGrandTotal(price, operator) {
+		var currTblTotal = $('#grand-total').text();
+		currTblTotal = currTblTotal.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		currTblTotal = parseFloat(currTblTotal);
+		var newTotal = currTblTotal;
+		if(operator == "add") {
+			newTotal += price;
+		} else if (operator == "subtract") {
+				newTotal -= price;
+		}
+		$('#grand-total').html('<b>$' + newTotal.toFixed(2) + '</b>');
+	}
+});
 </script>
 
 <!--

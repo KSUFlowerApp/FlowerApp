@@ -40,16 +40,27 @@ div.ui-datepicker, .ui-datepicker td {
  	font-size:1.5em;
 }
 
-.floatingTotal {
-	height: 75px;
+#floatingTotal {
 	width: 9%;
-	padding: 8px;
-	border: 1px solid #83052b;
+	padding: 5px;
 	border-radius: 4px;
-  background: #f2ebd0;
 	position: fixed;
-	bottom: 20px;
-	left: -4px;
+	bottom: 50%;
+	left: 10px;
+	border: solid 2px #83052b;
+}
+
+#grand-total-table {
+	border: solid 2px #83052b;
+}
+
+#grand-total-table th {
+	text-align: center;
+	margin: 0 !important;
+}
+
+#grand-total-table td {
+	font-weight: bold;
 }
 
 .grandTotalInput {
