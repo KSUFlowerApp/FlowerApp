@@ -39,3 +39,35 @@ textarea {
 div.ui-datepicker, .ui-datepicker td {
  	font-size:1.5em;
 }
+
+#floatingTotal {
+	width: 9%;
+	padding: 5px;
+	border-radius: 4px;
+	position: fixed;
+	bottom: 50%;
+	left: 10px;
+	border: solid 2px #83052b;
+}
+
+#grand-total-table {
+	border: solid 2px #83052b;
+}
+
+#grand-total-table th {
+	text-align: center;
+	margin: 0 !important;
+}
+
+#grand-total-table td {
+	font-weight: bold;
+}
+
+.grandTotalInput {
+	width: 100%;
+	height: 65%;
+	background: transparent;
+	border: none;
+	font-size: 18px;
+	font-weight: bold;
+}
