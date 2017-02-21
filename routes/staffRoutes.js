@@ -3,6 +3,7 @@
 var session = require('../middleware/session.js');
 var inventory = require('../middleware/inventory.js');
 var customers = require('../middleware/customers.js');
+var async = require('async');
 
 module.exports = function(app, passport, db) {
   // =====================================
@@ -30,11 +31,14 @@ module.exports = function(app, passport, db) {
   // STAFF - EVENT FORM =======================
   // =====================================
   app.get('/staff/eventForm', session.isLoggedIn, function(req,res) {
-    inventory.getFlowers(function(err, flowers) {
+    async.parallel([
+      inventory.getFlowers,
+      customers.getCustomers
+    ], function(err, results) {
       if(err) {
-        console.log(err);
+        console.log(err)
       } else {
-        res.render('staff/eventForm', {flowers:flowers});
+        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1] });
       }
     });
   });

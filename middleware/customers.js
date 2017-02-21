@@ -11,7 +11,8 @@ var db = require('../config/db');
 // Get inventory from database.
 function getCustomers(callback) {
     var query = "SELECT c.* " +
-    "FROM customers c ";
+    "FROM customers c " +
+    "ORDER BY lastName ASC";
     db.query(query, function(err, rows) {
         if (err) {
              return callback(err, null);

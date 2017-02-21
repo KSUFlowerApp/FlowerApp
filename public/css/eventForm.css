@@ -1,0 +1,41 @@
+textarea {
+	width: 100%;
+	height: 100px;
+	resize: none;
+}
+.dotted {
+	border-top: 2px dotted;
+	width: 80%;
+	color: #c9b66f;
+}
+
+.itemTable th,
+.itemTable td {
+	-webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  padding: 12px 0px 12px 10px;
+}
+
+.itemTable	th {
+	background-color: #83052b;
+  color: #f2ebd0;
+  font-size: 1.2em;
+}
+
+.itemTable {
+	margin-top: 5px;
+}
+
+.remove-item-btn	{
+	width: 30px;
+	height: 30px;
+}
+
+.itemTable tbody tr:nth-child(even) {
+	background-color: #D9D2B7;
+}
+
+div.ui-datepicker, .ui-datepicker td {
+ 	font-size:1.5em;
+}
