@@ -48,7 +48,6 @@ div.ui-datepicker, .ui-datepicker td {
 	border-right: none;
 	border-top: none;
 	border-left: none;
-	margin-top: 0;
 }
 
 #grand-total-table th {
@@ -75,7 +74,6 @@ div.ui-datepicker, .ui-datepicker td {
 	border-radius: 0;
 	color: #83052b;
 	background-color: #f2ebd0;
-	border-color: #D9D2B7;
 	border: solid 2px #c9b66f;
 	border-left: none;
 	border-right: none;
@@ -85,6 +83,10 @@ div.ui-datepicker, .ui-datepicker td {
 #save-btn:hover {
 	background-color: #D9D2B7;
 	color: #B6385E;
+}
+
+img.logo {
+	border-bottom: solid 2px #c9b66f;
 }
 
 body{
