@@ -40,18 +40,11 @@ div.ui-datepicker, .ui-datepicker td {
  	font-size:1.5em;
 }
 
-#side-bar {
-	width: 10%;
-	padding: 5px;
-	border-radius: 4px;
-	position: fixed;
-	bottom: 50%;
-	left: 10px;
-	border: solid 2px #83052b;
-}
 
 #grand-total-table {
 	border: solid 2px #83052b;
+	border-right: none;
+	margin-top: 0;
 }
 
 #grand-total-table th {
@@ -75,4 +68,37 @@ div.ui-datepicker, .ui-datepicker td {
 #save-btn {
 	margin-top: 5px;
 	width: 100%;
+	border-radius: 0;
 }
+
+body{
+    padding-left:200px;
+    margin:0;
+}
+
+div#side-bar{
+   position:fixed;
+   height:100%;
+   width:200px;
+   top:0;
+   left:0;
+	 border-right: solid 2px #83052b;
+	 margin-right: 5px;
+}
+
+div#side-bar ul {
+	margin-top: 5px;
+}
+
+div.container {
+	width: calc(100% - 200px)
+}
+
+@media (min-width:768px) {
+   div.container {
+     margin-right: 0 !important;
+   }
+	 body.container {
+		 margin-right: 0 !important;
+	 }
+ }

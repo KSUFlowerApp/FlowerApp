@@ -9,7 +9,7 @@
 	</div>
 
   <form action="/staff/eventForm" method="post">
-		<h2>Customer & General Info</h2>
+		<h2 id="GeneralInfo">Customer & General Info</h2>
 		<div class="row">
 			<div class="form-group col-sm-4">
 				<label>Customer</label>
@@ -29,7 +29,7 @@
 
 		<hr>
 
-		<h2>Ceremony Info</h2>
+		<h2 id="CeremonyInfo">Ceremony Info</h2>
 		<div class="row">
 			<div class="form-group col-sm-6">
 					<label>Date</label>
@@ -74,7 +74,7 @@
 		<hr>
 		<!-- RECEPTION -->
 
-		<h2>Reception Info</h2>
+		<h2 id="ReceptionInfo">Reception Info</h2>
 		<div class="row">
 			<div class="form-group col-sm-6">
 					<label>Date</label>
@@ -107,7 +107,7 @@
 		</div>
 
 <hr>
-<h2>Photography, Planner, & Delivery</h2>
+<h2 id="PhotographyPlannerDelivery">Photography, Planner, & Delivery</h2>
 <div class="row">
 	<div class="form-group col-sm-6">
 		<label>Photographers</label>
@@ -189,6 +189,18 @@
 				</tbody>
 			</table>
 
+			<ul id="floating-side-nav" class="floating-side-nav">
+				<li><a href="javascript:navigationFn.goToSection('#GeneralInfo');">Customer & General Info</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#CeremonyInfo');">Ceremony Info</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#ReceptionInfo');">Reception Info</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#PhotographyPlannerDelivery');">Photography, Planners, & Delivery</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#Bouquets');">Boquets</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#Ceremony');">Ceremony</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#Corsages');">Corsages</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#CeremonyDecorations');">Ceremony Decorations</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#ReceptionDecorations');">Reception Decorations</a></li>
+			</ul>
+
 			<!-- save -->
 			<input class="btn btn-primary" id="save-btn" type="submit" value="Save"></input>
 		</div>
@@ -236,8 +248,8 @@
 <% } %>
 
 <% function printRecipeSection(heading, subSections) { %>
-	<h2><%= heading %></h2>
 	<% strippedHeading = heading.replace(/\s+/g, ''); %>
+	<h2 id="<%= strippedHeading %>"><%= heading %></h2>
 
 	<% for(var i = 0; i < subSections.length; i++) { %>
 		<% strippedSubSection = subSections[i].replace(/\s+/g, ''); %>
