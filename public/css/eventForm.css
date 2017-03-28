@@ -94,11 +94,20 @@ div.container {
 	width: calc(100% - 200px)
 }
 
-@media (min-width:768px) {
+@media (max-width:800px) {
    div.container {
      margin-right: 0 !important;
    }
 	 body.container {
 		 margin-right: 0 !important;
+	 }
+ }
+
+ @media (min-width: 1200px) {
+	 div.container {
+	 	margin-right: auto;
+	 }
+	 body.container {
+		 margin-right: auto;
 	 }
  }
