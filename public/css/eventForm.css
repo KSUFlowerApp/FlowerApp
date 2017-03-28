@@ -14,13 +14,13 @@ textarea {
 	-webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  padding: 12px 0px 12px 10px;
+  padding: 6px 0px 6px 5px;
 }
 
 .itemTable	th {
 	background-color: #83052b;
   color: #f2ebd0;
-  font-size: 1.2em;
+  font-size: 0.9em;
 }
 
 .itemTable {
@@ -42,8 +42,12 @@ div.ui-datepicker, .ui-datepicker td {
 
 
 #grand-total-table {
-	border: solid 2px #83052b;
+	border: solid 2px #c9b66f;
+	color: #83052b;
+	background-color: #f2ebd0;
 	border-right: none;
+	border-top: none;
+	border-left: none;
 	margin-top: 0;
 }
 
@@ -69,6 +73,18 @@ div.ui-datepicker, .ui-datepicker td {
 	margin-top: 5px;
 	width: 100%;
 	border-radius: 0;
+	color: #83052b;
+	background-color: #f2ebd0;
+	border-color: #D9D2B7;
+	border: solid 2px #c9b66f;
+	border-left: none;
+	border-right: none;
+	font-weight: bold;
+}
+
+#save-btn:hover {
+	background-color: #D9D2B7;
+	color: #B6385E;
 }
 
 body{
@@ -82,12 +98,18 @@ div#side-bar{
    width:200px;
    top:0;
    left:0;
-	 border-right: solid 2px #83052b;
+	 border-right: solid 2px #c9b66f;
 	 margin-right: 5px;
+	 background: #83052b;
 }
 
 div#side-bar ul {
 	margin-top: 5px;
+	color: #f2ebd0;
+}
+
+div#side-bar ul li a {
+	color: #f2ebd0;
 }
 
 div.container {
