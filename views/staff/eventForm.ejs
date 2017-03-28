@@ -344,6 +344,22 @@ $( document ).ready(function() {
 		}
 	});
 
+	// Save event (parse page and send it to backend).
+	$(".save-btn").on('click', function() {
+		var $body = $(this).closest('body');
+		event.preventDefault();
+		// Display wait animation if needed.
+		$.ajax({
+			url: '/staff/eventForm',
+			data: $body.serialize(),
+			method: 'POST',
+			success: function(response) {
+				response = JSON.parse(response);
+				alert(response.message);
+			}
+		})
+	});
+
 	// Remove item from recipe table
 	$(document).on("click", ".remove-item-btn", function ()	{
 		event.preventDefault();
