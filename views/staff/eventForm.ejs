@@ -194,7 +194,7 @@
 				<li><a href="javascript:navigationFn.goToSection('#CeremonyInfo');">Ceremony Info</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#ReceptionInfo');">Reception Info</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#PhotographyPlannerDelivery');">Photography, Planners, & Delivery</a></li>
-				<li><a href="javascript:navigationFn.goToSection('#Bouquets');">Boquets</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#Bouquets');">Bouquets</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#Boutonnieres');">Boutonnieres</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#Corsages');">Corsages</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#CeremonyDecorations');">Ceremony Decorations</a></li>
@@ -454,7 +454,7 @@ $( document ).ready(function() {
 		currTblTotal = parseFloat(currTblTotal);
 		var newTotal = currTblTotal - initQty*pricePerItem;
 		parentTbl.find('.price').html('<b>$' + newTotal.toFixed(2) + '</b>');
-		updateGrandTotal(newTotal, "subtract")
+		updateGrandTotal(currTblTotal, "subtract")
 		rowClicked.remove();
 	});
 
