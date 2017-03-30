@@ -242,7 +242,7 @@
 	</script>
 	<% flowers.forEach(function(item, index) { %>
 			<script>
-				prices['<%= item.name %>'] = <%= item.price %>;
+				prices['<%= item.name %>'] = <%= item.price*item.markup %>;
 			</script>
 	<% }); %>
 <% } %>

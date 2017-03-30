@@ -32,8 +32,8 @@ module.exports = function(app, passport, db) {
   // =====================================
   app.get('/staff/eventForm', session.isLoggedIn, function(req,res) {
     async.parallel([
-      inventory.getFlowers,
-      customers.getCustomers
+      inventory.getFlowersWithMarkups,
+      customers.getCustomers,
     ], function(err, results) {
       if(err) {
         console.log(err)
