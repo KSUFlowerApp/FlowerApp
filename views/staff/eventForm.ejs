@@ -327,7 +327,7 @@ $( document ).ready(function() {
 			price = parseFloat(price);
 			var tblID = $form.find('#modal-table-id').val();
 			var tbl = $("#" + tblID);
-			tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price.toFixed(2) + "</td><td><center><input type='button' class='remove-item-btn' value='x' /></ center></td></tr>");
+			tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price.toFixed(2) + "</td><td><center><input type='button' class='increase-item-btn' value='+' /> <input type='button' class='decrease-item-btn' value='-' /> <input type='button' class='remove-item-btn' value='x' /></ center></td></tr>");
 			var qtyPrice = parseFloat(qty) * parseFloat(price);
 			var tblTotal = tbl.find('.price');
 			var initPrice = tblTotal.text();
@@ -389,8 +389,8 @@ $( document ).ready(function() {
 		}
 	});
 
-	// Remove item from recipe table
-	$(document).on("click", ".remove-item-btn", function ()	{
+	// Decrease item from recipe table
+	$(document).on("click", ".decrease-item-btn", function ()	{
 		event.preventDefault();
 		var parentTbl = $(this).closest('table');
 		var rowClicked = $(this).closest('tr');
@@ -412,6 +412,50 @@ $( document ).ready(function() {
 		else {
 			rowClicked.remove();
 		}
+	});
+
+	// Increase item from recipe table
+	$(document).on("click", ".increase-item-btn", function ()	{
+		event.preventDefault();
+		var parentTbl = $(this).closest('table');
+		var rowClicked = $(this).closest('tr');
+		var initQty = $(this).closest('td').prev('td').prev('td').text().replace(" x","");
+		initQty = parseFloat(initQty);
+		var pricePerItem = $(this).closest('td').prev('td').text();
+		pricePerItem = pricePerItem.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		pricePerItem = parseFloat(pricePerItem);
+		var currTblTotal = parentTbl.find('.price').text();
+		currTblTotal = currTblTotal.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		currTblTotal = parseFloat(currTblTotal);
+		var newTotal = currTblTotal + pricePerItem;
+		parentTbl.find('.price').html('<b>$' + newTotal.toFixed(2) + '</b>');
+		updateGrandTotal(pricePerItem, "add")
+		if (initQty > 1)	{
+			var newQty = initQty + 1;
+			$(this).closest('td').prev('td').prev('td').text(newQty + ' x');
+		}
+		else {
+			rowClicked.remove();
+		}
+	});
+
+	// Remove item from recipe table
+	$(document).on("click", ".remove-item-btn", function ()	{
+		event.preventDefault();
+		var parentTbl = $(this).closest('table');
+		var rowClicked = $(this).closest('tr');
+		var initQty = $(this).closest('td').prev('td').prev('td').text().replace(" x","");
+		initQty = parseFloat(initQty);
+		var pricePerItem = $(this).closest('td').prev('td').text();
+		pricePerItem = pricePerItem.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		pricePerItem = parseFloat(pricePerItem);
+		var currTblTotal = parentTbl.find('.price').text();
+		currTblTotal = currTblTotal.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		currTblTotal = parseFloat(currTblTotal);
+		var newTotal = currTblTotal - initQty*pricePerItem;
+		parentTbl.find('.price').html('<b>$' + newTotal.toFixed(2) + '</b>');
+		updateGrandTotal(newTotal, "subtract")
+		rowClicked.remove();
 	});
 
 	function updateGrandTotal(price, operator) {

@@ -27,7 +27,7 @@ textarea {
 	margin-top: 5px;
 }
 
-.remove-item-btn	{
+.remove-item-btn, .increase-item-btn, .decrease-item-btn	{
 	width: 30px;
 	height: 30px;
 }
