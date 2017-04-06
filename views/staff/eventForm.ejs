@@ -37,7 +37,7 @@
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Start Time</label>
-				<select class="form-control" name="ceremony-start-time">
+				<select class="form-control TimeSelect" name="ceremony-start-time">
 					<% printTimes(); %>
 				</select>
 			</div>
@@ -82,7 +82,7 @@
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Start Time</label>
-				<select class="form-control" name="reception-start-time">
+				<select class="form-control TimeSelect" name="reception-start-time">
 					<% printTimes(); %>
 				</select>
 			</div>
@@ -115,7 +115,7 @@
 	</div>
 	<div class="form-group col-sm-6">
 		<label>Photography Start Time</label>
-		<select class="form-control" name="photograph-start-time">
+		<select class="form-control TimeSelect" name="photograph-start-time">
 			<% printTimes(); %>
 		</select>
 	</div>
@@ -127,7 +127,7 @@
 	</div>
 	<div class="form-group col-sm-6">
 		<label>Delivery Time</label>
-		<select class="form-control" name="delivery-time">
+		<select class="form-control TimeSelect" name="delivery-time">
 			<% printTimes(); %>
 		</select>
 	</div>
@@ -211,6 +211,7 @@
   <% include ../../partials/footer %>
 
 <% function printTimes() { %>
+	<option value="TBA" selected="selected">--</option>
 	<% var minutes = ["00","15","30","45"]; %>
 	<% for(var i = 0; i <=23; i++) { %>
 		<% for(var j = 0; j < minutes.length; j++) {
@@ -296,11 +297,25 @@ $( document ).ready(function() {
 	$(".date").datepicker();
 
 	$('#save-btn').on('click', function() {
+		// replace all times with new token <TimeSelect data-val="value">
+		$(".TimeSelect").each(function() {
+			var val = $(this).val();
+			$(this).attr('data-val', val);
+		});
+		
 		var brides_name = $("input[name=brides-name]").val();
 		var grooms_name = $("input[name=grooms-name]").val();
 		var ceremony_date = $("input[name=ceremony-date]").val();
 		var form_text = $("#main-form").html().replace(/\s/g, '');
-		$('form').html().replace(/\s/g, '').replace(/<select.+?\/select>/g, function(html){ var val = $(html).val(); return '<TimeSelect data-val=' + val + '>'})
+
+		//var form_text = $("#main-form").html().replace(/\s/g, '').replace(/<select.+?\/select>/g, function(html) { var val = $(html).text(); return '<TimeSelect data-val=' + val + '>'} );
+		//var form_text = $("#main-form").html().replace(/\s/g,'').replace(/<select.+?\/select>/g, function(x) {
+		//	var val = $(x);
+		//	alert(val);
+		//	return "";
+		//});
+
+		console.log(form_text)
 		event.preventDefault();
 		$.ajax({
 			url: '/staff/eventForm',
