@@ -38,3 +38,12 @@ CREATE TABLE proj_flowerapp.inventory (
   PRIMARY KEY(id),
   FOREIGN KEY(type) REFERENCES proj_flowerapp.inventory_types(id)
 );
+
+CREATE TABLE proj_flowerapp.events (
+  id                     INT NOT NULL AUTO_INCREMENT,
+  brides_name            VARCHAR(45),
+  grooms_name            VARCHAR(45),
+  ceremony_date          DATETIME,
+  form                   LONGTEXT,
+  PRIMARY KEY(id)
+);

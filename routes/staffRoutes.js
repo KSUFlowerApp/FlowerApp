@@ -47,7 +47,7 @@ module.exports = function(app, passport, db) {
   // STAFF - EVENT FORM - POST =======================
   // =====================================
   app.post('/staff/eventForm', session.isLoggedIn, function(req,res) {
-        console.log(req.body);
+        console.log(req);
   });
 
   // =====================================
