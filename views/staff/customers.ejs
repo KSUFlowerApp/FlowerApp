@@ -293,6 +293,7 @@ $( document ).ready(function() {
 				success: function(response) {
 					response = JSON.parse(response);
 					alert(response.message);
+					location.href = location.href;
 				}
 			})
 		});

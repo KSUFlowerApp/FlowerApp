@@ -3,7 +3,9 @@
 var session = require('../middleware/session.js');
 var inventory = require('../middleware/inventory.js');
 var customers = require('../middleware/customers.js');
+var events = require('../middleware/events.js');
 var async = require('async');
+var SqlString = require('sqlstring');
 
 module.exports = function(app, passport, db) {
   // =====================================
@@ -38,7 +40,7 @@ module.exports = function(app, passport, db) {
       if(err) {
         console.log(err)
       } else {
-        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1] });
+        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: undefined });
       }
     });
   });
@@ -47,7 +49,52 @@ module.exports = function(app, passport, db) {
   // STAFF - EVENT FORM - POST =======================
   // =====================================
   app.post('/staff/eventForm', session.isLoggedIn, function(req,res) {
-        console.log(req);
+    var form_id = req.body.form_id;
+    var customer = req.body.customer;
+    var brides_name = req.body.brides_name;
+    var grooms_name = req.body.grooms_name;
+    var ceremony_date = req.body.ceremony_date;
+    var form_text = req.body.form_text;
+    var query = "";
+    if(form_id) {
+      console.log("UPDATING");
+      query = SqlString.format("UPDATE events " +
+              "SET customer = ?, brides_name = ?, grooms_name = ?, ceremony_date = ?, form = ? " +
+              "WHERE id = ?",[customer, brides_name, grooms_name, ceremony_date, form_text, form_id]);
+    } else {
+      console.log("INSERTING");
+      query = SqlString.format("INSERT INTO events(customer, brides_name, grooms_name, ceremony_date, form) " +
+							"VALUES(?, ?, ?, ?, ?)",[customer, brides_name, grooms_name, ceremony_date, form_text]);
+    }
+    db.query(query, function(err, rows) {
+			var response = {
+				status: 200,
+				message: "Form saved successfully.",
+        form_id: (form_id) ? form_id : rows.insertId
+			}
+			if(err) {
+				response = {
+					status: 500,
+					message: "Error saving form.",
+          form_id: (form_id) ? form_id : rows.insertId
+				}
+			}
+			res.send(JSON.stringify(response));
+		});
+  });
+
+  // =====================================
+  // STAFF - EVENTS =======================
+  // =====================================
+  app.get('/staff/events', session.isLoggedIn, function(req,res) {
+    // get events table and pass it to ejs
+    events.getEvents(function(err, events) {
+      if(err) {
+        console.log(err);
+      } else {
+        res.render('staff/events.ejs', { events:events });
+      }
+    });
   });
 
   // =====================================
@@ -74,7 +121,6 @@ module.exports = function(app, passport, db) {
     var state = undefined;
 		var query = undefined;
 
-    console.log(id);
 		if (typeof id === 'undefined' || !id) {
 			var firstName = req.body.addFirstName;
       var lastName = req.body.addLastName;
@@ -107,7 +153,6 @@ module.exports = function(app, passport, db) {
               "zip = '"+zip+"' " +
 							"WHERE id = "+id;
 		}
-    console.log(query + " " + id);
 		db.query(query, function(err, rows) {
 			var response = {
 				status: 200,

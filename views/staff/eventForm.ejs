@@ -6,9 +6,14 @@
 
 	<div class="page-header text-center">
 		<h1><span class="fa fa-calendar"></span> Event Form</h1>
+		<% if(form_id) { %>
+			<input type="text" id="form-id" disabled="true" value="<%= form_id %>">
+		<% } else { %>
+			<input type="text" id="form-id" disabled="true" value="<%= form_id %>">
+		<% } %>
 	</div>
 
-  <form action="/staff/eventForm" method="post" id="main-form">
+  <form id="main-form">
 		<h2 id="GeneralInfo">Customer & General Info</h2>
 		<div class="row">
 			<div class="form-group col-sm-4">
@@ -233,6 +238,7 @@
 <% } %>
 
 <% function printCustomers(customers) { %>
+	<option value="TBA" selected="selected">--</option>
 	<% customers.forEach(function(item, index) { %>
 			<option value="<%= item.id %>"><%= item.lastName + ', ' + item.firstName %></option>
 	<% }); %>
@@ -293,43 +299,57 @@
 <% } %>
 
 <script>
+function isEmpty(str) {
+	if(str == "TBA") {
+		return true;
+	}
+	return (!str || /^\s*$/.test(str));
+}
+
 $( document ).ready(function() {
-	$(".date").datepicker();
+	$(".date").datepicker({ dateFormat: 'yy-mm-dd' });
 
 	$('#save-btn').on('click', function() {
+		event.preventDefault();
 		// replace all times with new token <TimeSelect data-val="value">
-		$(".TimeSelect").each(function() {
+		$("select").each(function() {
 			var val = $(this).val();
 			$(this).attr('data-val', val);
 		});
-		
+
+		var form_id = $("#form-id").val();
+		var customer = $("select[name=customer]").val();
+		if(isEmpty(form_id)) { form_id = undefined }
 		var brides_name = $("input[name=brides-name]").val();
 		var grooms_name = $("input[name=grooms-name]").val();
 		var ceremony_date = $("input[name=ceremony-date]").val();
-		var form_text = $("#main-form").html().replace(/\s/g, '');
+		// replace all white space and strip out time dropdowns
+		var form_text = $("#main-form").html().replace(/^\s+|\r\n|\n|\r|(>)\s+(<)|\s+$/gm, '$1$2').replace(/<option value="TBA".+?\/select>/g, '</select>');
 
-		//var form_text = $("#main-form").html().replace(/\s/g, '').replace(/<select.+?\/select>/g, function(html) { var val = $(html).text(); return '<TimeSelect data-val=' + val + '>'} );
-		//var form_text = $("#main-form").html().replace(/\s/g,'').replace(/<select.+?\/select>/g, function(x) {
-		//	var val = $(x);
-		//	alert(val);
-		//	return "";
-		//});
-
-		console.log(form_text)
-		event.preventDefault();
-		$.ajax({
-			url: '/staff/eventForm',
-			data: {
-				brides_name: brides_name,
-				grooms_name: grooms_name,
-				ceremony_date: ceremony_date,
-				form_text: form_text
-			},
-			method: 'POST',
-			success: function(response) {
-				alert("Form Saved!");
-			}
-		});
+		if(isEmpty(customer) || isEmpty(brides_name) || isEmpty(grooms_name) || isEmpty(ceremony_date)) {
+			alert("Customer, Bride's Name, Groom's Name, and Ceremony Date must be filled out in order to save.");
+		} else {
+			$.ajax({
+				url: '/staff/eventForm',
+				data: {
+					form_id: form_id,
+					customer: customer,
+					brides_name: brides_name,
+					grooms_name: grooms_name,
+					ceremony_date: ceremony_date,
+					form_text: form_text
+				},
+				method: 'POST',
+				success: function(response) {
+					res = JSON.parse(response);
+					$("#form-id").val(res.form_id);
+					alert(res.message);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+        	alert("Status: " + textStatus); alert("Error: " + errorThrown);
+				}
+			});
+		}
 	});
 
 	// Display "add inventory" modal.
