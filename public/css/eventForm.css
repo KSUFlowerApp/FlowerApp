@@ -27,11 +27,6 @@ textarea {
 	margin-top: 5px;
 }
 
-.remove-item-btn, .increase-item-btn, .decrease-item-btn	{
-	width: 30px;
-	height: 30px;
-}
-
 .itemTable tbody tr:nth-child(even) {
 	background-color: #D9D2B7;
 }
