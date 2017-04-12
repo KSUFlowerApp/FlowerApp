@@ -40,7 +40,22 @@ module.exports = function(app, passport, db) {
       if(err) {
         console.log(err)
       } else {
-        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: undefined });
+        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: undefined, form_text: undefined });
+      }
+    });
+  });
+
+  app.get('/staff/eventForm/:form_id', session.isLoggedIn, function(req,res) {
+    console.log(req.params.form_id);
+    async.parallel([
+      inventory.getFlowersWithMarkups,
+      customers.getCustomers,
+      events.getEvent(req.params.form_id)
+    ], function(err, results) {
+      if(err) {
+        console.log(err)
+      } else {
+        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: results[2][0].id, form_text: results[2][0].form });
       }
     });
   });

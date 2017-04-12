@@ -77,6 +77,136 @@ $(document).on("click", "#addItem", function() {
 	}
 });
 
+// Decrease item from recipe table
+$(document).on("click", ".decrease-item-btn", function ()	{
+	event.preventDefault();
+	var parentTbl = $(this).closest('table');
+	var rowClicked = $(this).closest('tr');
+	var initQty = $(this).closest('td').prev('td').prev('td').text().replace(" x","");
+	initQty = parseFloat(initQty);
+	var pricePerItem = $(this).closest('td').prev('td').text();
+	pricePerItem = pricePerItem.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+	pricePerItem = parseFloat(pricePerItem);
+	var currTblTotal = parentTbl.find('.price').text();
+	currTblTotal = currTblTotal.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+	currTblTotal = parseFloat(currTblTotal);
+	var newTotal = currTblTotal - pricePerItem;
+	parentTbl.find('.price').html('<b>$' + newTotal.toFixed(2) + '</b>');
+	updateGrandTotal();
+	if (initQty > 1)	{
+		var newQty = initQty - 1;
+		$(this).closest('td').prev('td').prev('td').text(newQty + ' x');
+	}
+	else {
+		rowClicked.remove();
+	}
+});
+
+// Increase item from recipe table
+$(document).on("click", ".increase-item-btn", function ()	{
+	event.preventDefault();
+	var parentTbl = $(this).closest('table');
+	var rowClicked = $(this).closest('tr');
+	var initQty = $(this).closest('td').prev('td').prev('td').text().replace(" x","");
+	initQty = parseFloat(initQty);
+	var pricePerItem = $(this).closest('td').prev('td').text();
+	pricePerItem = pricePerItem.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+	pricePerItem = parseFloat(pricePerItem);
+	var currTblTotal = parentTbl.find('.price').text();
+	currTblTotal = currTblTotal.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+	currTblTotal = parseFloat(currTblTotal);
+	var newTotal = currTblTotal + pricePerItem;
+	parentTbl.find('.price').html('<b>$' + newTotal.toFixed(2) + '</b>');
+	updateGrandTotal();
+	if (initQty > 0)	{
+		var newQty = initQty + 1;
+		$(this).closest('td').prev('td').prev('td').text(newQty + ' x');
+	}
+	else {
+		rowClicked.remove();
+	}
+});
+
+// Remove item from recipe table
+$(document).on("click", ".remove-item-btn", function ()	{
+	event.preventDefault();
+	var parentTbl = $(this).closest('table');
+	var rowClicked = $(this).closest('tr');
+	var initQty = $(this).closest('td').prev('td').prev('td').text().replace(" x","");
+	initQty = parseFloat(initQty);
+	var pricePerItem = $(this).closest('td').prev('td').text();
+	pricePerItem = pricePerItem.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+	pricePerItem = parseFloat(pricePerItem);
+	var currTblTotal = parentTbl.find('.price').text();
+	currTblTotal = currTblTotal.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+	currTblTotal = parseFloat(currTblTotal);
+	var newTotal = currTblTotal - initQty*pricePerItem;
+	parentTbl.find('.price').html('<b>$' + newTotal.toFixed(2) + '</b>');
+	updateGrandTotal();
+	rowClicked.remove();
+});
+
+// Update Grand Total whenever qty is changed for a recipe
+$(document).on("change", ".recipeQty", function ()	{
+	updateGrandTotal();
+});
+
+// update Grand Total
+function updateGrandTotal() {
+	grand_total = 0;
+	$(".recipeQty").each(function() {
+		var recipe_qty = $(this).val();
+		var recipe_price = $(this).parent().prev().children('.itemTable').find('.recipeTotal').find('.price').text();
+		recipe_price = parseFloat(recipe_price.substring(1, recipe_price.length));
+		recipe_total = recipe_price*recipe_qty;
+		grand_total += recipe_total;
+	});
+	$('#grand-total').html('<b>$' + grand_total.toFixed(2) + '</b>');
+}
+
+$(document).on("click", "#save-btn", function() {
+	event.preventDefault();
+	// replace all times with new token <TimeSelect data-val="value">
+	$("select").each(function() {
+		var val = $(this).val();
+		$(this).attr('data-val', val);
+	});
+
+	var form_id = $("#form-id").val();
+	var customer = $("select[name=customer]").val();
+	if(isEmpty(form_id)) { form_id = undefined }
+	var brides_name = $("input[name=brides-name]").val();
+	var grooms_name = $("input[name=grooms-name]").val();
+	var ceremony_date = $("input[name=ceremony-date]").val();
+	// replace all white space and strip out time dropdowns
+	var form_text = $("#main-form").html().replace(/^\s+|\r\n|\n|\r|(>)\s+(<)|\s+$/gm, '$1$2').replace(/<option value="TBA".+?\/select>/g, '</select>');
+
+	if(isEmpty(customer) || isEmpty(brides_name) || isEmpty(grooms_name) || isEmpty(ceremony_date)) {
+		alert("Customer, Bride's Name, Groom's Name, and Ceremony Date must be filled out in order to save.");
+	} else {
+		$.ajax({
+			url: '/staff/eventForm',
+			data: {
+				form_id: form_id,
+				customer: customer,
+				brides_name: brides_name,
+				grooms_name: grooms_name,
+				ceremony_date: ceremony_date,
+				form_text: form_text
+			},
+			method: 'POST',
+			success: function(response) {
+				res = JSON.parse(response);
+				$("#form-id").val(res.form_id);
+				alert(res.message);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("Status: " + textStatus); alert("Error: " + errorThrown);
+			}
+		});
+	}
+});
+
 // Check if value of input isn't set
 function isEmpty(str) {
 	if(str == "TBA") {
