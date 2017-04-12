@@ -50,7 +50,18 @@ module.exports = function(app, passport, db) {
     async.parallel([
       inventory.getFlowersWithMarkups,
       customers.getCustomers,
-      events.getEvent(req.params.form_id)
+      function getEvent(callback) {
+        var query = "SELECT e.* " +
+                    "FROM events e " +
+                    "WHERE id = " + req.params.form_id;
+        db.query(query, function(err, rows) {
+            if (err) {
+                 return callback(err, null);
+            } else {
+                 return callback(null, rows);
+            }
+        });
+      }
     ], function(err, results) {
       if(err) {
         console.log(err)
