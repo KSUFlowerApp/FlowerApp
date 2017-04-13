@@ -28,7 +28,7 @@ function getEvents(callback) {
 // GETEVENT ========================
 // =====================================
 // Get a specific event from database
-function getEvent(callback) {
+function getEvent(form_id, callback) {
   var query = "SELECT e.* " +
               "FROM events e " +
               "WHERE id = " + form_id;

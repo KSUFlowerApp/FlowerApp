@@ -1,7 +1,12 @@
+function InsertCustomers() {
+	
+}
+
 $( document ).ready(function() {
 
 	// add datepicker to all .datepicker classes
 	$(".date").datepicker();
+	InsertCustomers();
 
 	// Load price in modal on item select
 	$("#altar-flowers").on('change', function()	{
@@ -164,6 +169,14 @@ function updateGrandTotal() {
 	$('#grand-total').html('<b>$' + grand_total.toFixed(2) + '</b>');
 }
 
+$(document).on("change","input, number", function() {
+	$(this).attr("value", $(this).val());
+});
+
+$(document).on("change", "textarea", function() {
+	$(this).text($(this).val());
+});
+
 $(document).on("click", "#save-btn", function() {
 	event.preventDefault();
 	// replace all times with new token <TimeSelect data-val="value">
@@ -180,7 +193,7 @@ $(document).on("click", "#save-btn", function() {
 	var ceremony_date = $("input[name=ceremony-date]").val();
 	// replace all white space and strip out time dropdowns
 	var form_text = $("#main-form").html().replace(/^\s+|\r\n|\n|\r|(>)\s+(<)|\s+$/gm, '$1$2').replace(/<option value="TBA".+?\/select>/g, '</select>');
-
+	console.log(form_text);
 	if(isEmpty(customer) || isEmpty(brides_name) || isEmpty(grooms_name) || isEmpty(ceremony_date)) {
 		alert("Customer, Bride's Name, Groom's Name, and Ceremony Date must be filled out in order to save.");
 	} else {

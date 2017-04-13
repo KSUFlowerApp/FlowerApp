@@ -29,6 +29,31 @@ module.exports = function(app, passport, db) {
     });
   });
 
+  // STAFF EVENT FORM GET CUSTOMER DROPDOWN
+  app.get('/staff/eventForm/getCustomers/:id', session.isLoggedIn, function(req, res) {
+    selected_id = req.params.id;
+    customers.getCustomers(function(err, _customers){
+      if(err) {
+        console.log(err);
+        return res.sendStatus(500);
+      }
+      options = "";
+      if(selected_id == "TBA") {
+        options += "<option value=\"TBA\" selected=\"selected\">--</option>";
+      } else {
+        options += "<option value=\"TBA\">--</option>";
+        _customers.forEach(function(item, index) {
+          if(item.id != selected_id) {
+      			options += "<option value=\"" + item.id + "\">"+ item.lastName + ", " + item.firstName + "</option>"
+          } else {
+            options += "<option value=\"" + item.id + "\" selected=\"selected\">"+ item.lastName + ", " + item.firstName + "</option>"
+          }
+      	});
+      }
+      res.send(options);
+    });
+  });
+
   // =====================================
   // STAFF - EVENT FORM =======================
   // =====================================
@@ -50,18 +75,7 @@ module.exports = function(app, passport, db) {
     async.parallel([
       inventory.getFlowersWithMarkups,
       customers.getCustomers,
-      function getEvent(callback) {
-        var query = "SELECT e.* " +
-                    "FROM events e " +
-                    "WHERE id = " + req.params.form_id;
-        db.query(query, function(err, rows) {
-            if (err) {
-                 return callback(err, null);
-            } else {
-                 return callback(null, rows);
-            }
-        });
-      }
+      (callback) => { events.getEvent(req.params.form_id, callback) }
     ], function(err, results) {
       if(err) {
         console.log(err)
