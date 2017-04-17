@@ -168,6 +168,7 @@ module.exports = function(app, passport, db) {
   app.get('/staff/events/PDF/:id', session.isLoggedIn, function(req,res) {
     // get event and generate pdf
     async.parallel([
+      (callback) => { events.getEvent(req.params.id, callback) }
     ], function(err, results) {
       if(err) {
         console.log(err)
