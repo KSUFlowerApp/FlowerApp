@@ -99,7 +99,6 @@ module.exports = function(app, passport, db) {
   });
 
   app.get('/staff/eventForm/:form_id', session.isLoggedIn, function(req,res) {
-    console.log(req.params.form_id);
     async.parallel([
       inventory.getFlowersWithMarkups,
       customers.getCustomers,
@@ -159,6 +158,21 @@ module.exports = function(app, passport, db) {
         console.log(err);
       } else {
         res.render('staff/events.ejs', { events:events, moment: moment });
+      }
+    });
+  });
+
+  // =====================================
+  // STAFF - EVENTS - PDF =======================
+  // =====================================
+  app.get('/staff/events/PDF/:id', session.isLoggedIn, function(req,res) {
+    // get event and generate pdf
+    async.parallel([
+    ], function(err, results) {
+      if(err) {
+        console.log(err)
+      } else {
+        res.send(results[0]);
       }
     });
   });
