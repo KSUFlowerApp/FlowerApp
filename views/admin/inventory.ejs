@@ -170,7 +170,10 @@ $( document ).ready(function() {
 				method: 'POST',
 				success: function(response) {
 					response = JSON.parse(response);
-					alert(response.message);
+					location.href = location.href;
+				}, error: function(response) {
+					response = JSON.parse(response);
+					alert(response);
 				}
 			})
 		});
@@ -185,7 +188,10 @@ $( document ).ready(function() {
 				method: 'POST',
 				success: function(response) {
 					response = JSON.parse(response);
-					alert(response.message);
+					location.href = location.href;
+				}, error: function(response) {
+					response = JSON.parse(response);
+					alert(response);
 				}
 			})
 		});

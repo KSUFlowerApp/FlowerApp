@@ -1,4 +1,7 @@
 $( document ).ready(function() {
+	// update grand total on page load
+	updateGrandTotal();
+
 	// Load price in modal on item select
 	$("#altar-flowers").on('change', function()	{
 		if ($(this).prop('selectedIndex') != 0)	{
@@ -157,6 +160,10 @@ $(document).on("change", ".recipeQty", function ()	{
 	updateGrandTotal();
 });
 
+$(document).on("change", ".taxes", function ()	{
+	updateGrandTotal();
+});
+
 // update Grand Total
 function updateGrandTotal() {
 	grand_total = 0;
@@ -167,6 +174,9 @@ function updateGrandTotal() {
 		recipe_total = recipe_price*recipe_qty;
 		grand_total += recipe_total;
 	});
+	tax_rate = $("select[name=tax-information] option:selected").attr("data-val");
+	tax_rate = 1 + parseFloat(tax_rate);
+	grand_total *= tax_rate;
 	$('#grand-total').html('<b>$' + grand_total.toFixed(2) + '</b>');
 }
 
@@ -178,14 +188,13 @@ $(document).on("change", "textarea", function() {
 	$(this).text($(this).val());
 });
 
+$(document).on("change","select", function() {
+	var val = $(this).val();
+	$(this).attr('data-val', val);
+});
+
 $(document).on("click", "#save-btn", function() {
 	event.preventDefault();
-	// replace all times with new token <TimeSelect data-val="value">
-	$("select").each(function() {
-		var val = $(this).val();
-		$(this).attr('data-val', val);
-	});
-
 	var form_id = $("#form-id").val();
 	var customer = $("select[name=customer]").val();
 	if(isEmpty(form_id)) { form_id = undefined }

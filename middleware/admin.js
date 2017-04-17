@@ -2,7 +2,8 @@ module.exports = exports = {
   getInventoryTypes: getInventoryTypes,
   getMarkups: getMarkups,
   getUsers: getUsers,
-  getRoles: getRoles
+  getRoles: getRoles,
+  getTaxes: getTaxes
 }
 
 // establish db connection
@@ -70,6 +71,23 @@ function getUsers(callback) {
 function getRoles(callback) {
   var query = "SELECT * " +
   "FROM roles";
+  db.query(query, function(err, rows) {
+      if (err) {
+           return callback(err, null);
+      } else {
+           return callback(null, rows);
+      }
+  });
+}
+
+// =====================================
+// GET TAXES ===============================
+// =====================================
+// Get taxes from database.
+function getTaxes(callback) {
+  var query = "SELECT * " +
+  "FROM taxes " +
+  "ORDER BY name ASC";
   db.query(query, function(err, rows) {
       if (err) {
            return callback(err, null);

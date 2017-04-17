@@ -49,3 +49,10 @@ CREATE TABLE proj_flowerapp.events (
   PRIMARY KEY(id),
   FOREIGN KEY(customer) REFERENCES proj_flowerapp.customers(id)
 );
+
+CREATE TABLE proj_flowerapp.taxes (
+  id                     INT NOT NULL AUTO_INCREMENT,
+  name                   VARCHAR(45) NOT NULL,
+  rate                   DECIMAL(5,5) NOT NULL,
+  PRIMARY KEY(id)
+);

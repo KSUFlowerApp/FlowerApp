@@ -3,6 +3,7 @@
 var session = require('../middleware/session.js');
 var inventory = require('../middleware/inventory.js');
 var customers = require('../middleware/customers.js');
+var admin = require('../middleware/admin.js');
 var events = require('../middleware/events.js');
 var async = require('async');
 var SqlString = require('sqlstring');
@@ -43,14 +44,40 @@ module.exports = function(app, passport, db) {
         options += "<option value=\"TBA\" selected=\"selected\">--</option>";
       } else {
         options += "<option value=\"TBA\">--</option>";
-        _customers.forEach(function(item, index) {
-          if(item.id != selected_id) {
-      			options += "<option value=\"" + item.id + "\">"+ item.lastName + ", " + item.firstName + "</option>"
-          } else {
-            options += "<option value=\"" + item.id + "\" selected=\"selected\">"+ item.lastName + ", " + item.firstName + "</option>"
-          }
-      	});
       }
+      _customers.forEach(function(item, index) {
+        if(item.id == selected_id) {
+          options += "<option value=\"" + item.id + "\" selected=\"selected\">"+ item.lastName + ", " + item.firstName + "</option>"
+        } else {
+          options += "<option value=\"" + item.id + "\">"+ item.lastName + ", " + item.firstName + "</option>"
+        }
+      });
+      res.send(options);
+    });
+  });
+
+  // STAFF EVENT FORM GET CUSTOMER DROPDOWN
+  app.get('/staff/eventForm/getTaxes/:id', session.isLoggedIn, function(req, res) {
+    selected_id = req.params.id;
+    admin.getTaxes(function(err, _taxes) {
+      if(err) {
+        console.log(err);
+        return res.sendStatus(500);
+      }
+      options = "";
+      if(selected_id == "TBA") {
+        options += "<option data-val=\"0\" value=\"TBA\" selected=\"selected\">--</option>";
+      } else {
+        options += "<option data-val=\"0\" value=\"TBA\">--</option>";
+      }
+      _taxes.forEach(function(item, index) {
+        var item_rate = item.rate/100;
+        if(item.id != selected_id) {
+          options += "<option data-val=\""+item_rate+"\" value=\"" + item.id + "\">"+ item.name + " (" + item.rate + "%)</option>"
+        } else {
+          options += "<option data-val=\""+item_rate+"\" value=\"" + item.id + "\" selected=\"selected\">"+ item.name + " (" + item.rate + "%)</option>"
+        }
+      });
       res.send(options);
     });
   });
@@ -98,12 +125,10 @@ module.exports = function(app, passport, db) {
     var form_text = req.body.form_text;
     var query = "";
     if(form_id) {
-      console.log("UPDATING");
       query = SqlString.format("UPDATE events " +
               "SET customer = ?, brides_name = ?, grooms_name = ?, ceremony_date = ?, form = ? " +
               "WHERE id = ?",[customer, brides_name, grooms_name, ceremony_date, form_text, form_id]);
     } else {
-      console.log("INSERTING");
       query = SqlString.format("INSERT INTO events(customer, brides_name, grooms_name, ceremony_date, form) " +
 							"VALUES(?, ?, ?, ?, ?)",[customer, brides_name, grooms_name, ceremony_date, form_text]);
     }

@@ -8,12 +8,6 @@
 		<h1><span class="fa fa-calendar"></span> Event Form</h1>
 		<% if(form_id) { %>
 			<input type="text" id="form-id" disabled="true" value="<%= form_id %>">
-			<script>
-				$( document ).ready(function() {
-					InsertCustomersDropdown();
-					InsertTimesDropdown();
-				});
-			</script>
 		<% } else { %>
 			<input type="text" id="form-id" disabled="true" value="<%= form_id %>">
 		<% } %>
@@ -28,9 +22,7 @@
 		<div class="row">
 			<div class="form-group col-sm-4">
 				<label>Customer</label>
-				<select class="form-control" name="customer">
-					<% printCustomers(customers); %>
-				</select>
+				<select class="form-control" name="customer" data-val="TBA"></select>
 			</div>
 			<div class="form-group col-sm-4">
 				<label>Bride's Name</label>
@@ -52,9 +44,7 @@
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Start Time</label>
-				<select class="form-control TimeSelect" name="ceremony-start-time">
-					<% printTimes(); %>
-				</select>
+				<select class="form-control TimeSelect" name="ceremony-start-time" data-val="TBA"></select>
 			</div>
 		</div>
 		<div class="row">
@@ -97,9 +87,7 @@
 			</div>
 			<div class="form-group col-sm-6">
 				<label>Start Time</label>
-				<select class="form-control TimeSelect" name="reception-start-time">
-					<% printTimes(); %>
-				</select>
+				<select class="form-control TimeSelect" name="reception-start-time" data-val="TBA"></select>
 			</div>
 		</div>
 		<div class="row">
@@ -122,7 +110,7 @@
 		</div>
 
 <hr>
-<h2 id="PhotographyPlannerDelivery">Photography, Planner, & Delivery</h2>
+<h2 id="PhotographyPlannerDeliveryTax">Photography, Planner, Delivery, & Tax</h2>
 <div class="row">
 	<div class="form-group col-sm-6">
 		<label>Photographers</label>
@@ -130,9 +118,7 @@
 	</div>
 	<div class="form-group col-sm-6">
 		<label>Photography Start Time</label>
-		<select class="form-control TimeSelect" name="photograph-start-time">
-			<% printTimes(); %>
-		</select>
+		<select class="form-control TimeSelect" name="photograph-start-time" data-val="TBA"></select>
 	</div>
 </div>
 <div class="row">
@@ -142,9 +128,13 @@
 	</div>
 	<div class="form-group col-sm-6">
 		<label>Delivery Time</label>
-		<select class="form-control TimeSelect" name="delivery-time">
-			<% printTimes(); %>
-		</select>
+		<select class="form-control TimeSelect" name="delivery-time" data-val="TBA"></select>
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Tax Information</label>
+		<select class="form-control taxes" name="tax-information" data-val="TBA"></select>
 	</div>
 </div>
 
@@ -174,7 +164,7 @@
 				<li><a href="javascript:navigationFn.goToSection('#GeneralInfo');">Customer & General Info</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#CeremonyInfo');">Ceremony Info</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#ReceptionInfo');">Reception Info</a></li>
-				<li><a href="javascript:navigationFn.goToSection('#PhotographyPlannerDelivery');">Photography, Planners, & Delivery</a></li>
+				<li><a href="javascript:navigationFn.goToSection('#PhotographyPlannerDeliveryTax');">Photography, Planners, Delivery, & Tax</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#Bouquets');">Bouquets</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#Boutonnieres');">Boutonnieres</a></li>
 				<li><a href="javascript:navigationFn.goToSection('#Corsages');">Corsages</a></li>
@@ -225,32 +215,10 @@
 
   <% include ../../partials/footer %>
 
-<% function printTimes() { %>
-	<option value="TBA" selected="selected">--</option>
-	<% var minutes = ["00","15","30","45"]; %>
-	<% for(var i = 0; i <=23; i++) { %>
-		<% for(var j = 0; j < minutes.length; j++) {
-			var suffix = (i >= 12)? 'pm' : 'am';
-			var hours = (i > 12) ? i - 12 : i;
-			if(hours == 0) {
-				hours = 12;
-			} %>
-			<option value="<%= hours + minutes[j] + suffix %>"><%= hours + ":" + minutes[j] + " " + suffix%></option>
-		<% } %>
-	<% } %>
-<% } %>
-
 <% function printFlowers(flowers) { %>
 	<option value="">Select Flower...</option>
 	<% flowers.forEach(function(item, index) { %>
 			<option value="<%= item.id %>"><%= item.name %></option>
-	<% }); %>
-<% } %>
-
-<% function printCustomers(customers) { %>
-	<option value="TBA" selected="selected">--</option>
-	<% customers.forEach(function(item, index) { %>
-			<option value="<%= item.id %>"><%= item.lastName + ', ' + item.firstName %></option>
 	<% }); %>
 <% } %>
 
@@ -311,6 +279,9 @@
 <script>
 
 $(document).ready(function() {
+	InsertTaxDropdown();
+	InsertCustomersDropdown();
+	InsertTimesDropdown();
 	// remove hasDatepicker class from all date inputs on page load
 	$(".date").each(function() {
 		$(this).removeClass('hasDatepicker');
@@ -325,6 +296,7 @@ function InsertCustomersDropdown() {
 	$.ajax({
 		url: '/staff/eventForm/getCustomers/'+customer_id,
 		method: 'GET',
+		async: false,
 		success: function(response) {
 			$("select[name=customer]").html(response);
 		},
@@ -332,7 +304,22 @@ function InsertCustomersDropdown() {
 			alert("Status: " + textStatus); alert("Error: " + errorThrown);
 		}
 	});
-	$("select[name=customer]").html()
+}
+
+// insert the customer dropdowns from the ajax call and select current data-val
+function InsertTaxDropdown() {
+	var tax_id = $("select[name=tax-information]").attr('data-val');
+	$.ajax({
+		url: '/staff/eventForm/getTaxes/'+tax_id,
+		method: 'GET',
+		async: false,
+		success: function(response) {
+			$("select[name=tax-information]").html(response);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("Status: " + textStatus); alert("Error: " + errorThrown);
+		}
+	});
 }
 
 // insert all time dropdowns and select the current data-val
