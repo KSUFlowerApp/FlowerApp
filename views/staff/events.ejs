@@ -12,6 +12,7 @@
 			<th>Groom</th>
 			<th>Ceremony Date</th>
 			<th>Edit</th>
+			<th>PDF</th>
 		</thead>
 		<tbody>
 		<% if(events) {
@@ -23,6 +24,7 @@
 						<td><%= item.grooms_name %></td>
 						<td><%= moment(item.ceremony_date).format('Do MMMM, YYYY'); %></td>
 						<td><button class='editbtn btn btn-primary'>Edit</button></td>
+						<td class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></td>
 					</tr>
 
 				<% });
