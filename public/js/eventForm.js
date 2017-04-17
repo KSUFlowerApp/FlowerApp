@@ -1,13 +1,4 @@
-function InsertCustomers() {
-	
-}
-
 $( document ).ready(function() {
-
-	// add datepicker to all .datepicker classes
-	$(".date").datepicker();
-	InsertCustomers();
-
 	// Load price in modal on item select
 	$("#altar-flowers").on('change', function()	{
 		if ($(this).prop('selectedIndex') != 0)	{
@@ -57,7 +48,17 @@ $(document).on("click", "#addItem", function() {
 		price = parseFloat(price);
 		var tblID = $form.find('#modal-table-id').val();
 		var tbl = $("#" + tblID);
-		tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price.toFixed(2) + "</td><td><center><input type='button' class='increase-item-btn' value='+' /> <input type='button' class='decrease-item-btn' value='-' /> <input type='button' class='remove-item-btn' value='x' /></ center></td></tr>");
+		tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price.toFixed(2) + "</td><td><center>" +
+		"<button class='increase-item-btn btn-success'>"+
+  		"<span class='glyphicon glyphicon-plus'></span>"+
+		"</button>"+
+		"<button class='decrease-item-btn btn-warning'>"+
+  		"<span class='glyphicon glyphicon-minus'></span>"+
+		"</button>"+
+		"<button class='remove-item-btn btn-danger'>"+
+  		"<span class='glyphicon glyphicon-remove'></span>"+
+		"</button>"+
+		"</ center></td></tr>");
 		var qtyPrice = parseFloat(qty) * parseFloat(price);
 		var tblTotal = tbl.find('.price');
 		var initPrice = tblTotal.text();
@@ -193,7 +194,6 @@ $(document).on("click", "#save-btn", function() {
 	var ceremony_date = $("input[name=ceremony-date]").val();
 	// replace all white space and strip out time dropdowns
 	var form_text = $("#main-form").html().replace(/^\s+|\r\n|\n|\r|(>)\s+(<)|\s+$/gm, '$1$2').replace(/<option value="TBA".+?\/select>/g, '</select>');
-	console.log(form_text);
 	if(isEmpty(customer) || isEmpty(brides_name) || isEmpty(grooms_name) || isEmpty(ceremony_date)) {
 		alert("Customer, Bride's Name, Groom's Name, and Ceremony Date must be filled out in order to save.");
 	} else {

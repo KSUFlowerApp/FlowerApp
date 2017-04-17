@@ -80,6 +80,10 @@ div.ui-datepicker, .ui-datepicker td {
 	color: #B6385E;
 }
 
+.remove-item-btn, .decrease-item-btn {
+	margin-left: 2px;
+}
+
 img.logo {
 	border-bottom: solid 2px #c9b66f;
 }

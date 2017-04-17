@@ -6,6 +6,7 @@ var customers = require('../middleware/customers.js');
 var events = require('../middleware/events.js');
 var async = require('async');
 var SqlString = require('sqlstring');
+var moment = require('moment');
 
 module.exports = function(app, passport, db) {
   // =====================================
@@ -132,7 +133,7 @@ module.exports = function(app, passport, db) {
       if(err) {
         console.log(err);
       } else {
-        res.render('staff/events.ejs', { events:events });
+        res.render('staff/events.ejs', { events:events, moment: moment });
       }
     });
   });

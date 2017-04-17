@@ -11,16 +11,18 @@
 			<th>Bride</th>
 			<th>Groom</th>
 			<th>Ceremony Date</th>
+			<th>Edit</th>
 		</thead>
 		<tbody>
 		<% if(events) {
 				events.forEach(function(item, index) { %>
 					<tr>
-						<td><%= item.id %></td>
+						<td class='itemId'><%= item.id %></td>
 						<td><%= item.customer %></td>
 						<td><%= item.brides_name %></td>
 						<td><%= item.grooms_name %></td>
-						<td><%= item.ceremony_date %></td>
+						<td><%= moment(item.ceremony_date).format('Do MMMM, YYYY'); %></td>
+						<td><button class='editbtn btn btn-primary'>Edit</button></td>
 					</tr>
 
 				<% });
@@ -41,5 +43,11 @@ $( document ).ready(function() {
     $("#events").DataTable({
     		"iDisplayLength": 50
   	});
+});
+
+$("#events").on('click', '.editbtn', function() {
+		var row = $(this).closest('tr');
+		var id = row.find('.itemId').text();
+		window.location.href = '/staff/eventForm/'+id;
 });
 </script>

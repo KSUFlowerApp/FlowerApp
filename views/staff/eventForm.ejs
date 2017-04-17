@@ -8,6 +8,12 @@
 		<h1><span class="fa fa-calendar"></span> Event Form</h1>
 		<% if(form_id) { %>
 			<input type="text" id="form-id" disabled="true" value="<%= form_id %>">
+			<script>
+				$( document ).ready(function() {
+					InsertCustomersDropdown();
+					InsertTimesDropdown();
+				});
+			</script>
 		<% } else { %>
 			<input type="text" id="form-id" disabled="true" value="<%= form_id %>">
 		<% } %>
@@ -301,3 +307,61 @@
 
 	<hr>
 <% } %>
+
+<script>
+
+$(document).ready(function() {
+	// remove hasDatepicker class from all date inputs on page load
+	$(".date").each(function() {
+		$(this).removeClass('hasDatepicker');
+	});
+	// add datepicker to all .date classes
+	$(".date").datepicker({ dateFormat: 'yy-mm-dd' });
+});
+
+// insert the customer dropdowns from the ajax call and select current data-val
+function InsertCustomersDropdown() {
+	var customer_id = $("select[name=customer]").attr('data-val');
+	$.ajax({
+		url: '/staff/eventForm/getCustomers/'+customer_id,
+		method: 'GET',
+		success: function(response) {
+			$("select[name=customer]").html(response);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("Status: " + textStatus); alert("Error: " + errorThrown);
+		}
+	});
+	$("select[name=customer]").html()
+}
+
+// insert all time dropdowns and select the current data-val
+function InsertTimesDropdown() {
+	$(".TimeSelect").each(function() {
+		var data_val = $(this).attr('data-val');
+		var html = "";
+		if(data_val == "TBA") {
+			html += "<option value=\"TBA\" selected=\"selected\">--</option>";
+		} else {
+			html += "<option value=\"TBA\">--</option>"
+		}
+		var minutes = ["00","15","30","45"];
+		for(var i = 0; i <=23; i++) {
+			for(var j = 0; j < minutes.length; j++) {
+				var suffix = (i >= 12)? 'pm' : 'am';
+				var hours = (i > 12) ? i - 12 : i;
+				if(hours == 0) {
+					hours = 12;
+				}
+				var val = String(hours) + String(minutes[j]) + suffix;
+				if(data_val == val) {
+					html += "<option value=\""+val+"\" selected=\"selected\">" + hours + ":" + minutes[j] + " " + suffix + "</option>";
+				} else {
+					html += "<option value=\""+val+"\">" + hours + ":" + minutes[j] + " " + suffix + "</option>";
+				}
+			}
+		}
+		$(this).html(html);
+	});
+}
+</script>
