@@ -5,10 +5,7 @@ module.exports = exports = {
 // establish db connection
 var db = require('../config/db');
 
-// =====================================
-// GETINVENTORY ===============================
-// =====================================
-// Get inventory from database.
+// Get customers from database.
 function getCustomers(callback) {
     var query = "SELECT c.* " +
     "FROM customers c " +
