@@ -174,9 +174,9 @@ module.exports = function(app, passport, db) {
       if(err) {
         console.log(err)
       } else {
-        //console.log(results[0][0].form_json);
         var form_json = JSON.parse(results[0][0].form_json);
-        res.set({'Content-Type': 'application/json; charset=utf-8'}).send(JSON.stringify(form_json, null, 3));
+        //res.set({'Content-Type': 'application/json; charset=utf-8'}).send(JSON.stringify(form_json, null, 3));
+        res.render('staff/pdfs.ejs', { pdf: form_json });
       }
     });
   });

@@ -1,0 +1,58 @@
+<!-- views/staff/events.ejs -->
+<% include ../../partials/header %>
+<script src='/bower_components/pdfmake/build/pdfmake.min.js'></script>
+<script src='/bower_components/pdfmake/build/vfs_fonts.js'></script>
+<link rel="stylesheet" href="/public/css/tiles.css">
+
+<div class="page-header text-center">
+  <h1><span class="fa fa-file-pdf-o fa-2x"></span> Download Event PDFs</h1>
+</div>
+
+<div class="row text-center">
+  <div class="col-sm-4">
+    <h3><%= pdf.brides_name %></h3>
+  </div>
+  <div class="col-sm-4">
+    <h3><%= pdf.grooms_name %></h3>
+  </div>
+  <div class="col-sm-4">
+    <h3><%= pdf.ceremony_date %></h3>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <a href="#" id="staffPDF">
+    <div class="col-sm-6">
+      <div class="tile tile-primary">
+        <h3 class="title">Staff PDF</h3>
+        <p>Download the pdf formatted for the staff.</p>
+      </div>
+    </div>
+  </a>
+  <a href="#" id="customerPDF">
+    <div class="col-sm-6">
+      <div class="tile tile-primary">
+        <h3 class="title">Customer PDF</h3>
+        <p>Download the pdf formatted for the customer.</p>
+      </div>
+    </div>
+  </a>
+</div>
+
+<% include ../../partials/footer %>
+
+<script>
+$(document).on("click", "#staffPDF", function() {
+  var doc_name = "<%= pdf.brides_name %>_<%= pdf.grooms_name %>_<%= pdf.ceremony_date %>_staff_pdf.pdf";
+  var docDefinition = { content: 'Staff PDF' };
+  pdfMake.createPdf(docDefinition).download(doc_name);
+});
+
+$(document).on("click", "#customerPDF", function() {
+  var doc_name = "<%= pdf.brides_name %>_<%= pdf.grooms_name %>_<%= pdf.ceremony_date %>_customer_pdf.pdf";
+  var docDefinition = { content: 'Customer PDF' };
+  pdfMake.createPdf(docDefinition).download(doc_name);
+});
+</script>
