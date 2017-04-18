@@ -25,6 +25,12 @@ $(document).on("click", ".add-btn", function() {
 		$("#mdlAddItem").modal();
 });
 
+$(document).on("shown.bs.modal", "#mdlAddItem", function() {
+	$(this).find('#altar-flowers').prop('selectedIndex', 0);
+	$(this).find('#addQuantity').val(null);
+	$(this).find("#addPrice").val(null);
+});
+
 // Load price in modal on item select
 $(document).on("change", ".altar-flowers", function() {
 	if ($(this).prop('selectedIndex') != 0)	{
@@ -62,14 +68,6 @@ $(document).on("click", "#addItem", function() {
   		"<span class='glyphicon glyphicon-remove'></span>"+
 		"</button>"+
 		"</ center></td></tr>");
-		var qtyPrice = parseFloat(qty) * parseFloat(price);
-		var tblTotal = tbl.find('.price');
-		var initPrice = tblTotal.text();
-		initPrice = initPrice.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-		totalToDisp = parseFloat(initPrice) + parseFloat(qtyPrice);
-		tblTotal.html("$" + totalToDisp.toFixed(2));
-		$("#mdlAddItem").modal('hide');
-		updateGrandTotal(totalToDisp, "add")
 		var qtyTblToUpdate = tbl.closest('.itemTable');
 		var tblID2 = qtyTblToUpdate.attr("id");
 		var numRows = $("#" + tblID2 + " > tbody > tr").length;
@@ -84,6 +82,14 @@ $(document).on("click", "#addItem", function() {
 		event.preventDefault();
 		alert("Please select a valid item.");
 	}
+		var qtyPrice = parseFloat(qty) * parseFloat(price);
+		var tblTotal = tbl.find('.price');
+		var initPrice = tblTotal.text();
+		initPrice = initPrice.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		totalToDisp = parseFloat(initPrice) + parseFloat(qtyPrice);
+		tblTotal.html("$" + totalToDisp.toFixed(2));
+		$("#mdlAddItem").modal('hide');
+		updateGrandTotal();
 });
 
 // Decrease item from recipe table
