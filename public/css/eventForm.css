@@ -80,8 +80,25 @@ div.ui-datepicker, .ui-datepicker td {
 	color: #B6385E;
 }
 
-.remove-item-btn, .decrease-item-btn {
+.increase-item-btn {
 	margin-left: 2px;
+	border: 1px solid;
+	border-radius: 4px;
+	background-color: #84DB84;
+}
+
+.decrease-item-btn {
+	margin-left: 2px;
+	border: 1px solid;
+	border-radius: 4px;
+	background-color: #FFBB00;
+}
+
+.remove-item-btn {
+	margin-left: 2px;
+	border: 1px solid;
+	border-radius: 4px;
+	background-color: #FF8080;
 }
 
 img.logo {
