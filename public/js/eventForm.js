@@ -89,7 +89,7 @@ $(document).on("click", "#addItem", function() {
 		totalToDisp = parseFloat(initPrice) + parseFloat(qtyPrice);
 		tblTotal.html("$" + totalToDisp.toFixed(2));
 		$("#mdlAddItem").modal('hide');
-		updateGrandTotal(totalToDisp, "add")
+		updateGrandTotal();
 });
 
 // Decrease item from recipe table
