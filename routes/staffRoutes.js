@@ -93,7 +93,7 @@ module.exports = function(app, passport, db) {
       if(err) {
         console.log(err)
       } else {
-        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: undefined, form_text: undefined });
+        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: undefined, form_html: undefined });
       }
     });
   });
