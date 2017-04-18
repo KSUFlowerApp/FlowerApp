@@ -180,7 +180,10 @@ function updateGrandTotal() {
 		recipe_total = recipe_price*recipe_qty;
 		grand_total += recipe_total;
 	});
-	tax_rate = $("select[name=tax-information] option:selected").attr("data-val");
+	var tax_rate = $("select[name=tax-information] option:selected").attr("data-val");
+	if(isNaN(tax_rate)) {
+		tax_rate = 0;
+	}
 	tax_rate = 1 + parseFloat(tax_rate);
 	grand_total *= tax_rate;
 	$('#grand-total').html('$' + grand_total.toFixed(2));
