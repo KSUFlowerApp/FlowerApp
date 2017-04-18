@@ -14,8 +14,8 @@
 	</div>
 
 	<form id="main-form">
-	<% if(form_text) { %>
-		<%- form_text %>
+	<% if(form_html) { %>
+		<%- form_html %>
 	<% }  else { %>
 
 		<h2 id="GeneralInfo">Customer & General Info</h2>
@@ -253,8 +253,8 @@
 					</thead>
 					<tbody>
 					<tr class='recipeTotal'>
-						<td class='item' colspan='2'><b>Total<b></td>
-						<td class='price' colspan='2'><b>$0.00<b></td>
+						<td class='item total-row' colspan='2'>Total</td>
+						<td class='price total-row' colspan='2'>$0.00</td>
 					</tr>
 				</tbody>
 				</table>

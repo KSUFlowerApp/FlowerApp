@@ -45,7 +45,8 @@ CREATE TABLE proj_flowerapp.events (
   brides_name            VARCHAR(45),
   grooms_name            VARCHAR(45),
   ceremony_date          DATETIME,
-  form                   LONGTEXT,
+  form_html              LONGTEXT,
+  form_json              LONGTEXT,
   PRIMARY KEY(id),
   FOREIGN KEY(customer) REFERENCES proj_flowerapp.customers(id)
 );

@@ -107,7 +107,7 @@ module.exports = function(app, passport, db) {
       if(err) {
         console.log(err)
       } else {
-        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: results[2][0].id, form_text: results[2][0].form });
+        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: results[2][0].id, form_html: results[2][0].form_html });
       }
     });
   });
@@ -121,15 +121,16 @@ module.exports = function(app, passport, db) {
     var brides_name = req.body.brides_name;
     var grooms_name = req.body.grooms_name;
     var ceremony_date = req.body.ceremony_date;
-    var form_text = req.body.form_text;
+    var form_html = req.body.form_html;
+    var form_json = req.body.form_json;
     var query = "";
     if(form_id) {
       query = SqlString.format("UPDATE events " +
-              "SET customer = ?, brides_name = ?, grooms_name = ?, ceremony_date = ?, form = ? " +
-              "WHERE id = ?",[customer, brides_name, grooms_name, ceremony_date, form_text, form_id]);
+              "SET customer = ?, brides_name = ?, grooms_name = ?, ceremony_date = ?, form_html = ?, form_json = ? " +
+              "WHERE id = ?",[customer, brides_name, grooms_name, ceremony_date, form_html, form_json, form_id]);
     } else {
-      query = SqlString.format("INSERT INTO events(customer, brides_name, grooms_name, ceremony_date, form) " +
-							"VALUES(?, ?, ?, ?, ?)",[customer, brides_name, grooms_name, ceremony_date, form_text]);
+      query = SqlString.format("INSERT INTO events(customer, brides_name, grooms_name, ceremony_date, form_html, form_json) " +
+							"VALUES(?, ?, ?, ?, ?, ?)",[customer, brides_name, grooms_name, ceremony_date, form_html, form_json]);
     }
     db.query(query, function(err, rows) {
 			var response = {
@@ -173,7 +174,9 @@ module.exports = function(app, passport, db) {
       if(err) {
         console.log(err)
       } else {
-        res.send(results[0]);
+        //console.log(results[0][0].form_json);
+        var form_json = JSON.parse(results[0][0].form_json);
+        res.set({'Content-Type': 'application/json; charset=utf-8'}).send(JSON.stringify(form_json, null, 3));
       }
     });
   });

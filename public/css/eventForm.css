@@ -35,6 +35,10 @@ div.ui-datepicker, .ui-datepicker td {
  	font-size:1.5em;
 }
 
+.total-row {
+	font-weight: bold;
+}
+
 
 #grand-total-table {
 	border: solid 2px #c9b66f;
