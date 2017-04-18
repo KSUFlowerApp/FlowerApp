@@ -1,0 +1,10 @@
+Libraries used:
+- Request
+- Mocha
+
+Login system tests:
+- Signup
+- Signin
+- Logout
+- Signup with unavailable username
+- Signin with wrong password
