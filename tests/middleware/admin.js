@@ -23,4 +23,34 @@ describe("Middleware - Admin", function() {
       expect(r).to.not.equal(null);
     });
   });
+
+  // Get users.
+  it("- Get users", function() {
+    var r = null;
+    admin.getUsers(function(err, rows) {
+      expect(err).to.equal(null);
+      r = rows;
+      expect(r).to.not.equal(null);
+    });
+  });
+
+  // Get roles.
+  it("- Get roles", function() {
+    var r = null;
+    admin.getRoles(function(err, rows) {
+      expect(err).to.equal(null);
+      r = rows;
+      expect(r).to.not.equal(null);
+    });
+  });
+
+  // Get taxes.
+  it("- Get taxes", function() {
+    var r = null;
+    admin.getTaxes(function(err, rows) {
+      expect(err).to.equal(null);
+      r = rows;
+      expect(r).to.not.equal(null);
+    });
+  });
 });
