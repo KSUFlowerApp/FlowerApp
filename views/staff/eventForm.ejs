@@ -3,6 +3,7 @@
 <script src='/public/js/eventForm.js'></script>
 <link rel='stylesheet' href='/public/css/eventForm.css' />
 <% getPrices(flowers); %>
+<% getPrices(hardGoods); %>
 
 	<div class="page-header text-center">
 		<h1><span class="fa fa-calendar"></span> New Event</h1>
@@ -192,6 +193,12 @@
 					<div class="modal-body" style="padding:48px 48px;">
 						<form name="formEditInventory" role="form" attribute="">
 							<div class="form-group">
+								<center>
+									<label style="display: inline;">Flower</label>&nbsp;
+									<input type="radio" name="inventory-type" class="inventory-btn" value="Flower" />&nbsp;&nbsp;
+									<label style="display: inline;">Hard Good</label>&nbsp;
+									<input type="radio" name="inventory-type" class="inventory-btn" value="Hard Good" /><br /><br />
+								</center>
 								<input class="modal-hidden-table" id="modal-table-id" type="hidden" value="" />
 								<label>Item</label>
 								<select class="form-control" name="altar-flowers" id="altar-flowers" style="width: 200px; display: inline;"><% printFlowers(flowers); %></select>&nbsp;
@@ -227,6 +234,17 @@
 		var prices = {};
 	</script>
 	<% flowers.forEach(function(item, index) { %>
+			<script>
+				prices['<%= item.name %>'] = <%= item.price*item.markup %>;
+			</script>
+	<% }); %>
+<% } %>
+
+<% function getPrices(hardGoods) { %>
+	<script>
+		var prices = {};
+	</script>
+	<% hardGoods.forEach(function(item, index) { %>
 			<script>
 				prices['<%= item.name %>'] = <%= item.price*item.markup %>;
 			</script>

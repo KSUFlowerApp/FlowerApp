@@ -117,6 +117,22 @@ $(document).on("click", ".decrease-item-btn", function ()	{
 	}
 });
 
+$(document).on("change", ".inventory-btn", function()	{
+	var checkVal = $(this).val();
+	$.ajax({
+		url: '/staff/eventForm/getInventoryItems/'+ checkVal,
+		method: 'GET',
+		async: false,
+		success: function(response) {
+			$("select[name=altar-flowers]").html(response);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("Status: " + textStatus); alert("Error: " + errorThrown);
+		}
+	});
+});
+
+
 // Increase item from recipe table
 $(document).on("click", ".increase-item-btn", function ()	{
 	event.preventDefault();

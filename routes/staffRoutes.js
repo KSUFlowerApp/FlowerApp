@@ -56,6 +56,39 @@ module.exports = function(app, passport, db) {
     });
   });
 
+  app.get('/staff/eventForm/getInventoryItems/:id', session.isLoggedIn, function(req, res) {
+    selected_id = req.params.id;
+    options = ""
+
+    if (selected_id == "Flower")  {
+      admin.getFlowers(function(err, _flowers)  {
+        if (err) {
+          console.log(err);
+          return res.sendStatus(500);
+        }
+        options += "<option value=''>Select Flower...</option>";
+        _flowers.forEach(function(item, index)  {
+          options += "<option value=\"" + item.id + "\">" + item.name + "</option>";
+        });
+        res.send(options);
+      });
+    }
+
+    else if (selected_id == "Hard Good")  {
+      admin.getHardGoods(function(err, _hardGoods)  {
+        if (err)  {
+          console.log(err);
+          return res.sendStatus(500);
+        }
+        options += "<option value=''>Select Hard Good...</option>";
+        _hardGoods.forEach(function(item, index)  {
+          options += "<option value=\"" + item.id + "\">" + item.name + "</option>";
+        });
+        res.send(options);
+      });
+    }
+    });
+
   // STAFF EVENT FORM GET CUSTOMER DROPDOWN
   app.get('/staff/eventForm/getTaxes/:id', session.isLoggedIn, function(req, res) {
     selected_id = req.params.id;
