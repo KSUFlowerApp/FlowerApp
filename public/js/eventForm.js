@@ -1,9 +1,53 @@
+var flwPrices = {};
+var hgPrices = {};
+var flwIDs = {};
+var hgIDs = {};
+var flwOptions = "";
+var hgOptions = "";
+
+console.log(hgPrices);
+console.log(flwPrices);
+
 $( document ).ready(function() {
 	// update grand total on page load
 	updateGrandTotal();
+	loadFlowers();
+	loadHardGoods();
+
+	function loadFlowers() {
+		$.ajax({
+			url: '/staff/eventForm/getInventoryItems/Flower',
+			method: 'GET',
+			async: false,
+			success: function(response) {
+				flwPrices.dict = response.itemPrices;
+				flwIDs.dict = response.itemIDs;
+				flwOptions = response.options;
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("Status: " + textStatus); alert("Error: " + errorThrown);
+			}
+		});
+	}
+
+	function loadHardGoods() {
+		$.ajax({
+			url: '/staff/eventForm/getInventoryItems/Hard Good',
+			method: 'GET',
+			async: false,
+			success: function(response) {
+				hgPrices.dict = response.itemPrices;
+				hgIDs.dict = response.itemIDs;
+				hgOptions = response.options;
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("Status: " + textStatus); alert("Error: " + errorThrown);
+			}
+		});
+	}
 
 	// Load price in modal on item select
-	$("#altar-flowers").on('change', function()	{
+	/*$("#altar-flowers").on('change', function()	{
 		if ($(this).prop('selectedIndex') != 0)	{
 			var name = $("option:selected", this).text();
 			var price = parseFloat(prices[name]).toFixed(2);
@@ -14,7 +58,7 @@ $( document ).ready(function() {
 			$(this).siblings('#addPrice').val(price);
 			$(this).siblings('#addQuantity').val(null);
 		}
-	});
+	});*/
 
 });
 
@@ -32,15 +76,15 @@ $(document).on("shown.bs.modal", "#mdlAddItem", function() {
 });
 
 // Load price in modal on item select
-$(document).on("change", ".altar-flowers", function() {
+$(document).on("change", "[name=altar-flowers]", function() {
 	if ($(this).prop('selectedIndex') != 0)	{
 		var name = $("option:selected", this).text();
 		var price = parseFloat(prices[name]).toFixed(2);
-		$(this).siblings('#addPrice').val(price);
+		$(this).siblings('#addPrice').val(null);
 		$(this).siblings('#addQuantity').val(1);
 	}
 	else {
-		$(this).siblings('#addPrice').val(price);
+		$(this).siblings('#addPrice').val(null);
 		$(this).siblings('#addQuantity').val(null);
 	}
 });
@@ -119,17 +163,14 @@ $(document).on("click", ".decrease-item-btn", function ()	{
 
 $(document).on("change", ".inventory-btn", function()	{
 	var checkVal = $(this).val();
-	$.ajax({
-		url: '/staff/eventForm/getInventoryItems/'+ checkVal,
-		method: 'GET',
-		async: false,
-		success: function(response) {
-			$("select[name=altar-flowers]").html(response);
-		},
-		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("Status: " + textStatus); alert("Error: " + errorThrown);
-		}
-	});
+	var qtyBox = $(this).siblings('#addQuantity');
+	qtyBox.val(1);
+	if (checkVal == "Flower")	{
+		$("select[name=altar-flowers]").html(flwOptions);
+	}
+	else if (checkVal == "Hard Good")	{
+		$("select[name=altar-flowers]").html(hgOptions);
+	}
 });
 
 

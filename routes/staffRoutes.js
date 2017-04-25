@@ -58,7 +58,10 @@ module.exports = function(app, passport, db) {
 
   app.get('/staff/eventForm/getInventoryItems/:id', session.isLoggedIn, function(req, res) {
     selected_id = req.params.id;
+    var data = {};
     options = ""
+    itemIDs = {};
+    itemPrices = {};
 
     if (selected_id == "Flower")  {
       admin.getFlowers(function(err, _flowers)  {
@@ -68,9 +71,17 @@ module.exports = function(app, passport, db) {
         }
         options += "<option value=''>Select Flower...</option>";
         _flowers.forEach(function(item, index)  {
-          options += "<option value=\"" + item.id + "\">" + item.name + "</option>";
+          options += "<option value=\"" + item.name + "\">" + item.name + "</option>";
+          itemIDs[item.name] = item.id;
+          itemPrices[item.id] = item.price;
         });
-        res.send(options);
+        data = {
+          "options": options,
+          "itemIDs": itemIDs,
+          "itemPrices": itemPrices
+        }
+        console.log('the data is: ' + data);
+        res.send(data);
       });
     }
 
@@ -82,9 +93,17 @@ module.exports = function(app, passport, db) {
         }
         options += "<option value=''>Select Hard Good...</option>";
         _hardGoods.forEach(function(item, index)  {
-          options += "<option value=\"" + item.id + "\">" + item.name + "</option>";
+          options += "<option value=\"" + item.name + "\">" + item.name + "</option>";
+          itemIDs[item.name] = item.id;
+          itemPrices[item.id] = item.price;
         });
-        res.send(options);
+        data = {
+          "options": options,
+          "itemIDs": itemIDs,
+          "itemPrices": itemPrices
+        }
+        console.log('the data is: ' + data);
+        res.send(data);
       });
     }
     });
