@@ -1,5 +1,12 @@
 // format currency on keyup
-$(document).on("keyup", ".currency", function ()	{
+/*$(document).on("keyup", ".currency", function ()	{
+  // no characters can be typed
+  // price is always 2 decminal points
+  var sanitized = parseFloat($(this).val().replace(/,/g, "")).toFixed(2);
+  $(this).val(sanitized);
+});*/
+
+$(document).on("change", ".currency", function ()	{
   // no characters can be typed
   // price is always 2 decminal points
   var sanitized = parseFloat($(this).val().replace(/,/g, "")).toFixed(2);
