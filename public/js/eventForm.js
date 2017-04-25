@@ -53,7 +53,7 @@ $(document).on("click", "#addItem", function() {
 		var price = $form.find('#addPrice').val();
 		price = parseFloat(price);
 		qty = parseFloat(qty)
-		if (isNaN(price) || isNaN(qty)) {
+		if (isNaN(price) || checkQtyIsInvalid(qty) ) {
 			alert("Price or quantity is invalid.");
 			$form.find('#addPrice').val(prices[item].toFixed(2));
 			$form.find('#addQuantity').val(1);
@@ -515,4 +515,14 @@ function InsertTimesDropdown() {
 // select first inventory item by default in add modal
 function SelectFirstInventoryTypeByDefault() {
 	$("input:radio[name=inventory-type]:first").click();
+}
+
+function checkQtyIsInvalid(qty) {
+	if (isNaN(qty)) {
+		return true;
+	}
+	else if(qty % 1 != 0) {
+		return true;
+	}
+	return false;
 }
