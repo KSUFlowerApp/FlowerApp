@@ -52,27 +52,35 @@ $(document).on("click", "#addItem", function() {
 		var qty = $form.find('#addQuantity').val();
 		var price = $form.find('#addPrice').val();
 		price = parseFloat(price);
-		var tblID = $form.find('#modal-table-id').val();
-		var tbl = $("#" + tblID);
-		tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price.toFixed(2) + "</td><td><center>" +
-		"<button class='increase-item-btn btn-success'>"+
-  		"<span class='glyphicon glyphicon-plus'></span>"+
-		"</button>"+
-		"<button class='decrease-item-btn btn-warning'>"+
-  		"<span class='glyphicon glyphicon-minus'></span>"+
-		"</button>"+
-		"<button class='remove-item-btn btn-danger'>"+
-  		"<span class='glyphicon glyphicon-remove'></span>"+
-		"</button>"+
-		"</ center></td></tr>");
-		var qtyTblToUpdate = tbl.closest('.itemTable');
-		var tblID2 = qtyTblToUpdate.attr("id");
-		var numRows = $("#" + tblID2 + " > tbody > tr").length;
-		qtyVal = qtyTblToUpdate.parent().next().children('.form-control-num').val();
-		if (qtyVal == null | qtyVal == "" | qtyVal == 0)
-		{
-			qtyTblToUpdate.parent().next().children('.form-control-num').defaultValue = 1;
-			qtyTblToUpdate.parent().next().children('.form-control-num').val(1);
+		qty = parseFloat(qty)
+		if (isNaN(price) || isNaN(qty)) {
+			alert("Price or quantity is invalid.");
+			$form.find('#addPrice').val(prices[item].toFixed(2));
+			$form.find('#addQuantity').val(1);
+		}
+		else {
+			var tblID = $form.find('#modal-table-id').val();
+			var tbl = $("#" + tblID);
+			tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price.toFixed(2) + "</td><td><center>" +
+			"<button class='increase-item-btn btn-success'>"+
+	  		"<span class='glyphicon glyphicon-plus'></span>"+
+			"</button>"+
+			"<button class='decrease-item-btn btn-warning'>"+
+	  		"<span class='glyphicon glyphicon-minus'></span>"+
+			"</button>"+
+			"<button class='remove-item-btn btn-danger'>"+
+	  		"<span class='glyphicon glyphicon-remove'></span>"+
+			"</button>"+
+			"</ center></td></tr>");
+			var qtyTblToUpdate = tbl.closest('.itemTable');
+			var tblID2 = qtyTblToUpdate.attr("id");
+			var numRows = $("#" + tblID2 + " > tbody > tr").length;
+			qtyVal = qtyTblToUpdate.parent().next().children('.form-control-num').val();
+			if (qtyVal == null | qtyVal == "" | qtyVal == 0)
+			{
+				qtyTblToUpdate.parent().next().children('.form-control-num').defaultValue = 1;
+				qtyTblToUpdate.parent().next().children('.form-control-num').val(1);
+			}
 		}
 	}
 	else {
