@@ -46,7 +46,7 @@ $(document).on("change", "[name=altar-inventory]", function() {
 $(document).on("click", "#addItem", function() {
 	if ($("#altar-inventory").prop("selectedIndex") != 0)	{
 		event.preventDefault();
-
+		var addRow = true;
 		var $form = $(this).closest('form');
 		var item = $form.find('#altar-inventory option:selected').text();
 		var qty = $form.find('#addQuantity').val();
@@ -61,25 +61,39 @@ $(document).on("click", "#addItem", function() {
 		else {
 			var tblID = $form.find('#modal-table-id').val();
 			var tbl = $("#" + tblID);
-			tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price.toFixed(2) + "</td><td><center>" +
-			"<button class='increase-item-btn btn-success'>"+
-	  		"<span class='glyphicon glyphicon-plus'></span>"+
-			"</button>"+
-			"<button class='decrease-item-btn btn-warning'>"+
-	  		"<span class='glyphicon glyphicon-minus'></span>"+
-			"</button>"+
-			"<button class='remove-item-btn btn-danger'>"+
-	  		"<span class='glyphicon glyphicon-remove'></span>"+
-			"</button>"+
-			"</ center></td></tr>");
-			var qtyTblToUpdate = tbl.closest('.itemTable');
-			var tblID2 = qtyTblToUpdate.attr("id");
-			var numRows = $("#" + tblID2 + " > tbody > tr").length;
-			qtyVal = qtyTblToUpdate.parent().next().children('.form-control-num').val();
-			if (qtyVal == null | qtyVal == "" | qtyVal == 0)
-			{
-				qtyTblToUpdate.parent().next().children('.form-control-num').defaultValue = 1;
-				qtyTblToUpdate.parent().next().children('.form-control-num').val(1);
+			tbl.find("tbody > tr:not(:last)").each(function() {
+				var item_name = $(this).children().eq(0).text();
+				var item_qty = $(this).children().eq(1).text().replace(" x","");
+				var item_price = $(this).children().eq(2).text();
+				item_qty = parseFloat(item_qty);
+				item_price = parseFloat(item_price.substring(1, item_price.length));
+				if (item == item_name && price == item_price) {
+					addRow = false;
+					item_qty = item_qty + qty;
+					$(this).children().eq(1).text(item_qty + " x");
+				}
+			});
+			if (addRow) {
+				tbl.prepend("<tr><td>" + item + "</td><td style='text-align: right;'>" + qty + " x </td><td>$" + price.toFixed(2) + "</td><td><center>" +
+				"<button class='increase-item-btn btn-success'>"+
+		  		"<span class='glyphicon glyphicon-plus'></span>"+
+				"</button>"+
+				"<button class='decrease-item-btn btn-warning'>"+
+		  		"<span class='glyphicon glyphicon-minus'></span>"+
+				"</button>"+
+				"<button class='remove-item-btn btn-danger'>"+
+		  		"<span class='glyphicon glyphicon-remove'></span>"+
+				"</button>"+
+				"</ center></td></tr>");
+				var qtyTblToUpdate = tbl.closest('.itemTable');
+				var tblID2 = qtyTblToUpdate.attr("id");
+				var numRows = $("#" + tblID2 + " > tbody > tr").length;
+				qtyVal = qtyTblToUpdate.parent().next().children('.form-control-num').val();
+				if (qtyVal == null | qtyVal == "" | qtyVal == 0)
+				{
+					qtyTblToUpdate.parent().next().children('.form-control-num').defaultValue = 1;
+					qtyTblToUpdate.parent().next().children('.form-control-num').val(1);
+				}
 			}
 		}
 	}
