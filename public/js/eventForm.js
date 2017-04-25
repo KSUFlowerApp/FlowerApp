@@ -1,65 +1,18 @@
-var flwPrices = {};
-var hgPrices = {};
-var flwIDs = {};
-var hgIDs = {};
-var flwOptions = "";
-var hgOptions = "";
-
-console.log(hgPrices);
-console.log(flwPrices);
-
 $( document ).ready(function() {
-	// update grand total on page load
+	prices = {}
+	InsertTaxDropdown();
+	InsertCustomersDropdown();
+	InsertTimesDropdown();
+	SelectFirstInventoryTypeByDefault();
 	updateGrandTotal();
-	loadFlowers();
-	loadHardGoods();
 
-	function loadFlowers() {
-		$.ajax({
-			url: '/staff/eventForm/getInventoryItems/Flower',
-			method: 'GET',
-			async: false,
-			success: function(response) {
-				flwPrices.dict = response.itemPrices;
-				flwIDs.dict = response.itemIDs;
-				flwOptions = response.options;
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				alert("Status: " + textStatus); alert("Error: " + errorThrown);
-			}
-		});
-	}
-
-	function loadHardGoods() {
-		$.ajax({
-			url: '/staff/eventForm/getInventoryItems/Hard Good',
-			method: 'GET',
-			async: false,
-			success: function(response) {
-				hgPrices.dict = response.itemPrices;
-				hgIDs.dict = response.itemIDs;
-				hgOptions = response.options;
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				alert("Status: " + textStatus); alert("Error: " + errorThrown);
-			}
-		});
-	}
-
-	// Load price in modal on item select
-	/*$("#altar-flowers").on('change', function()	{
-		if ($(this).prop('selectedIndex') != 0)	{
-			var name = $("option:selected", this).text();
-			var price = parseFloat(prices[name]).toFixed(2);
-			$(this).siblings('#addPrice').val(price);
-			$(this).siblings('#addQuantity').val(1);
-		}
-		else {
-			$(this).siblings('#addPrice').val(price);
-			$(this).siblings('#addQuantity').val(null);
-		}
-	});*/
-
+	// remove hasDatepicker class from all date inputs on page load
+	$(".date").each(function() {
+		$(this).removeClass('hasDatepicker');
+	});
+	// add datepicker to all .date classes
+	$(".date").datepicker({ dateFormat: 'yy-mm-dd' });
+	// update grand total on page load
 });
 
 // Display "add inventory" modal.
@@ -70,13 +23,13 @@ $(document).on("click", ".add-btn", function() {
 });
 
 $(document).on("shown.bs.modal", "#mdlAddItem", function() {
-	$(this).find('#altar-flowers').prop('selectedIndex', 0);
+	$(this).find('#altar-inventory').prop('selectedIndex', 0);
 	$(this).find('#addQuantity').val(null);
 	$(this).find("#addPrice").val(null);
 });
 
 // Load price in modal on item select
-$(document).on("change", "[name=altar-flowers]", function() {
+$(document).on("change", "[name=altar-inventory]", function() {
 	if ($(this).prop('selectedIndex') != 0)	{
 		var name = $("option:selected", this).text();
 		var price = parseFloat(prices[name]).toFixed(2);
@@ -91,11 +44,11 @@ $(document).on("change", "[name=altar-flowers]", function() {
 
 // Add new item to recipe table
 $(document).on("click", "#addItem", function() {
-	if ($("#altar-flowers").prop("selectedIndex") != 0)	{
+	if ($("#altar-inventory").prop("selectedIndex") != 0)	{
 		event.preventDefault();
 
 		var $form = $(this).closest('form');
-		var item = $form.find('#altar-flowers option:selected').text();
+		var item = $form.find('#altar-inventory option:selected').text();
 		var qty = $form.find('#addQuantity').val();
 		var price = $form.find('#addPrice').val();
 		price = parseFloat(price);
@@ -166,10 +119,10 @@ $(document).on("change", ".inventory-btn", function()	{
 	var qtyBox = $(this).siblings('#addQuantity');
 	qtyBox.val(1);
 	if (checkVal == "Flower")	{
-		$("select[name=altar-flowers]").html(flwOptions);
+		$("select[name=altar-inventory]").html(flwOptions);
 	}
 	else if (checkVal == "Hard Good")	{
-		$("select[name=altar-flowers]").html(hgOptions);
+		$("select[name=altar-inventory]").html(hgOptions);
 	}
 });
 
@@ -442,4 +395,102 @@ function GetPDFJSON() {
 		}
 	});
 	return JSON.stringify(pdf);
+}
+
+// ajax call to update the inventory dropdown and the prices object whenever a new inventory type is selected
+$(document).on("change", "input[name=inventory-type]", function() {
+	var inventory_type = $(this).val();
+	$.ajax({
+		url: '/staff/eventForm/getInventory/'+inventory_type,
+		method: 'GET',
+		async: false,
+		success: function(response) {
+			$("select[name=altar-inventory]").html(response.options);
+			prices = response.prices;
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("Status: " + textStatus); alert("Error: " + errorThrown);
+		}
+	});
+});
+
+// puts qty 1 and the price on change from inventory dropdown in add item modal
+$(document).on("change", "#altar-inventory", function() {
+	if($(this).prop('selectedIndex') != 0)	{
+		var name = $("option:selected", this).text();
+		var price = parseFloat(prices[name]).toFixed(2);
+		$('#addPrice').val(price);
+		$('#addQuantity').val(1);
+	}
+	else {
+		$('#addPrice').val(price);
+		$('#addQuantity').val(null);
+	}
+});
+
+// insert the customer dropdowns from the ajax call and select current data-val
+function InsertCustomersDropdown() {
+	var customer_id = $("select[name=customer]").attr('data-val');
+	$.ajax({
+		url: '/staff/eventForm/getCustomers/'+customer_id,
+		method: 'GET',
+		async: false,
+		success: function(response) {
+			$("select[name=customer]").html(response);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("Status: " + textStatus); alert("Error: " + errorThrown);
+		}
+	});
+}
+
+// insert the customer dropdowns from the ajax call and select current data-val
+function InsertTaxDropdown() {
+	var tax_id = $("select[name=tax-information]").attr('data-val');
+	$.ajax({
+		url: '/staff/eventForm/getTaxes/'+tax_id,
+		method: 'GET',
+		async: false,
+		success: function(response) {
+			$("select[name=tax-information]").html(response);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("Status: " + textStatus); alert("Error: " + errorThrown);
+		}
+	});
+}
+
+// insert all time dropdowns and select the current data-val
+function InsertTimesDropdown() {
+	$(".TimeSelect").each(function() {
+		var data_val = $(this).attr('data-val');
+		var html = "";
+		if(data_val == "TBA") {
+			html += "<option value=\"TBA\" selected=\"selected\">--</option>";
+		} else {
+			html += "<option value=\"TBA\">--</option>"
+		}
+		var minutes = ["00","15","30","45"];
+		for(var i = 0; i <=23; i++) {
+			for(var j = 0; j < minutes.length; j++) {
+				var suffix = (i >= 12)? 'pm' : 'am';
+				var hours = (i > 12) ? i - 12 : i;
+				if(hours == 0) {
+					hours = 12;
+				}
+				var val = String(hours) + String(minutes[j]) + suffix;
+				if(data_val == val) {
+					html += "<option value=\""+val+"\" selected=\"selected\">" + hours + ":" + minutes[j] + " " + suffix + "</option>";
+				} else {
+					html += "<option value=\""+val+"\">" + hours + ":" + minutes[j] + " " + suffix + "</option>";
+				}
+			}
+		}
+		$(this).html(html);
+	});
+}
+
+// select first inventory item by default in add modal
+function SelectFirstInventoryTypeByDefault() {
+	$("input:radio[name=inventory-type]:first").click();
 }
