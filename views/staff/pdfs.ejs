@@ -46,7 +46,18 @@
 <script>
 $(document).on("click", "#staffPDF", function() {
   var doc_name = "<%= pdf.brides_name %>_<%= pdf.grooms_name %>_<%= pdf.ceremony_date %>_staff_pdf.pdf";
-  var docDefinition = { content: 'Staff PDF' };
+  var bride, groom, date, e_mail;
+  bride = "<%= pdf.brides_name %>";
+  groom = "<%= pdf.grooms_name %>";
+  date = "<%= pdf.ceremony_date %>";
+  email = "<%= pdf.email %>";
+  var docDefinition = { content: [
+    { text: 'Designer PDF', alignment: 'center' },
+    { text: 'Bride: ' + bride, style: 'header' },
+    { text: 'Groom: ' + groom, style: 'header' },
+    { text: 'Ceremony Date: ' + date, style: 'header'},
+    { text: 'E-Mail: ' + email, style: 'header'}
+  ]};
   pdfMake.createPdf(docDefinition).download(doc_name);
 });
 
