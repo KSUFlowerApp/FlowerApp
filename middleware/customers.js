@@ -1,5 +1,8 @@
+var sqlstring = require('sqlstring');
+
 module.exports = exports = {
-  getCustomers: getCustomers
+  getCustomers: getCustomers,
+  getCustomer: getCustomer
 }
 
 // establish db connection
@@ -17,4 +20,20 @@ function getCustomers(callback) {
              return callback(null, rows);
         }
     });
+}
+
+function getCustomer(id, callback) {
+  var query = sqlstring.format(
+    "SELECT * " +
+    "FROM customers " +
+    "WHERE id = ?",
+    [id]
+  );
+  db.query(query, function(err, rows) {
+    if(err) {
+      return callback(err, null);
+    } else {
+      return callback(null, rows);
+    }
+  });
 }

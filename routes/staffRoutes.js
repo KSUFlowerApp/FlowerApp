@@ -196,8 +196,15 @@ module.exports = function(app, passport, db) {
         console.log(err)
       } else {
         var form_json = JSON.parse(results[0][0].form_json);
-        //res.set({'Content-Type': 'application/json; charset=utf-8'}).send(JSON.stringify(form_json, null, 3));
-        res.render('staff/pdfs.ejs', { pdf: form_json });
+        var customer_id = form_json.customer_id;
+        customers.getCustomer(customer_id, function(err2, customer_results) {
+          if(err2) {
+            console.log(err2);
+          } else {
+            form_json.customer = customer_results[0];
+            res.render('staff/pdfs.ejs', { pdf: form_json });
+          }
+        });
       }
     });
   });

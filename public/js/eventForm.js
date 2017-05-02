@@ -287,6 +287,9 @@ function GetPDFJSON() {
 	var customer_name = $("select[name=customer] option:selected").text();
 	pdf["customer_name"] = customer_name;
 
+	var customer_id = $("select[name=customer]").attr("data-val");
+	pdf["customer_id"] = customer_id;
+
 	var brides_name = $("input[name=brides-name]").val();
 	pdf["brides_name"] = brides_name;
 
