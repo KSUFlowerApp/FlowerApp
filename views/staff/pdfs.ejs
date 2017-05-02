@@ -63,7 +63,7 @@ $(document).on("click", "#staffPDF", function() {
 
 $(document).on("click", "#customerPDF", function() {
   var doc_name = "<%= pdf.brides_name %>_<%= pdf.grooms_name %>_<%= pdf.ceremony_date %>_customer_pdf.pdf";
-  var docDefinition = { content: 'Customer PDF' };
+  var docDefinition = { content: 'Customer PDF' };\
   pdfMake.createPdf(docDefinition).download(doc_name);
 });
 </script>
