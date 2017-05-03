@@ -106,11 +106,12 @@ $(document).on("click", "#designerPDF", function() {
         columns:
         [
           { width: '33%', text: 'Start Time: ' + pdf.ceremony_start_time + '\n\nAddress: ' + pdf.ceremony_address + ', ' + pdf.ceremony_city + ', ' + pdf.ceremony_state + ' ' + pdf.ceremony_zip + '\n\nColors: ' + pdf.ceremony_colors + '\n\nTheme: ' + pdf.ceremony_theme, alignment: 'left' },
-          { width: '33%', text: 'Start Time: ' + pdf.reception_start_time + '\n\nAddress: ' + pdf.reception_address + ', ' + pdf.reception_city + ', ' + pdf.reception_state + ' ' + pdf.reception_zip, alignment: 'center' },
-          { width: '33%', text: 'Photo, Planner, Delivery, Tax:', alignment: 'right' }
+          { width: '33%', text: 'Date: ' + pdf.reception_date + '\n\nStart Time: ' + pdf.reception_start_time + '\n\nAddress: ' + pdf.reception_address + ', ' + pdf.reception_city + ', ' + pdf.reception_state + ' ' + pdf.reception_zip, alignment: 'center' },
+          { width: '33%', text: 'Photographer: ' + pdf.photographers + '\n\nPhoto Start Time: ' + pdf.photograph_start_time + '\n\nWedding Planner: ' + pdf.wedding_planner + '\n\nDelivery Time: ' + pdf.delivery_time + '\n\nTax: ' + pdf.tax_information, alignment: 'right' }
         ],
         columnGap: 10
-      }
+      },
+      { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' }
     ],
     styles:
     {
