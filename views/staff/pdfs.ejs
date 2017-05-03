@@ -78,29 +78,23 @@ $(document).on("click", "#designerPDF", function() {
           { width: '33%', text: pdf.ceremony_date, style: 'mainInfo', alignment: 'center' }
         ]
       },
-      { text: '\n' },
+      { text: '\n\n' },
+      { text: 'Customer Info:', style: 'bold', alignment: 'center' },
       {
         columns:
         [
-          { width: '33%', text: 'Email:', style: 'bold', alignment: 'center' },
-          { width: '33%', text: 'Address:', style: 'bold', alignment: 'center' },
-          { width: '33%', text: 'Phone:', style: 'bold', alignment: 'center' }
+          { width: '25%', text: "Name:\n" + pdf.customer.firstName + " " + pdf.customer.lastName, alignment: 'center' },
+          { width: '25%', text: "Email:\n" + pdf.customer.e_mail, alignment: 'center' },
+          { width: '25%', text: "Phone:\n" + pdf.customer.phone + " " + pdf.customer.lastName, alignment: 'center' },
+          { width: '25%', text: "Address:\n" + pdf.customer.street_addr + ", " + pdf.customer.city + ", " + pdf.customer.state + " " + pdf.customer.zip, alignment: 'center' }
         ]
-      },
-      {
-        columns:
-        [
-          { width: '33%', text: pdf.brides_name, style: 'mainInfo', alignment: 'center' },
-          { width: '33%', text: pdf.grooms_name, style: 'mainInfo', alignment: 'center' },
-          { width: '33%', text: pdf.ceremony_date, style: 'mainInfo', alignment: 'center' }
-        ]
-      },
+      }
     ],
     styles:
     {
       title: { fontSize: 32, alignment: 'center' },
       bold: { bold: true },
-      mainInfo: { fontSize: 18 }
+      mainInfo: { fontSize: 20 }
     }
   };
   pdfMake.createPdf(docDefinition).download(doc_name);
