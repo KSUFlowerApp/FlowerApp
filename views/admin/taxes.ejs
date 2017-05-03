@@ -1,27 +1,27 @@
-<!-- views/admin/users.ejs -->
+<!-- views/admin/taxes.ejs -->
 <% include ../../partials/header %>
 	<div class="page-header text-center">
-		<h1><span class="fa fa-unlock"></span> Inventory Types</h1>
+		<h1><span class="fa fa-unlock"></span> Taxes</h1>
 	</div>
 
 	<div>
-		<button class='addnewtypebtn btn btn-primary' id="addNewType">Add New Inventory Type</button>
+		<button class='addNewTaxbtn btn btn-primary' id="addNewTax">Add New Tax</button>
 	</div>
 
-		<table id="inventoryTypes" style="width: 100%">
+		<table id="taxes" style="width: 100%">
 			<thead>
 				<th>ID</th>
-				<th>Type</th>
-				<th>Markup</th>
+				<th>Name</th>
+				<th>Rate (%)</th>
 				<th>Edit</th>
 			</thead>
 			<tbody>
-				<% if(inventoryTypes) {
-						inventoryTypes.forEach(function(item, index) { %>
+				<% if(taxes) {
+						taxes.forEach(function(item, index) { %>
 						<tr>
-							<td class="typeID"><%= item.id %></td>
-							<td class="typeName"><%= item.type %></td>
-							<td class="typeMarkup"><b>x</b><%= item.markup %></td>
+							<td class="taxID"><%= item.id %></td>
+							<td class="taxName"><%= item.name %></td>
+							<td class="taxRate"><%= item.rate %></td>
 							<td><button class='editbtn btn btn-primary'>Edit</button></td>
 						</tr>
 					<% });
@@ -34,28 +34,28 @@
 <!-- Add Type Modal -->
 <div class="container">
 
-  <div class="modal fade" id="mdlAddInventoryTypes" role="dialog">
+  <div class="modal fade" id="mdlAddtaxes" role="dialog">
     <div class="modal-dialog">
 
       <div class="modal-content">
         <div class="modal-header" style="padding:32px 32px;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4>Add New Inventory Type</h4>
+          <h4>Add New Tax</h4>
         </div>
         <div class="modal-body" style="padding:48px 48px;">
-          <form name="formAddType" role="form" attribute="">
+          <form name="formAddTax" role="form" attribute="">
             <div class="form-group">
               <label>Name</label>
               <input name="addName" type="text" class="form-control" id="addName" placeholder="Enter name">
             </div>
 						<div class="form-group">
-              <label>Markup</label>
-              <input name="addMarkup" type="text" class="form-control" id="addMarkup" placeholder="Enter name">
+              <label>Rate</label>
+              <input name="addRate" type="text" class="form-control" id="addRate" placeholder="Enter rate">
             </div>
 						<br><br>
 						<div>
 		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-success btn-default pull-right" id="addType">Update</button>
+							<button type="submit" class="btn btn-success btn-default pull-right" id="addTax">Update</button>
 		        </div>
           </form>
         </div>
@@ -67,31 +67,31 @@
 <!-- Edit Type Modal -->
 <div class="container">
 
-  <div class="modal fade" id="mdlEditInventoryTypes" role="dialog">
+  <div class="modal fade" id="mdlEdittaxes" role="dialog">
     <div class="modal-dialog">
 
       <div class="modal-content">
         <div class="modal-header" style="padding:32px 32px;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4>Edit Type</h4>
+          <h4>Edit Tax</h4>
         </div>
         <div class="modal-body" style="padding:48px 48px;">
           <form name="formEditInventory" role="form" attribute="">
             <div class="form-group">
               <label>Name</label>
-              <input name="typeName" type="text" class="form-control" id="typeName" placeholder="Enter name">
+              <input name="taxName" type="text" class="form-control" id="taxName" placeholder="Enter name">
             </div>
 						<div class="form-group">
-              <label>Markup</label>
-							<input name="typeMarkup" type="number" min="0.00" step="0.01" class="form-control" id="typeMarkup" placeholder="Enter markup">
+              <label>Rate</label>
+							<input name="taxRate" type="number" min="0.00" step="0.01" class="form-control" id="taxRate" placeholder="Enter markup">
             </div>
 						<div class="form-group">
-              <input type="text" name="typeID" id="typeID" style="display:none">
+              <input type="text" name="taxID" id="taxID" style="display:none">
             </div>
 						<br><br>
 						<div>
 		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-success btn-default pull-right" id="updateType">Update</button>
+							<button type="submit" class="btn btn-success btn-default pull-right" id="updateTax">Update</button>
 		        </div>
           </form>
         </div>
@@ -102,37 +102,37 @@
 
 <script>
 $( document ).ready(function() {
-    $("#inventoryTypes").DataTable({
+    $("#taxes").DataTable({
     		"iDisplayLength": 50,
 				"bPaginate": false
   	});
 });
 
 // Display "add type" modal.
-$("#addNewType").on('click', function() {
-		$("#mdlAddInventoryTypes").modal();
+$("#addNewTax").on('click', function() {
+		$("#mdlAddtaxes").modal();
 });
 
 // Display "edit type" modal
-$("#inventoryTypes").on('click', '.editbtn', function() {
+$("#taxes").on('click', '.editbtn', function() {
 		var row = $(this).closest('tr');
-		var id = row.find('.typeID').text();
-		var name = row.find('.typeName').text();
-		var markup = row.find('.typeMarkup').text();
+		var id = row.find('.taxID').text();
+		var name = row.find('.taxName').text();
+		var rate = row.find('.taxRate').text();
 
-		$("#mdlEditInventoryTypes").modal();
+		$("#mdlEdittaxes").modal();
 
-		$("#typeID").val(id);
-		$("#typeName").val(name);
-		$("#typeMarkup").val(markup);
+		$("#taxID").val(id);
+		$("#taxName").val(name);
+		$("#taxRate").val(rate);
 });
 
-$("#addType").on('click', function() {
+$("#addTax").on('click', function() {
 	var $form = $(this).closest('form');
 	event.preventDefault();
 	// Display wait animation if needed.
 	$.ajax({
-		url: '/admin/inventoryTypes',
+		url: '/admin/taxes',
 		data: $form.serialize(),
 		method: 'POST',
 		success: function(response) {
@@ -145,12 +145,12 @@ $("#addType").on('click', function() {
 	})
 });
 
-$("#updateType").on('click', function() {
+$("#updateTax").on('click', function() {
 	var $form = $(this).closest('form');
 	event.preventDefault();
 	// Display wait animation if needed.
 	$.ajax({
-		url: '/admin/inventoryTypes',
+		url: '/admin/taxes',
 		data: $form.serialize(),
 		method: 'POST',
 		success: function(response) {
@@ -160,6 +160,6 @@ $("#updateType").on('click', function() {
 			response = JSON.parse(response);
 			alert(response);
 		}
-	});
+	})
 });
 </script>

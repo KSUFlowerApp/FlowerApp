@@ -13,6 +13,7 @@ var port     = process.env.PORT || 3000;
 var passport = require('passport');
 var flash    = require('connect-flash');
 var mysql = require('mysql');
+var SqlString = require('sqlstring');
 
 // configuration ===============================================================
 // connect to our database

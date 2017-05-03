@@ -11,11 +11,6 @@ module.exports = function(app, passport, db) {
 		res.render('staff.ejs');
 	});
 
-	// about page
-	app.get('/about', session.isLoggedIn, function(req, res) {
-			res.render('about.ejs');
-	});
-
 	// home
 	app.get('/home', session.isLoggedIn, function(req, res) {
 		res.render('home.ejs');

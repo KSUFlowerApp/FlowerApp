@@ -2,7 +2,7 @@
 <% include ../../partials/header %>
 
 	<div class="page-header text-center">
-		<h1><span class="fa fa-unlock"></span> Admin - Inventory</h1>
+		<h1><span class="fa fa-unlock"></span> Inventory</h1>
 	</div>
 
 	<div>
@@ -24,7 +24,7 @@
 						<!--<td class="itemName" contenteditable="True"><%= item.name %></td>-->
 						<td class='itemId'><%= item.id %></td>
 						<td class='itemName'><%= item.name %></td>
-						<td class='itemPrice'><%= item.price %></td>
+						<td class='itemPrice'><%= item.price.toFixed(2) %></td>
 						<td class='itemType'><%= item.inventoryType %></td>
 						<!--<td><input type="number" step="0.01" class="form-control itemPrice" value=<%= item.price %>></td>-->
 						<td><button class='editbtn btn btn-primary'>Edit</button></td>
@@ -170,7 +170,10 @@ $( document ).ready(function() {
 				method: 'POST',
 				success: function(response) {
 					response = JSON.parse(response);
-					alert(response.message);
+					location.href = location.href;
+				}, error: function(response) {
+					response = JSON.parse(response);
+					alert(response);
 				}
 			})
 		});
@@ -185,7 +188,10 @@ $( document ).ready(function() {
 				method: 'POST',
 				success: function(response) {
 					response = JSON.parse(response);
-					alert(response.message);
+					location.href = location.href;
+				}, error: function(response) {
+					response = JSON.parse(response);
+					alert(response);
 				}
 			})
 		});

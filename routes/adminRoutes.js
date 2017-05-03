@@ -204,4 +204,54 @@ module.exports = function(app, passport, db) {
 			res.end(JSON.stringify(response));
 		});
 	});
+
+	// =====================================
+	// ADMIN - TAXES =====================
+	// =====================================
+	app.get('/admin/taxes', session.isLoggedIn, session.isAdmin, function(req,res) {
+		// get Markups table and pass it to ejs
+		admin.getTaxes(function(err, taxes) {
+			if(err) {
+				res.render('admin/taxes.ejs', { taxes:undefined });
+			} else {
+				res.render('admin/taxes.ejs', { taxes:taxes });
+			}
+		});
+	});
+
+	app.post('/admin/taxes', function(req, res) {
+		var id = req.body.taxID;
+		var name = undefined;
+		var rate = undefined;
+		var query = undefined;
+
+		if (typeof id === 'undefined' || !id) {
+			name = req.body.addName;
+			rate = req.body.addRate;
+			query = "INSERT INTO taxes(name, rate) " +
+							"VALUES('"+name+"', "+rate+")";
+		}
+		else {
+			name = req.body.taxName;
+			rate = req.body.taxRate;
+			query = "UPDATE taxes " +
+							"SET name = '"+name+"', " +
+							"rate = "+rate+" " +
+							"WHERE id = "+id;
+		}
+
+		db.query(query, function(err, rows) {
+			var response = {
+				status: 200,
+				message: "Tax updated successfully."
+			}
+			if(err) {
+				response = {
+					status: 500,
+					message: "Error updating type."
+				}
+			}
+			res.end(JSON.stringify(response));
+		});
+	});
 };

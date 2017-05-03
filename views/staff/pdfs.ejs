@@ -1,0 +1,150 @@
+<!-- views/staff/events.ejs -->
+<% include ../../partials/header %>
+<script src='/bower_components/pdfmake/build/pdfmake.min.js'></script>
+<script src='/bower_components/pdfmake/build/vfs_fonts.js'></script>
+<link rel="stylesheet" href="/public/css/tiles.css">
+
+<% if (pdf) { %>
+  <script>var pdf = <%- JSON.stringify(pdf) %></script>
+
+  <div class="page-header text-center">
+    <h1><span class="fa fa-file-pdf-o fa-2x"></span> Download Event PDFs</h1>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-sm-4">
+      <h3><%= pdf.brides_name %></h3>
+    </div>
+    <div class="col-sm-4">
+      <h3><%= pdf.grooms_name %></h3>
+    </div>
+    <div class="col-sm-4">
+      <h3><%= pdf.ceremony_date %></h3>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <a href="#" id="designerPDF">
+      <div class="col-sm-6">
+        <div class="tile tile-primary">
+          <h3 class="title">Designer PDF</h3>
+          <p>Download the pdf formatted for the designer staff.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" id="customerPDF">
+      <div class="col-sm-6">
+        <div class="tile tile-primary">
+          <h3 class="title">Customer PDF</h3>
+          <p>Download the pdf formatted for the customer.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- PRINT PDF JSON FOR DEVELOPMENT, COMMENT OUT LATER -->
+  <div class="row">
+   <pre><%- JSON.stringify(pdf, null, 2) %></pre>
+  </div>
+
+<% } else { %>
+  <div class="page-header text-center">
+    <h1><span class="fa fa-file-pdf-o fa-2x"></span> No PDF Available</h1>
+  </div>
+<% } %>
+
+<% include ../../partials/footer %>
+
+<script>
+$(document).on("click", "#designerPDF", function() {
+  var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_designer_pdf.pdf";
+  var docDefinition = { content: [
+      { text: 'Kistner\'s Flowers\n\n', style: 'title' },
+      {
+        columns:
+        [
+          { width: '33%', text: 'Bride:', style: 'bold', alignment: 'center' },
+          { width: '33%', text: 'Groom:', style: 'bold', alignment: 'center' },
+          { width: '33%', text: 'Ceremony Date:', style: 'bold', alignment: 'center' }
+        ]
+      },
+      { text: '\n' },
+      {
+        columns:
+        [
+          { width: '33%', text: pdf.brides_name, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: pdf.grooms_name, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: pdf.ceremony_date, style: 'mainInfo', alignment: 'center' }
+        ],
+        columnGap: 10
+      },
+      { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+      { text: 'Customer: ' + pdf.customer.firstName + ' ' + pdf.customer.lastName, style: 'bold', alignment: 'center' },
+      { text: '\n' },
+      {
+        columns:
+        [
+          { width: '33%', text: 'Email:\n' + pdf.customer.e_mail, alignment: 'center' },
+          { width: '33%', text: 'Address:\n' + pdf.customer.street_addr + ', ' + pdf.customer.city + ', ' + pdf.customer.state + ' ' + pdf.customer.zip, alignment: 'center' },
+          { width: '33%', text: 'Phone:\n' + pdf.customer.phone, alignment: 'center' }
+        ],
+        columnGap: 10
+      },
+      { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+      {
+        columns:
+        [
+          { width: '33%', text: 'Ceremony Info:', style: 'bold', alignment: 'left' },
+          { width: '33%', text: 'Reception Info:', style: 'bold', alignment: 'center' },
+          { width: '33%', text: 'Photo, Planner, Delivery, Tax:', style: 'bold', alignment: 'right' }
+        ]
+      },
+      { text: '\n' },
+      {
+        columns:
+        [
+          { width: '33%', text: 'Start Time: ' + pdf.ceremony_start_time + '\n\nAddress: ' + pdf.ceremony_address + ', ' + pdf.ceremony_city + ', ' + pdf.ceremony_state + ' ' + pdf.ceremony_zip + '\n\nColors: ' + pdf.ceremony_colors + '\n\nTheme: ' + pdf.ceremony_theme, alignment: 'left' },
+          { width: '33%', text: 'Date: ' + pdf.reception_date + '\n\nStart Time: ' + pdf.reception_start_time + '\n\nAddress: ' + pdf.reception_address + ', ' + pdf.reception_city + ', ' + pdf.reception_state + ' ' + pdf.reception_zip, alignment: 'center' },
+          { width: '33%', text: 'Photographer: ' + pdf.photographers + '\n\nPhoto Start Time: ' + pdf.photograph_start_time + '\n\nWedding Planner: ' + pdf.wedding_planner + '\n\nDelivery Time: ' + pdf.delivery_time + '\n\nTax: ' + pdf.tax_information, alignment: 'right' }
+        ],
+        columnGap: 10
+      },
+      { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+      { text: 'Grand Total: ' + pdf.grand_total, style: 'recipeHeader' },
+      { text: '\n\n' },
+      { text: '- - - - - - - - - - - - - Bouquets - - - - - - - - - - - - -', style: 'recipeHeader', alignment: 'center' },
+      { text: '\n\n' },
+      { text: 'Bridal (' + pdf.Bouquets.Bridal.recipe.total + ' x ' + pdf.Bouquets.Bridal.recipe_qty + '):', style: 'bold' },
+      {
+        table:
+        {
+          headerRows: 1,
+          widths: [ 'auto', 'auto', 'auto' ],
+          body:
+          [
+            [ 'Name', 'Quantity', 'Price' ]
+          ]
+        }
+      },
+      { text: '\n' },
+      { text: 'Notes: ' + pdf.Bouquets.Bridal.notes }
+    ],
+    styles:
+    {
+      title: { fontSize: 32, alignment: 'center' },
+      bold: { bold: true },
+      mainInfo: { fontSize: 20 },
+      recipeHeader: { fontSize: 16, }
+    }
+  };
+  pdfMake.createPdf(docDefinition).download(doc_name);
+});
+
+$(document).on("click", "#customerPDF", function() {
+  var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_customer_pdf.pdf";
+  var docDefinition = { content: 'Customer PDF' };
+  pdfMake.createPdf(docDefinition).download(doc_name);
+});
+</script>

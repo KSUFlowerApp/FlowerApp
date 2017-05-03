@@ -1,0 +1,25 @@
+{
+  "name": "flowerapp",
+  "description": "A web app for a flower shop.",
+  "main": "server.js",
+  "authors": [
+    "Tyler Lentz",
+    "Arun P",
+    "Eric Johnson"
+  ],
+  "license": "Open Source",
+  "homepage": "https://github.com/KSUFlowerApp/FlowerApp",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "4.7.0",
+    "jquery-ui": "^1.12.1",
+    "jquery": "^3.1.1",
+    "pdfmake": "^0.1.27"
+  }
+}

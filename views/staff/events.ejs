@@ -1,0 +1,66 @@
+<!-- views/staff/events.ejs -->
+<% include ../../partials/header %>
+<style>
+.fa-file-pdf-o {
+	cursor: pointer;
+}
+</style>
+	<div class="page-header text-center">
+		<h1><span class="fa fa-calendar"></span> Events</h1>
+	</div>
+
+	<table id="events">
+		<thead>
+			<th>ID</th>
+			<th>Customer</th>
+			<th>Bride</th>
+			<th>Groom</th>
+			<th>Ceremony Date</th>
+			<th>Edit</th>
+			<th>PDF</th>
+		</thead>
+		<tbody>
+		<% if(events) {
+				events.forEach(function(item, index) { %>
+					<tr>
+						<td class='itemId'><%= item.id %></td>
+						<td><%= item.customer %></td>
+						<td><%= item.brides_name %></td>
+						<td><%= item.grooms_name %></td>
+						<td><%= moment(item.ceremony_date).format('Do MMMM, YYYY'); %></td>
+						<td><button class='editbtn btn btn-primary'>Edit</button></td>
+						<td class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></td>
+					</tr>
+
+				<% });
+			}%>
+	</tbody>
+	</table>
+
+<% include ../../partials/footer %>
+
+<style>
+#events {
+	width: 100%;
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+    $("#events").DataTable({
+    		"iDisplayLength": 50
+  	});
+});
+
+$("#events").on('click', '.editbtn', function() {
+		var row = $(this).closest('tr');
+		var id = row.find('.itemId').text();
+		window.location.href = '/staff/eventForm/'+id;
+});
+
+$("#events").on('click', '.fa-file-pdf-o', function() {
+	var row = $(this).closest('tr');
+	var id = row.find('.itemId').text();
+	window.location.href = '/staff/events/PDF/'+id;
+});
+</script>

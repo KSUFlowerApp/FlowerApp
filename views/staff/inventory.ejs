@@ -1,14 +1,14 @@
 <!-- views/staff/inventory.ejs -->
 <% include ../../partials/header %>
 	<div class="page-header text-center">
-		<h1><span class="fa fa-unlock"></span> Staff - Inventory</h1>
+		<h1><span class="fa fa-database"></span> Inventory</h1>
 	</div>
 
 	<table id="inventory">
 		<thead>
 			<th>ID</th>
 			<th>Name</th>
-			<th>Price</th>
+			<th>Price ($)</th>
 			<th>Type</th>
 		</thead>
 		<tbody>
@@ -18,7 +18,7 @@
 						<!--<td class="itemName" contenteditable="True"><%= item.name %></td>-->
 						<td><%= item.id %></td>
 						<td><%= item.name %></td>
-						<td><%= item.price %></td>
+						<td><%= item.price.toFixed(2) %></td>
 						<td><%= item.inventoryType %></td>
 					</tr>
 

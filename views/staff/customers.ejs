@@ -1,7 +1,7 @@
 <!-- views/staff/customers.ejs -->
 <% include ../../partials/header %>
 	<div class="page-header text-center">
-		<h1><span class="fa fa-unlock"></span> Staff - Customers</h1>
+		<h1><span class="fa fa-users"></span> Customers</h1>
 	</div>
 
 	<div>
@@ -292,7 +292,10 @@ $( document ).ready(function() {
 				method: 'POST',
 				success: function(response) {
 					response = JSON.parse(response);
-					alert(response.message);
+					location.href = location.href;
+				}, error: function(response) {
+					response = JSON.parse(response);
+					alert(response);
 				}
 			})
 		});
@@ -336,8 +339,10 @@ $( document ).ready(function() {
 				method: 'POST',
 				success: function(response) {
 					response = JSON.parse(response);
-					alert(response.message);
 					location.href = location.href;
+				}, error: function(response) {
+					response = JSON.parse(response);
+					alert(response);
 				}
 			})
 		});
