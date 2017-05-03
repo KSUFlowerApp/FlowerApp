@@ -4,53 +4,62 @@
 <script src='/bower_components/pdfmake/build/vfs_fonts.js'></script>
 <link rel="stylesheet" href="/public/css/tiles.css">
 
-<div class="page-header text-center">
-  <h1><span class="fa fa-file-pdf-o fa-2x"></span> Download Event PDFs</h1>
-</div>
+<% if (pdf) { %>
+  <script>var pdf = <%- JSON.stringify(pdf) %></script>
 
-<div class="row text-center">
-  <div class="col-sm-4">
-    <h3><%= pdf.brides_name %></h3>
+  <div class="page-header text-center">
+    <h1><span class="fa fa-file-pdf-o fa-2x"></span> Download Event PDFs</h1>
   </div>
-  <div class="col-sm-4">
-    <h3><%= pdf.grooms_name %></h3>
-  </div>
-  <div class="col-sm-4">
-    <h3><%= pdf.ceremony_date %></h3>
-  </div>
-</div>
 
-<hr>
-
-<div class="row">
-  <a href="#" id="staffPDF">
-    <div class="col-sm-6">
-      <div class="tile tile-primary">
-        <h3 class="title">Staff PDF</h3>
-        <p>Download the pdf formatted for the staff.</p>
-      </div>
+  <div class="row text-center">
+    <div class="col-sm-4">
+      <h3><%= pdf.brides_name %></h3>
     </div>
-  </a>
-  <a href="#" id="customerPDF">
-    <div class="col-sm-6">
-      <div class="tile tile-primary">
-        <h3 class="title">Customer PDF</h3>
-        <p>Download the pdf formatted for the customer.</p>
-      </div>
+    <div class="col-sm-4">
+      <h3><%= pdf.grooms_name %></h3>
     </div>
-  </a>
-</div>
+    <div class="col-sm-4">
+      <h3><%= pdf.ceremony_date %></h3>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <a href="#" id="designerPDF">
+      <div class="col-sm-6">
+        <div class="tile tile-primary">
+          <h3 class="title">Designer PDF</h3>
+          <p>Download the pdf formatted for the designer staff.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" id="customerPDF">
+      <div class="col-sm-6">
+        <div class="tile tile-primary">
+          <h3 class="title">Customer PDF</h3>
+          <p>Download the pdf formatted for the customer.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- PRINT PDF JSON FOR DEVELOPMENT, COMMENT OUT LATER -->
+  <div class="row">
+   <pre><%- JSON.stringify(pdf, null, 2) %></pre>
+  </div>
+
+<% } else { %>
+  <div class="page-header text-center">
+    <h1><span class="fa fa-file-pdf-o fa-2x"></span> No PDF Available</h1>
+  </div>
+<% } %>
 
 <% include ../../partials/footer %>
 
 <script>
-$(document).on("click", "#staffPDF", function() {
-  var doc_name = "<%= pdf.brides_name %>_<%= pdf.grooms_name %>_<%= pdf.ceremony_date %>_staff_pdf.pdf";
-  var bride, groom, date, email, address, phone;
-  bride = "<%= pdf.brides_name %>";
-  groom = "<%= pdf.grooms_name %>";
-  date = "<%= pdf.ceremony_date %>";
-  email = "<%= pdf.email %>";
+$(document).on("click", "#designerPDF", function() {
+  var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_designer_pdf.pdf";
   var docDefinition = { content: [
       { text: 'Kistner\'s Flowers\n\n', style: 'title' },
       {
@@ -64,9 +73,9 @@ $(document).on("click", "#staffPDF", function() {
       {
         columns:
         [
-          { width: '33%', text: bride, style: 'mainInfo', alignment: 'center' },
-          { width: '33%', text: groom, style: 'mainInfo', alignment: 'center' },
-          { width: '33%', text: date, style: 'mainInfo', alignment: 'center' }
+          { width: '33%', text: pdf.brides_name, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: pdf.grooms_name, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: pdf.ceremony_date, style: 'mainInfo', alignment: 'center' }
         ]
       },
       { text: '\n' },
@@ -81,9 +90,9 @@ $(document).on("click", "#staffPDF", function() {
       {
         columns:
         [
-          { width: '33%', text: bride, style: 'mainInfo', alignment: 'center' },
-          { width: '33%', text: groom, style: 'mainInfo', alignment: 'center' },
-          { width: '33%', text: date, style: 'mainInfo', alignment: 'center' }
+          { width: '33%', text: pdf.brides_name, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: pdf.grooms_name, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: pdf.ceremony_date, style: 'mainInfo', alignment: 'center' }
         ]
       },
     ],
@@ -98,7 +107,7 @@ $(document).on("click", "#staffPDF", function() {
 });
 
 $(document).on("click", "#customerPDF", function() {
-  var doc_name = "<%= pdf.brides_name %>_<%= pdf.grooms_name %>_<%= pdf.ceremony_date %>_customer_pdf.pdf";
+  var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_customer_pdf.pdf";
   var docDefinition = { content: 'Customer PDF' };
   pdfMake.createPdf(docDefinition).download(doc_name);
 });
