@@ -70,24 +70,46 @@ $(document).on("click", "#designerPDF", function() {
           { width: '33%', text: 'Ceremony Date:', style: 'bold', alignment: 'center' }
         ]
       },
+      { text: '\n' },
       {
         columns:
         [
           { width: '33%', text: pdf.brides_name, style: 'mainInfo', alignment: 'center' },
           { width: '33%', text: pdf.grooms_name, style: 'mainInfo', alignment: 'center' },
           { width: '33%', text: pdf.ceremony_date, style: 'mainInfo', alignment: 'center' }
-        ]
+        ],
+        columnGap: 10
       },
-      { text: '\n\n' },
-      { text: 'Customer Info:', style: 'bold', alignment: 'center' },
+      { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+      { text: 'Customer: ' + pdf.customer.firstName + ' ' + pdf.customer.lastName, style: 'bold', alignment: 'center' },
+      { text: '\n' },
       {
         columns:
         [
-          { width: '25%', text: "Name:\n" + pdf.customer.firstName + " " + pdf.customer.lastName, alignment: 'center' },
-          { width: '25%', text: "Email:\n" + pdf.customer.e_mail, alignment: 'center' },
-          { width: '25%', text: "Phone:\n" + pdf.customer.phone + " " + pdf.customer.lastName, alignment: 'center' },
-          { width: '25%', text: "Address:\n" + pdf.customer.street_addr + ", " + pdf.customer.city + ", " + pdf.customer.state + " " + pdf.customer.zip, alignment: 'center' }
+          { width: '33%', text: 'Email:\n' + pdf.customer.e_mail, alignment: 'center' },
+          { width: '33%', text: 'Address:\n' + pdf.customer.street_addr + ', ' + pdf.customer.city + ', ' + pdf.customer.state + ' ' + pdf.customer.zip, alignment: 'center' },
+          { width: '33%', text: 'Phone:\n' + pdf.customer.phone, alignment: 'center' }
+        ],
+        columnGap: 10
+      },
+      { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+      {
+        columns:
+        [
+          { width: '33%', text: 'Ceremony Info:', style: 'bold', alignment: 'left' },
+          { width: '33%', text: 'Reception Info:', style: 'bold', alignment: 'center' },
+          { width: '33%', text: 'Photo, Planner, Delivery, Tax:', style: 'bold', alignment: 'right' }
         ]
+      },
+      { text: '\n' },
+      {
+        columns:
+        [
+          { width: '33%', text: 'Start Time: ' + pdf.ceremony_start_time + '\n\nAddress: ' + pdf.ceremony_address + ', ' + pdf.ceremony_city + ', ' + pdf.ceremony_state + ' ' + pdf.ceremony_zip + '\n\nColors: ' + pdf.ceremony_colors + '\n\nTheme: ' + pdf.ceremony_theme, alignment: 'left' },
+          { width: '33%', text: 'Start Time: ' + pdf.reception_start_time + '\n\nAddress: ' + pdf.reception_address + ', ' + pdf.reception_city + ', ' + pdf.reception_state + ' ' + pdf.reception_zip, alignment: 'center' },
+          { width: '33%', text: 'Photo, Planner, Delivery, Tax:', alignment: 'right' }
+        ],
+        columnGap: 10
       }
     ],
     styles:
