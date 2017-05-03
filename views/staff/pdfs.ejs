@@ -46,18 +46,54 @@
 <script>
 $(document).on("click", "#staffPDF", function() {
   var doc_name = "<%= pdf.brides_name %>_<%= pdf.grooms_name %>_<%= pdf.ceremony_date %>_staff_pdf.pdf";
-  var bride, groom, date, e_mail;
+  var bride, groom, date, email, address, phone;
   bride = "<%= pdf.brides_name %>";
   groom = "<%= pdf.grooms_name %>";
   date = "<%= pdf.ceremony_date %>";
   email = "<%= pdf.email %>";
   var docDefinition = { content: [
-    { text: 'Designer PDF', alignment: 'center' },
-    { text: 'Bride: ' + bride, style: 'header' },
-    { text: 'Groom: ' + groom, style: 'header' },
-    { text: 'Ceremony Date: ' + date, style: 'header'},
-    { text: 'E-Mail: ' + email, style: 'header'}
-  ]};
+      { text: 'Kistner\'s Flowers\n\n', style: 'title' },
+      {
+        columns:
+        [
+          { width: '33%', text: 'Bride:', style: 'bold', alignment: 'center' },
+          { width: '33%', text: 'Groom:', style: 'bold', alignment: 'center' },
+          { width: '33%', text: 'Ceremony Date:', style: 'bold', alignment: 'center' }
+        ]
+      },
+      {
+        columns:
+        [
+          { width: '33%', text: bride, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: groom, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: date, style: 'mainInfo', alignment: 'center' }
+        ]
+      },
+      { text: '\n' },
+      {
+        columns:
+        [
+          { width: '33%', text: 'Email:', style: 'bold', alignment: 'center' },
+          { width: '33%', text: 'Address:', style: 'bold', alignment: 'center' },
+          { width: '33%', text: 'Phone:', style: 'bold', alignment: 'center' }
+        ]
+      },
+      {
+        columns:
+        [
+          { width: '33%', text: bride, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: groom, style: 'mainInfo', alignment: 'center' },
+          { width: '33%', text: date, style: 'mainInfo', alignment: 'center' }
+        ]
+      },
+    ],
+    styles:
+    {
+      title: { fontSize: 32, alignment: 'center' },
+      bold: { bold: true },
+      mainInfo: { fontSize: 18 }
+    }
+  };
   pdfMake.createPdf(docDefinition).download(doc_name);
 });
 
