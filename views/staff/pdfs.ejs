@@ -111,13 +111,32 @@ $(document).on("click", "#designerPDF", function() {
         ],
         columnGap: 10
       },
-      { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' }
+      { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+      { text: 'Grand Total: ' + pdf.grand_total, style: 'recipeHeader' },
+      { text: '\n\n' },
+      { text: '- - - - - - - - - - - - - Bouquets - - - - - - - - - - - - -', style: 'recipeHeader', alignment: 'center' },
+      { text: '\n\n' },
+      { text: 'Bridal (' + pdf.Bouquets.Bridal.recipe.total + ' x ' + pdf.Bouquets.Bridal.recipe_qty + '):', style: 'bold' },
+      {
+        table:
+        {
+          headerRows: 1,
+          widths: [ 'auto', 'auto', 'auto' ],
+          body:
+          [
+            [ 'Name', 'Quantity', 'Price' ]
+          ]
+        }
+      },
+      { text: '\n' },
+      { text: 'Notes:', style: 'bold'}
     ],
     styles:
     {
       title: { fontSize: 32, alignment: 'center' },
       bold: { bold: true },
-      mainInfo: { fontSize: 20 }
+      mainInfo: { fontSize: 20 },
+      recipeHeader: { fontSize: 16, }
     }
   };
   pdfMake.createPdf(docDefinition).download(doc_name);
