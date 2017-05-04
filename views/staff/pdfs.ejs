@@ -140,8 +140,6 @@ function getRecipes(type, content, a) {
       content.push({ text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n', alignment: 'center' });
       content.push({ text: '- - - - - - - - - - - - - '+ a[i] +' - - - - - - - - - - - - -', style: 'recipeHeader' });
       content.push({ text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n', alignment: 'center' });
-    } else {
-      content.push({ text: '- - - - - - - - - - - - - '+ a[i] +' - - - - - - - - - - - - -', style: 'recipeHeader' });
     }
     for(var key in header) {
       if(header[key].recipe_qty > 0) {
@@ -162,20 +160,20 @@ function getRecipes(type, content, a) {
         }
       }
     }
-    if(type == "customer") {
-      var table = {
-        table: {
-          headerRows: 1,
-          widths: ['40%', '20%', '20%', '20%'],
-          body: getCustomerRecipeTableBody(header),
-        }
-      }
-      content.push(table);
-      content.push({ text: '\n' });
-    }
     if(no_items && type == "designer") {
       content.push({ text: 'No recipes', alignment: 'center' });
     }
+  }
+  if(type == "customer") {
+    var table = {
+      table: {
+        headerRows: 1,
+        widths: ['40%', '20%', '20%', '20%'],
+        body: getCustomerRecipeTableBody(a),
+      }
+    }
+    content.push(table);
+    content.push({ text: '\n' });
   }
   return content;
 }
@@ -189,16 +187,19 @@ function getDesignerRecipeTableBody(items) {
   return body;
 }
 
-function getCustomerRecipeTableBody(row) {
+function getCustomerRecipeTableBody(a) {
   var body = [];
   body.push(['Type','Price (each)','Quantity','Total Cost']);
-  console.log(row);
-  for(var key in row) {
-    if(row[key].recipe_qty > 0) {
-      var total_cost = parseFloat(row[key].recipe_qty)*parseFloat(row[key].recipe.total.slice(1));
-      body.push([key, row[key].recipe.total, row[key].recipe_qty, '$'+total_cost.toFixed(2)]);
-    }
+  for(var i = 0; i < a.length; i++) {
+    console.log(a[i]);
   }
+  //console.log(row);
+  // for(var key in row) {
+  //   if(row[key].recipe_qty > 0) {
+  //     var total_cost = parseFloat(row[key].recipe_qty)*parseFloat(row[key].recipe.total.slice(1));
+  //     body.push([key, row[key].recipe.total, row[key].recipe_qty, '$'+total_cost.toFixed(2)]);
+  //   }
+  // }
   return body;
 }
 </script>
