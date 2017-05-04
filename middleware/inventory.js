@@ -1,7 +1,9 @@
 module.exports = exports = {
   getInventory: getInventory,
   getFlowers: getFlowers,
-  getFlowersWithMarkups: getFlowersWithMarkups
+  getFlowersWithMarkups: getFlowersWithMarkups,
+  getInventoryTypes: getInventoryTypes,
+  getInventoryByType: getInventoryByType
 }
 
 // establish db connection
@@ -45,6 +47,33 @@ function getFlowersWithMarkups(callback) {
   "JOIN markups m " +
   "ON i.type = m.type " +
   "WHERE i.type = 1 " +
+  "ORDER BY name ASC";
+  db.query(query, function(err, rows) {
+    if (err) {
+      return callback(err, null);
+    } else {
+      return callback(null, rows);
+    }
+  });
+}
+
+function getInventoryTypes(callback) {
+  var query = "SELECT * FROM inventory_types ORDER BY type ASC";
+  db.query(query, function(err, rows) {
+    if (err) {
+      return callback(err, null);
+    } else {
+      return callback(null, rows);
+    }
+  });
+}
+
+function getInventoryByType(inventory_type, callback) {
+  var query = "SELECT i.*, m.* " +
+  "FROM inventory i " +
+  "JOIN markups m " +
+  "ON i.type = m.type " +
+  "WHERE i.type = " + inventory_type + " " +
   "ORDER BY name ASC";
   db.query(query, function(err, rows) {
     if (err) {

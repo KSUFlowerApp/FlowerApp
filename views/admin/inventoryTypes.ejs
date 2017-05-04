@@ -1,7 +1,7 @@
 <!-- views/admin/users.ejs -->
 <% include ../../partials/header %>
 	<div class="page-header text-center">
-		<h1><span class="fa fa-unlock"></span> Admin - Inventory Types</h1>
+		<h1><span class="fa fa-unlock"></span> Inventory Types</h1>
 	</div>
 
 	<div>
@@ -21,7 +21,7 @@
 						<tr>
 							<td class="typeID"><%= item.id %></td>
 							<td class="typeName"><%= item.type %></td>
-							<td class="typeMarkup"><%= item.markup %></td>
+							<td class="typeMarkup"><b>x</b><%= item.markup %></td>
 							<td><button class='editbtn btn btn-primary'>Edit</button></td>
 						</tr>
 					<% });

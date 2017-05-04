@@ -2,10 +2,8 @@
 <% include ../../partials/header %>
 <script src='/public/js/eventForm.js'></script>
 <link rel='stylesheet' href='/public/css/eventForm.css' />
-<% getPrices(flowers); %>
-
 	<div class="page-header text-center">
-		<h1><span class="fa fa-calendar"></span> Event Form</h1>
+		<h1><span class="fa fa-calendar"></span> New Event</h1>
 		<% if(form_id) { %>
 			<input type="text" id="form-id" disabled="true" value="<%= form_id %>">
 		<% } else { %>
@@ -187,18 +185,26 @@
 				<div class="modal-content">
 					<div class="modal-header" style="padding:32px 32px;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4>Add Item</h4>
+						<h2>Add Item</h2>
 					</div>
 					<div class="modal-body" style="padding:48px 48px;">
 						<form name="formEditInventory" role="form" attribute="">
 							<div class="form-group">
+									<% InsertIneventoryTypes(inventory_types); %><hr>
 								<input class="modal-hidden-table" id="modal-table-id" type="hidden" value="" />
 								<label>Item</label>
-								<select class="form-control" name="altar-flowers" id="altar-flowers" style="width: 200px; display: inline;"><% printFlowers(flowers); %></select>&nbsp;
-								<label style="display: inline;">Quantity</label>&nbsp;
-								<input name="addQuanitiy" id="addQuantity" type="number" min="1" step="1" style="width: 40px; display: inline;" />
-								<label style="display: inline;">$ Price</label>&nbsp;
-								<input name="addPrice" id="addPrice" style="width: 75; display: inline;" type="number" min="0" min="0.00" step="0.01" class="form-control currency";>
+								<select class="form-control" name="altar-inventory" id="altar-inventory"></select><br>
+								<div class="row">
+									<div class="col-sm-6">
+										<label>Quantity</label>
+										<input name="addQuanitiy" class="form-control" id="addQuantity" type="number" min="1" step="1" />
+									</div>
+									<div class="col-sm-6">
+										<label>$ Price</label>
+										<input name="addPrice" id="addPrice" type="number" min="0" min="0.00" step="0.01" class="form-control currency";>
+									</div>
+								</div>
+								<hr>
 							</div>
 							<br><br>
 							<div>
@@ -215,24 +221,6 @@
 
   <% include ../../partials/footer %>
 
-<% function printFlowers(flowers) { %>
-	<option value="">Select Flower...</option>
-	<% flowers.forEach(function(item, index) { %>
-			<option value="<%= item.id %>"><%= item.name %></option>
-	<% }); %>
-<% } %>
-
-<% function getPrices(flowers) { %>
-	<script>
-		var prices = {};
-	</script>
-	<% flowers.forEach(function(item, index) { %>
-			<script>
-				prices['<%= item.name %>'] = <%= item.price*item.markup %>;
-			</script>
-	<% }); %>
-<% } %>
-
 <% function printRecipeSection(heading, subSections) { %>
 	<% strippedHeading = heading.replace(/\s+/g, ''); %>
 	<h2 id="<%= strippedHeading %>"><%= heading %></h2>
@@ -240,7 +228,7 @@
 	<% for(var i = 0; i < subSections.length; i++) { %>
 		<% strippedSubSection = subSections[i].replace(/\s+/g, ''); %>
 		<div class="row">
-			<div class="form-group col-sm-6">
+			<div class="form-group col-sm-8">
 				<label><%= subSections[i] %></label><br>
 
 				<input type="button" class='add-btn btn btn-primary' id="add-<%= strippedHeading %>-<%= strippedSubSection %>" value="Add" />
@@ -259,11 +247,11 @@
 				</tbody>
 				</table>
 			</div>
-			<div class="form-group col-sm-6">
+			<div class="form-group col-sm-4">
 				<label>Qty</label>
 				<input type="number" min="0" class="form-control-num recipeQty" name="<%= strippedHeading %>-<%= strippedSubSection %>-qty" value="0">
 			</div>
-			<div class="form-group col-sm-6">
+			<div class="form-group col-sm-4">
 				<label>Notes</label>
 				<textarea name="<%= strippedHeading %>-<%= strippedSubSection %>-notes"></textarea>
 			</div>
@@ -276,79 +264,9 @@
 	<hr>
 <% } %>
 
-<script>
-
-$(document).ready(function() {
-	InsertTaxDropdown();
-	InsertCustomersDropdown();
-	InsertTimesDropdown();
-	// remove hasDatepicker class from all date inputs on page load
-	$(".date").each(function() {
-		$(this).removeClass('hasDatepicker');
-	});
-	// add datepicker to all .date classes
-	$(".date").datepicker({ dateFormat: 'yy-mm-dd' });
-});
-
-// insert the customer dropdowns from the ajax call and select current data-val
-function InsertCustomersDropdown() {
-	var customer_id = $("select[name=customer]").attr('data-val');
-	$.ajax({
-		url: '/staff/eventForm/getCustomers/'+customer_id,
-		method: 'GET',
-		async: false,
-		success: function(response) {
-			$("select[name=customer]").html(response);
-		},
-		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("Status: " + textStatus); alert("Error: " + errorThrown);
-		}
-	});
-}
-
-// insert the customer dropdowns from the ajax call and select current data-val
-function InsertTaxDropdown() {
-	var tax_id = $("select[name=tax-information]").attr('data-val');
-	$.ajax({
-		url: '/staff/eventForm/getTaxes/'+tax_id,
-		method: 'GET',
-		async: false,
-		success: function(response) {
-			$("select[name=tax-information]").html(response);
-		},
-		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("Status: " + textStatus); alert("Error: " + errorThrown);
-		}
-	});
-}
-
-// insert all time dropdowns and select the current data-val
-function InsertTimesDropdown() {
-	$(".TimeSelect").each(function() {
-		var data_val = $(this).attr('data-val');
-		var html = "";
-		if(data_val == "TBA") {
-			html += "<option value=\"TBA\" selected=\"selected\">--</option>";
-		} else {
-			html += "<option value=\"TBA\">--</option>"
-		}
-		var minutes = ["00","15","30","45"];
-		for(var i = 0; i <=23; i++) {
-			for(var j = 0; j < minutes.length; j++) {
-				var suffix = (i >= 12)? 'pm' : 'am';
-				var hours = (i > 12) ? i - 12 : i;
-				if(hours == 0) {
-					hours = 12;
-				}
-				var val = String(hours) + String(minutes[j]) + suffix;
-				if(data_val == val) {
-					html += "<option value=\""+val+"\" selected=\"selected\">" + hours + ":" + minutes[j] + " " + suffix + "</option>";
-				} else {
-					html += "<option value=\""+val+"\">" + hours + ":" + minutes[j] + " " + suffix + "</option>";
-				}
-			}
-		}
-		$(this).html(html);
-	});
-}
-</script>
+<% function InsertIneventoryTypes(rows) { %>
+	<% rows.forEach(function(item, index) { %>
+		<input type="radio" name="inventory-type" class="inventory-btn" value="<%= item.id %>">
+		<label class="invradiolabel"><%= item.type %></label><br>
+	<% }); %>
+<% } %>

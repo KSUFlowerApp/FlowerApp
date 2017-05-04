@@ -33,7 +33,7 @@ module.exports = function(app, passport, db) {
 
   // STAFF EVENT FORM GET CUSTOMER DROPDOWN
   app.get('/staff/eventForm/getCustomers/:id', session.isLoggedIn, function(req, res) {
-    selected_id = req.params.id;
+    var selected_id = req.params.id;
     customers.getCustomers(function(err, _customers){
       if(err) {
         console.log(err);
@@ -58,7 +58,7 @@ module.exports = function(app, passport, db) {
 
   // STAFF EVENT FORM GET CUSTOMER DROPDOWN
   app.get('/staff/eventForm/getTaxes/:id', session.isLoggedIn, function(req, res) {
-    selected_id = req.params.id;
+    var selected_id = req.params.id;
     admin.getTaxes(function(err, _taxes) {
       if(err) {
         console.log(err);
@@ -82,32 +82,53 @@ module.exports = function(app, passport, db) {
     });
   });
 
+  // STAFF EVENT FORM GET CUSTOMER DROPDOWN
+  app.get('/staff/eventForm/getInventory/:id', session.isLoggedIn, function(req, res) {
+    var data = {}
+    // get event and generate pdf
+    async.parallel([
+      (callback) => { inventory.getInventoryByType(req.params.id, callback) }
+    ], function(err, _inventory) {
+        if(err) {
+          console.log(err)
+        } else {
+          var prices = {}
+          var options = "<option value=''>Select...</option>";
+          var inventory = _inventory[0];
+          inventory.forEach(function(item, index) {
+            options += "<option value=" + item.id + ">" + item.name + "</option>";
+            prices[item.name] = item.price*item.markup;
+          });
+          data["options"] = options;
+          data["prices"] = prices;
+        }
+        res.send(data);
+      });
+    });
   // =====================================
   // STAFF - EVENT FORM =======================
   // =====================================
   app.get('/staff/eventForm', session.isLoggedIn, function(req,res) {
     async.parallel([
-      inventory.getFlowersWithMarkups,
-      customers.getCustomers,
+      inventory.getInventoryTypes,
     ], function(err, results) {
       if(err) {
         console.log(err)
       } else {
-        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: undefined, form_html: undefined });
+        res.render('staff/eventForm.ejs', {inventory_types: results[0], form_id: undefined, form_html: undefined });
       }
     });
   });
 
   app.get('/staff/eventForm/:form_id', session.isLoggedIn, function(req,res) {
     async.parallel([
-      inventory.getFlowersWithMarkups,
-      customers.getCustomers,
+      inventory.getInventoryTypes,
       (callback) => { events.getEvent(req.params.form_id, callback) }
     ], function(err, results) {
       if(err) {
         console.log(err)
       } else {
-        res.render('staff/eventForm.ejs', {flowers: results[0], customers: results[1], form_id: results[2][0].id, form_html: results[2][0].form_html });
+        res.render('staff/eventForm.ejs', {inventory_types: results[0], form_id: results[1][0].id, form_html: results[1][0].form_html });
       }
     });
   });
@@ -175,8 +196,15 @@ module.exports = function(app, passport, db) {
         console.log(err)
       } else {
         var form_json = JSON.parse(results[0][0].form_json);
-        //res.set({'Content-Type': 'application/json; charset=utf-8'}).send(JSON.stringify(form_json, null, 3));
-        res.render('staff/pdfs.ejs', { pdf: form_json });
+        var customer_id = form_json.customer_id;
+        customers.getCustomer(customer_id, function(err2, customer_results) {
+          if(err2) {
+            console.log(err2);
+          } else {
+            form_json.customer = customer_results[0];
+            res.render('staff/pdfs.ejs', { pdf: form_json });
+          }
+        });
       }
     });
   });
