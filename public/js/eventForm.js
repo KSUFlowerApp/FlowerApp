@@ -202,6 +202,10 @@ $(document).on("change", ".taxes", function ()	{
 	updateGrandTotal();
 });
 
+$(document).on("change", "input[name=delivery-fee]", function() {
+	updateGrandTotal();
+});
+
 // update Grand Total
 function updateGrandTotal() {
 	grand_total = 0;
@@ -212,6 +216,7 @@ function updateGrandTotal() {
 		recipe_total = recipe_price*recipe_qty;
 		grand_total += recipe_total;
 	});
+	grand_total += $("input[name=delivery-fee]").val();
 	var tax_rate = $("select[name=tax-information] option:selected").attr("data-val");
 	if(isNaN(tax_rate)) {
 		tax_rate = 0;
@@ -349,6 +354,9 @@ function GetPDFJSON() {
 
 	var delivery_time = $("select[name=delivery-time] option:selected").text();
 	pdf["delivery_time"] = delivery_time;
+
+	var delivery_fee = $("input[name=delivery-fee]").val();
+	pdf["delivery_fee"] = delivery_fee;
 
 	var tax_information = $("select[name=tax-information] option:selected").text();
 	pdf["tax_information"] = tax_information;
