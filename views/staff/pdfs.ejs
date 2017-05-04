@@ -43,12 +43,6 @@
       </div>
     </a>
   </div>
-
-  <!-- PRINT PDF JSON FOR DEVELOPMENT, COMMENT OUT LATER -->
-  <div class="row">
-   <pre><%- JSON.stringify(pdf, null, 2) %></pre>
-  </div>
-
 <% } else { %>
   <div class="page-header text-center">
     <h1><span class="fa fa-file-pdf-o fa-2x"></span> No PDF Available</h1>
@@ -58,11 +52,31 @@
 <% include ../../partials/footer %>
 
 <script>
+function getDocDefinition(type) {
+  var docDefinition = {};
+  docDefinition.content = getContent(type);
+  docDefinition.styles = {
+      title: { fontSize: 32, alignment: 'center' },
+      bold: { bold: true },
+      mainInfo: { fontSize: 20 },
+      recipeHeader: { fontSize: 16, alignment: 'center' }
+    }
+  return docDefinition;
+}
 $(document).on("click", "#designerPDF", function() {
   var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_designer_pdf.pdf";
-  var docDefinition = { content: [
-      { text: 'Kistner\'s Flowers\n\n', style: 'title' },
-      {
+  pdfMake.createPdf(getDocDefinition("designer")).download(doc_name);
+});
+
+$(document).on("click", "#customerPDF", function() {
+  var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_customer_pdf.pdf";
+  pdfMake.createPdf(getDocDefinition("customer")).download(doc_name);
+});
+
+function getContent(type) {
+  content = []
+  content.push({ text: 'Kistner\'s Flowers\n\n', style: 'title' },
+  {
         columns:
         [
           { width: '33%', text: 'Bride:', style: 'bold', alignment: 'center' },
@@ -112,6 +126,7 @@ $(document).on("click", "#designerPDF", function() {
         columnGap: 10
       },
       { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+<<<<<<< HEAD
       { text: 'Grand Total: ' + pdf.grand_total, style: 'recipeHeader' },
       { text: '\n\n' },
       { text: '- - - - - - - - - - - - - Bouquets - - - - - - - - - - - - -', style: 'recipeHeader', alignment: 'center' },
@@ -127,25 +142,58 @@ $(document).on("click", "#designerPDF", function() {
             [ 'Name', 'Quantity', 'Price' ],
             [ 'name1', 'qty1', 'price1' ]
           ]
-        }
-      },
-      { text: '\n' },
-      { text: 'Notes: ' + pdf.Bouquets.Bridal.notes }
-    ],
-    styles:
-    {
-      title: { fontSize: 32, alignment: 'center' },
-      bold: { bold: true },
-      mainInfo: { fontSize: 20 },
-      recipeHeader: { fontSize: 16, }
-    }
-  };
-  pdfMake.createPdf(docDefinition).download(doc_name);
-});
+=======
+      { text: 'Recipes', style: 'title' },
+      { text: 'Grand Total: ( ' + pdf.grand_total + ' )', style: 'recipeHeader' });
+      content = getRecipes(type, content, ["Bouquets", "Boutonnieres", "Corsages", "Ceremony Decorations", "Reception Decorations"]);
+      return content;
+}
 
-$(document).on("click", "#customerPDF", function() {
-  var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_customer_pdf.pdf";
-  var docDefinition = { content: 'Customer PDF' };
-  pdfMake.createPdf(docDefinition).download(doc_name);
-});
+function getRecipes(type, content, a) {
+  console.log(type);
+  for(var i = 0; i < a.length; i++) {
+    var no_items = true;
+    var header = pdf[a[i]];
+    if(type == "designer") {
+      content.push({ text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n', alignment: 'center' });
+      content.push({ text: '- - - - - - - - - - - - - '+ a[i] +' - - - - - - - - - - - - -', style: 'recipeHeader' });
+      content.push({ text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n', alignment: 'center' });
+    } else {
+      content.push({ text: '- - - - - - - - - - - - - '+ a[i] +' - - - - - - - - - - - - -', style: 'recipeHeader' });
+    }
+    for(var key in header) {
+      if(header[key].recipe_qty > 0) {
+        no_items = false;
+        content.push({ text: key + '\t' + header[key].recipe.total + ' x' + header[key].recipe_qty, style: 'bold' });
+        if(type == "designer") {
+          var table = {
+            table: {
+              headerRows: 1,
+              widths: ['auto', 'auto', 'auto'],
+              body: getDesignerRecipeTableBody(header[key].recipe.items),
+            }
+          }
+          content.push(table);
+          content.push({ text: '\n' });
+          content.push({ text: 'Notes: ' + header[key].notes });
+          content.push({ text: '\n\n' });
+>>>>>>> refs/remotes/origin/6-PDF
+        }
+      }
+    }
+    if(no_items && type == "designer") {
+      content.push({ text: 'No recipes', alignment: 'center' });
+    }
+  }
+  return content;
+}
+
+function getDesignerRecipeTableBody(items) {
+  var body = [];
+  body.push([ 'Name', 'Quantity', 'Price' ]);
+  items.forEach(function(i) {
+    body.push([i.item_name, i.item_qty, i.item_price]);
+  });
+  return body;
+}
 </script>
