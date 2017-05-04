@@ -43,6 +43,9 @@
       </div>
     </a>
   </div>
+  <div class="row">
+    <pre><%- JSON.stringify(pdf, null, 4) %></pre>
+  </div>
 <% } else { %>
   <div class="page-header text-center">
     <h1><span class="fa fa-file-pdf-o fa-2x"></span> No PDF Available</h1>
@@ -146,8 +149,8 @@ function getRecipes(type, content, a) {
     for(var key in header) {
       if(header[key].recipe_qty > 0) {
         no_items = false;
-        content.push({ text: key + '\t' + header[key].recipe.total + ' x' + header[key].recipe_qty, style: 'bold' });
         if(type == "designer") {
+          content.push({ text: key + '\t' + header[key].recipe.total + ' x' + header[key].recipe_qty, style: 'bold' });
           var table = {
             table: {
               headerRows: 1,
@@ -159,18 +162,19 @@ function getRecipes(type, content, a) {
           content.push({ text: '\n' });
           content.push({ text: 'Notes: ' + header[key].notes });
           content.push({ text: '\n\n' });
-        } else {
-          var table = {
-            table: {
-              headerRows: 1,
-              widths: ['40%', '20%', '20%', '20%'],
-              body: getCustomerRecipeTableBody(header[key].recipe.items),
-            }
-          }
-          content.push(table);
-          content.push({ text: '\n' });
         }
       }
+    }
+    if(type == "customer") {
+      var table = {
+        table: {
+          headerRows: 1,
+          widths: ['40%', '20%', '20%', '20%'],
+          body: getCustomerRecipeTableBody(header),
+        }
+      }
+      content.push(table);
+      content.push({ text: '\n' });
     }
     if(no_items && type == "designer") {
       content.push({ text: 'No recipes', alignment: 'center' });
@@ -188,13 +192,16 @@ function getDesignerRecipeTableBody(items) {
   return body;
 }
 
-function getCustomerRecipeTableBody(items) {
+function getCustomerRecipeTableBody(row) {
   var body = [];
   body.push(['Type','Price (each)','Quantity','Total Cost']);
-  items.forEach(function(i) {
-    var total_cost = parseFloat(i.item_qty)*parseFloat(i.item_price.slice(1));
-    body.push([i.item_name, i.item_price, i.item_qty, '$'+total_cost.toFixed(2)]);
-  });
+  console.log(row);
+  for(var key in row) {
+    if(row[key].recipe_qty > 0) {
+      var total_cost = parseFloat(row[key].recipe_qty)*parseFloat(row[key].recipe.total.slice(1));
+      body.push([key, row[key].recipe.total, row[key].recipe_qty, '$'+total_cost.toFixed(2)]);
+    }
+  }
   return body;
 }
 </script>
