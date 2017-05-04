@@ -133,7 +133,6 @@ function getContent(type) {
 }
 
 function getRecipes(type, content, a) {
-  console.log(type);
   for(var i = 0; i < a.length; i++) {
     var no_items = true;
     var header = pdf[a[i]];
@@ -147,12 +146,12 @@ function getRecipes(type, content, a) {
     for(var key in header) {
       if(header[key].recipe_qty > 0) {
         no_items = false;
-        content.push({ text: key + '\t' + header[key].recipe.total + ' x' + header[key].recipe_qty, style: 'bold' });
         if(type == "designer") {
+          content.push({ text: key + '\t' + header[key].recipe.total + ' x' + header[key].recipe_qty, style: 'bold' });
           var table = {
             table: {
               headerRows: 1,
-              widths: ['auto', 'auto', 'auto'],
+              widths: ['50%', '20%', '30%'],
               body: getDesignerRecipeTableBody(header[key].recipe.items),
             }
           }
@@ -162,6 +161,17 @@ function getRecipes(type, content, a) {
           content.push({ text: '\n\n' });
         }
       }
+    }
+    if(type == "customer") {
+      var table = {
+        table: {
+          headerRows: 1,
+          widths: ['40%', '20%', '20%', '20%'],
+          body: getCustomerRecipeTableBody(header),
+        }
+      }
+      content.push(table);
+      content.push({ text: '\n' });
     }
     if(no_items && type == "designer") {
       content.push({ text: 'No recipes', alignment: 'center' });
@@ -176,6 +186,19 @@ function getDesignerRecipeTableBody(items) {
   items.forEach(function(i) {
     body.push([i.item_name, i.item_qty, i.item_price]);
   });
+  return body;
+}
+
+function getCustomerRecipeTableBody(row) {
+  var body = [];
+  body.push(['Type','Price (each)','Quantity','Total Cost']);
+  console.log(row);
+  for(var key in row) {
+    if(row[key].recipe_qty > 0) {
+      var total_cost = parseFloat(row[key].recipe_qty)*parseFloat(row[key].recipe.total.slice(1));
+      body.push([key, row[key].recipe.total, row[key].recipe_qty, '$'+total_cost.toFixed(2)]);
+    }
+  }
   return body;
 }
 </script>
