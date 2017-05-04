@@ -151,7 +151,7 @@ function getRecipes(type, content, a) {
           var table = {
             table: {
               headerRows: 1,
-              widths: ['auto', 'auto', 'auto'],
+              widths: ['50%', '20%', '30%'],
               body: getDesignerRecipeTableBody(header[key].recipe.items),
             }
           }
@@ -159,6 +159,16 @@ function getRecipes(type, content, a) {
           content.push({ text: '\n' });
           content.push({ text: 'Notes: ' + header[key].notes });
           content.push({ text: '\n\n' });
+        } else {
+          var table = {
+            table: {
+              headerRows: 1,
+              widths: ['40%', '20%', '20%', '20%'],
+              body: getCustomerRecipeTableBody(header[key].recipe.items),
+            }
+          }
+          content.push(table);
+          content.push({ text: '\n' });
         }
       }
     }
@@ -174,6 +184,16 @@ function getDesignerRecipeTableBody(items) {
   body.push([ 'Name', 'Quantity', 'Price' ]);
   items.forEach(function(i) {
     body.push([i.item_name, i.item_qty, i.item_price]);
+  });
+  return body;
+}
+
+function getCustomerRecipeTableBody(items) {
+  var body = [];
+  body.push(['Type','Price (each)','Quantity','Total Cost']);
+  items.forEach(function(i) {
+    var total_cost = parseFloat(i.item_qty)*parseFloat(i.item_price.slice(1));
+    body.push([i.item_name, i.item_price, i.item_qty, '$'+total_cost.toFixed(2)]);
   });
   return body;
 }
