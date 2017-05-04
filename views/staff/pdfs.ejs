@@ -59,6 +59,38 @@
 
 <script>
 $(document).on("click", "#designerPDF", function() {
+  var externalDataRetrievedFromServer = [];
+  $.each(pdf.Bouquets.Bridal.recipe.items, function(i, item)  {
+    externalDataRetrievedFromServer.push({ name: item.item_name, qty: item.item_qty, price: item.item_price});
+  });
+var theData = externalDataRetrievedFromServer;
+function buildTableBody(data, columns) {
+    var body = [];
+
+    body.push(columns);
+
+    data.forEach(function(row) {
+        var dataRow = [];
+
+        columns.forEach(function(column) {
+            dataRow.push(row[column].toString());
+        })
+
+        body.push(dataRow);
+    });
+
+    return body;
+}
+
+function table(data, columns) {
+    return {
+        table: {
+            headerRows: 1,
+            body: buildTableBody(data, columns)
+        }
+    };
+}
+
   var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_designer_pdf.pdf";
   var docDefinition = { content: [
       { text: 'Kistner\'s Flowers\n\n', style: 'title' },
@@ -117,17 +149,7 @@ $(document).on("click", "#designerPDF", function() {
       { text: '- - - - - - - - - - - - - Bouquets - - - - - - - - - - - - -', style: 'recipeHeader', alignment: 'center' },
       { text: '\n\n' },
       { text: 'Bridal (' + pdf.Bouquets.Bridal.recipe.total + ' x ' + pdf.Bouquets.Bridal.recipe_qty + '):', style: 'bold' },
-      {
-        table:
-        {
-          headerRows: 1,
-          widths: [ 'auto', 'auto', 'auto' ],
-          body:
-          [
-            [ 'Name', 'Quantity', 'Price' ]
-          ]
-        }
-      },
+        table(externalDataRetrievedFromServer, ['name', 'qty', 'price']),
       { text: '\n' },
       { text: 'Notes: ' + pdf.Bouquets.Bridal.notes }
     ],
