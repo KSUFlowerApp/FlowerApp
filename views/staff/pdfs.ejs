@@ -60,9 +60,28 @@
 <script>
 $(document).on("click", "#designerPDF", function() {
   var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_designer_pdf.pdf";
-  var docDefinition = { content: [
-      { text: 'Kistner\'s Flowers\n\n', style: 'title' },
-      {
+  var docDefinition = { content: getDesignerContent(),
+    styles:
+    {
+      title: { fontSize: 32, alignment: 'center' },
+      bold: { bold: true },
+      mainInfo: { fontSize: 20 },
+      recipeHeader: { fontSize: 16, alignment: 'center' }
+    }
+  };
+  pdfMake.createPdf(docDefinition).download(doc_name);
+});
+
+$(document).on("click", "#customerPDF", function() {
+  var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_customer_pdf.pdf";
+  var docDefinition = { content: 'Customer PDF' };
+  pdfMake.createPdf(docDefinition).download(doc_name);
+});
+
+function getDesignerContent() {
+  content = []
+  content.push({ text: 'Kistner\'s Flowers\n\n', style: 'title' },
+  {
         columns:
         [
           { width: '33%', text: 'Bride:', style: 'bold', alignment: 'center' },
@@ -112,39 +131,49 @@ $(document).on("click", "#designerPDF", function() {
         columnGap: 10
       },
       { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
-      { text: 'Grand Total: ' + pdf.grand_total, style: 'recipeHeader' },
-      { text: '\n\n' },
-      { text: '- - - - - - - - - - - - - Bouquets - - - - - - - - - - - - -', style: 'recipeHeader', alignment: 'center' },
-      { text: '\n\n' },
-      { text: 'Bridal (' + pdf.Bouquets.Bridal.recipe.total + ' x ' + pdf.Bouquets.Bridal.recipe_qty + '):', style: 'bold' },
-      {
-        table:
-        {
-          headerRows: 1,
-          widths: [ 'auto', 'auto', 'auto' ],
-          body:
-          [
-            [ 'Name', 'Quantity', 'Price' ]
-          ]
-        }
-      },
-      { text: '\n' },
-      { text: 'Notes: ' + pdf.Bouquets.Bridal.notes }
-    ],
-    styles:
-    {
-      title: { fontSize: 32, alignment: 'center' },
-      bold: { bold: true },
-      mainInfo: { fontSize: 20 },
-      recipeHeader: { fontSize: 16, }
-    }
-  };
-  pdfMake.createPdf(docDefinition).download(doc_name);
-});
+      { text: 'Recipes', style: 'title' },
+      { text: 'Grand Total: ( ' + pdf.grand_total + ' )', style: 'recipeHeader' });
+      content = getDesignerRecipes(content, ["Bouquets", "Boutonnieres", "Corsages", "Ceremony Decorations", "Reception Decorations"]);
+      return content;
+}
 
-$(document).on("click", "#customerPDF", function() {
-  var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_customer_pdf.pdf";
-  var docDefinition = { content: 'Customer PDF' };
-  pdfMake.createPdf(docDefinition).download(doc_name);
-});
+function getDesignerRecipes(content, a) {
+  for(var i = 0; i < a.length; i++) {
+    var no_items = true;
+    var header = pdf[a[i]];
+    content.push({ text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n', alignment: 'center' });
+    content.push({ text: '- - - - - - - - - - - - - '+ a[i] +' - - - - - - - - - - - - -', style: 'recipeHeader' });
+    content.push({ text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n', alignment: 'center' });
+    for(var key in header) {
+      if(header[key].recipe_qty > 0) {
+        no_items = false;
+        content.push({ text: key + ' x' + header[key].recipe_qty + '\t' + header[key].recipe.total, style: 'bold' });
+        var table = {
+          table: {
+            headerRows: 1,
+            widths: ['auto', 'auto', 'auto'],
+            body: getDesignerRecipeTableBody(header[key].recipe.items),
+          }
+        }
+        content.push(table);
+        content.push({ text: '\n' });
+        content.push({ text: 'Notes: ' + header[key].notes });
+        content.push({ text: '\n\n' });
+      }
+    }
+    if(no_items) {
+      content.push({ text: 'No recipes', alignment: 'center' });
+    }
+  }
+  return content;
+}
+
+function getDesignerRecipeTableBody(items) {
+  var body = [];
+  body.push([ 'Name', 'Quantity', 'Price' ]);
+  items.forEach(function(i) {
+    body.push([i.item_name, i.item_qty, i.item_price]);
+  });
+  return body;
+}
 </script>
