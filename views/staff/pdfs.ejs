@@ -126,23 +126,6 @@ function getContent(type) {
         columnGap: 10
       },
       { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
-<<<<<<< HEAD
-      { text: 'Grand Total: ' + pdf.grand_total, style: 'recipeHeader' },
-      { text: '\n\n' },
-      { text: '- - - - - - - - - - - - - Bouquets - - - - - - - - - - - - -', style: 'recipeHeader', alignment: 'center' },
-      { text: '\n\n' },
-      { text: 'Bridal (' + pdf.Bouquets.Bridal.recipe.total + ' x ' + pdf.Bouquets.Bridal.recipe_qty + '):', style: 'bold' },
-      {
-        table:
-        {
-          headerRows: 1,
-          widths: [ 'auto', 'auto', 'auto' ],
-          body:
-          [
-            [ 'Name', 'Quantity', 'Price' ],
-            [ 'name1', 'qty1', 'price1' ]
-          ]
-=======
       { text: 'Recipes', style: 'title' },
       { text: 'Grand Total: ( ' + pdf.grand_total + ' )', style: 'recipeHeader' });
       content = getRecipes(type, content, ["Bouquets", "Boutonnieres", "Corsages", "Ceremony Decorations", "Reception Decorations"]);
@@ -177,7 +160,6 @@ function getRecipes(type, content, a) {
           content.push({ text: '\n' });
           content.push({ text: 'Notes: ' + header[key].notes });
           content.push({ text: '\n\n' });
->>>>>>> refs/remotes/origin/6-PDF
         }
       }
     }
