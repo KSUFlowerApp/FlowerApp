@@ -75,37 +75,95 @@ $(document).on("click", "#customerPDF", function() {
 
 function getContent(type) {
   content = []
-  content.push({ text: 'Kistner\'s Flowers\n\n', style: 'title' },
-      { width: '33%', text: "Kistner's Flowers", alignment: 'left' },
-      { width: '33%', text: "1901 Pillsbury Drive P.O. Box 926", alignment: 'left' },
-      { width: '33%', text: 'Manhattan, KS 66502', alignment: 'left' },
-      { width: '33%', text: '(785) 776-7989', alignment: 'left' },
-      { text: '\n' },
-      { width: '33%', text: 'Order Date: ', style: 'bold', alignment: 'left' },
-      { width: '33%', text: 'Delivery Date: ', style: 'bold', alignment: 'left' },
-      { text: '\n' },
-      { text: '\n' },
-      { text: 'Customer ', style: 'bold', alignment: 'center' },
-      { text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
-      { width: '33%', text: 'Account: ', style: 'bold', alignment: 'left' },
-      { width: '33%', text: 'Name: ' + pdf.customer.firstName + ' ' + pdf.customer.lastName, alignment: 'left' },
-      { width: '33%', text: 'Address: ' + pdf.customer.street_addr, alignment: 'left' },
-      { width: '33%', text: 'City: ' + pdf.customer.city + ', ' + pdf.customer.state + ' ' + pdf.customer.zip, alignment: 'left' },
-      { width: '33%', text: 'Telephone: ' + pdf.customer.phone, alignment: 'left' },
-      { text: '\n' },
-      { text: '\n' },
-      { text: 'Recipent ', style: 'bold', alignment: 'center' },
-      { text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
-      { width: '33%', text: 'Name: ' + pdf.brides_name, alignment: 'left' },
-      { width: '33%', text: 'Address: ', alignment: 'left' },
-      { width: '33%', text: 'City: ', alignment: 'left' },
-      { width: '33%', text: 'Telephone: ', alignment: 'left' },
-      { text: '\n' },
-      { text: '\n' },
-      { text: 'Product Information', style: 'bold', alignment: 'center' },
-      { text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' });
-      content = getRecipes(type, content, ["Bouquets", "Boutonnieres", "Corsages", "Ceremony Decorations", "Reception Decorations"]);
-      return content;
+  if (type == "designer") {
+    content.push({ text: 'Kistner\'s Flowers\n\n', style: 'title' },
+    {
+          columns:
+          [
+            { width: '33%', text: 'Bride:', style: 'bold', alignment: 'center' },
+            { width: '33%', text: 'Groom:', style: 'bold', alignment: 'center' },
+            { width: '33%', text: 'Ceremony Date:', style: 'bold', alignment: 'center' }
+          ]
+        },
+        { text: '\n' },
+        {
+          columns:
+          [
+            { width: '33%', text: pdf.brides_name, style: 'mainInfo', alignment: 'center' },
+            { width: '33%', text: pdf.grooms_name, style: 'mainInfo', alignment: 'center' },
+            { width: '33%', text: pdf.ceremony_date, style: 'mainInfo', alignment: 'center' }
+          ],
+          columnGap: 10
+        },
+        { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+        { text: 'Customer: ' + pdf.customer.firstName + ' ' + pdf.customer.lastName, style: 'bold', alignment: 'center' },
+        { text: '\n' },
+        {
+          columns:
+          [
+            { width: '33%', text: 'Email:\n' + pdf.customer.e_mail, alignment: 'center' },
+            { width: '33%', text: 'Address:\n' + pdf.customer.street_addr + ', ' + pdf.customer.city + ', ' + pdf.customer.state + ' ' + pdf.customer.zip, alignment: 'center' },
+            { width: '33%', text: 'Phone:\n' + pdf.customer.phone, alignment: 'center' }
+          ],
+          columnGap: 10
+        },
+        { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+        {
+          columns:
+          [
+            { width: '33%', text: 'Ceremony Info:', style: 'bold', alignment: 'left' },
+            { width: '33%', text: 'Reception Info:', style: 'bold', alignment: 'center' },
+            { width: '33%', text: 'Photo, Planner, Delivery, Tax:', style: 'bold', alignment: 'right' }
+          ]
+        },
+        { text: '\n' },
+        {
+          columns:
+          [
+            { width: '33%', text: 'Start Time: ' + pdf.ceremony_start_time + '\n\nAddress: ' + pdf.ceremony_address + ', ' + pdf.ceremony_city + ', ' + pdf.ceremony_state + ' ' + pdf.ceremony_zip + '\n\nColors: ' + pdf.ceremony_colors + '\n\nTheme: ' + pdf.ceremony_theme, alignment: 'left' },
+            { width: '33%', text: 'Date: ' + pdf.reception_date + '\n\nStart Time: ' + pdf.reception_start_time + '\n\nAddress: ' + pdf.reception_address + ', ' + pdf.reception_city + ', ' + pdf.reception_state + ' ' + pdf.reception_zip, alignment: 'center' },
+            { width: '33%', text: 'Photographer: ' + pdf.photographers + '\n\nPhoto Start Time: ' + pdf.photograph_start_time + '\n\nWedding Planner: ' + pdf.wedding_planner + '\n\nDelivery Time: ' + pdf.delivery_time + '\n\nTax: ' + pdf.tax_information, alignment: 'right' },
+          ],
+          columnGap: 10
+        },
+        { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+        { text: 'Recipes', style: 'title' },
+        { text: 'Grand Total: ( ' + pdf.grand_total + ' )', style: 'recipeHeader' });
+        content = getRecipes(type, content, ["Bouquets", "Boutonnieres", "Corsages", "Ceremony Decorations", "Reception Decorations"]);
+  }
+  else {
+    content.push({ text: 'Kistner\'s Flowers\n\n', style: 'title' },
+        { width: '33%', text: "Kistner's Flowers", alignment: 'left' },
+        { width: '33%', text: "1901 Pillsbury Drive P.O. Box 926", alignment: 'left' },
+        { width: '33%', text: 'Manhattan, KS 66502', alignment: 'left' },
+        { width: '33%', text: '(785) 776-7989', alignment: 'left' },
+        { text: '\n' },
+        { width: '33%', text: 'Order Date: ', style: 'bold', alignment: 'left' },
+        { width: '33%', text: 'Delivery Date: ', style: 'bold', alignment: 'left' },
+        { text: '\n' },
+        { text: '\n' },
+        { text: 'Customer ', style: 'bold', alignment: 'center' },
+        { text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+        { width: '33%', text: 'Account: ', style: 'bold', alignment: 'left' },
+        { width: '33%', text: 'Name: ' + pdf.customer.firstName + ' ' + pdf.customer.lastName, alignment: 'left' },
+        { width: '33%', text: 'Address: ' + pdf.customer.street_addr, alignment: 'left' },
+        { width: '33%', text: 'City: ' + pdf.customer.city + ', ' + pdf.customer.state + ' ' + pdf.customer.zip, alignment: 'left' },
+        { width: '33%', text: 'Telephone: ' + pdf.customer.phone, alignment: 'left' },
+        { text: '\n' },
+        { text: '\n' },
+        { text: 'Recipent ', style: 'bold', alignment: 'center' },
+        { text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+        { width: '33%', text: 'Name: ' + pdf.brides_name, alignment: 'left' },
+        { width: '33%', text: 'Address: ', alignment: 'left' },
+        { width: '33%', text: 'City: ', alignment: 'left' },
+        { width: '33%', text: 'Telephone: ', alignment: 'left' },
+        { text: '\n' },
+        { text: '\n' },
+        { text: 'Product Information', style: 'bold', alignment: 'center' },
+        { text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' });
+        content = getProductInformation(type, content, ["Bouquets", "Boutonnieres", "Corsages", "Ceremony Decorations", "Reception Decorations"]);
+  }
+  return content;
 }
 
 function getRecipes(type, content, a) {
@@ -116,6 +174,8 @@ function getRecipes(type, content, a) {
       content.push({ text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n', alignment: 'center' });
       content.push({ text: '- - - - - - - - - - - - - '+ a[i] +' - - - - - - - - - - - - -', style: 'recipeHeader' });
       content.push({ text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n', alignment: 'center' });
+    } else {
+      content.push({ text: '- - - - - - - - - - - - - '+ a[i] +' - - - - - - - - - - - - -', style: 'recipeHeader' });
     }
     for(var key in header) {
       if(header[key].recipe_qty > 0) {
@@ -140,17 +200,23 @@ function getRecipes(type, content, a) {
       content.push({ text: 'No recipes', alignment: 'center' });
     }
   }
-  if(type == "customer") {
+  return content;
+}
+
+function getProductInformation(type, content, a)  {
+
+    var no_items = true;
+
     var table = {
       table: {
-        headerRows: 1,
-        widths: ['40%', '20%', '20%', '20%'],
-        body: getCustomerRecipeTableBody(a),
+          headerRows: 1,
+          widths: ['10%', '50%', '20%', '20%'],
+          body: getCustomerRecipeTableBody(a),
+        }
       }
-    }
-    content.push(table);
-    content.push({ text: '\n' });
-  }
+      content.push(table);
+      content.push({ text: '\n' });
+
   return content;
 }
 
@@ -165,17 +231,25 @@ function getDesignerRecipeTableBody(items) {
 
 function getCustomerRecipeTableBody(a) {
   var body = [];
-  body.push(['Quantity', 'Description', 'Price', 'Ext. Price']);
+  body.push(['Quantity','Description','Price','Ext. Price']);
   for(var i = 0; i < a.length; i++) {
-    console.log(a[i]);
+    var temp = a[i];
+    var header = pdf[a[i]];
+    for(var key in header) {
+      if(header[key].recipe_qty > 0) {
+        temp = temp + ', ' + key;
+        var qty = header[key].recipe_qty;
+        var price = header[key].recipe.total;
+        price = price.substring(1, price.length);
+        qty = parseFloat(qty);
+        price = parseFloat(price);
+        var total = qty * price;
+        total = parseFloat(total).toFixed(2);
+        total = '$' + total;
+        body.push([header[key].recipe_qty, temp, header[key].recipe.total, total]);
+      }
+    }
   }
-  //console.log(row);
-  // for(var key in row) {
-  //   if(row[key].recipe_qty > 0) {
-  //     var total_cost = parseFloat(row[key].recipe_qty)*parseFloat(row[key].recipe.total.slice(1));
-  //     body.push([key, row[key].recipe.total, row[key].recipe_qty, '$'+total_cost.toFixed(2)]);
-  //   }
-  // }
   return body;
 }
 </script>
