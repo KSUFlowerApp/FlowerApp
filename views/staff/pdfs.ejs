@@ -70,6 +70,7 @@ $(document).on("click", "#designerPDF", function() {
 
 $(document).on("click", "#customerPDF", function() {
   var doc_name = pdf.brides_name + "_" + pdf.grooms_name + "_" + pdf.ceremony_date + "_customer_pdf.pdf";
+  console.log(pdf);
   pdfMake.createPdf(getDocDefinition("customer")).download(doc_name);
 });
 
@@ -188,8 +189,8 @@ function getContent(type) {
         { width: '33%', text: 'Manhattan, KS 66502', alignment: 'left' },
         { width: '33%', text: '(785) 776-7989', alignment: 'left' },
         { text: '\n' },
-        { width: '33%', text: 'Order Date: ', style: 'bold', alignment: 'left' },
-        { width: '33%', text: 'Delivery Date: ', style: 'bold', alignment: 'left' },
+        //{ width: '33%', text: 'Order Date: ', style: 'bold', alignment: 'left' },
+        { width: '33%', text: 'Delivery Date: ' + pdf.reception_date, style: 'bold', alignment: 'left' },
         { text: '\n' },
         { text: '\n' },
         { text: 'Customer ', style: 'bold', alignment: 'center' },
@@ -201,12 +202,12 @@ function getContent(type) {
         { width: '33%', text: 'Telephone: ' + pdf.customer.phone, alignment: 'left' },
         { text: '\n' },
         { text: '\n' },
-        { text: 'Recipent ', style: 'bold', alignment: 'center' },
+        { text: 'Recipient ', style: 'bold', alignment: 'center' },
         { text: '-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
         { width: '33%', text: 'Name: ' + pdf.brides_name, alignment: 'left' },
-        { width: '33%', text: 'Address: ', alignment: 'left' },
-        { width: '33%', text: 'City: ', alignment: 'left' },
-        { width: '33%', text: 'Telephone: ', alignment: 'left' },
+        { width: '33%', text: 'Address: ' + pdf.reception_address, alignment: 'left' },
+        { width: '33%', text: 'City: ' + pdf.reception_city + ', ' + pdf.reception_state + ' ' + pdf.reception_zip, alignment: 'left' },
+        { width: '33%', text: 'Telephone: ' + pdf.customer.phone, alignment: 'left' },
         { text: '\n' },
         { text: '\n' },
         { text: 'Product Information', style: 'bold', alignment: 'center' },
@@ -281,6 +282,9 @@ function getDesignerRecipeTableBody(items) {
 
 function getCustomerRecipeTableBody(a) {
   var body = [];
+  var sub, tax, grand;
+  sub = 0;
+  tax = pdf.tax;
   body.push(['Quantity','Description','Price','Ext. Price']);
   for(var i = 0; i < a.length; i++) {
     var temp = a[i];
@@ -295,11 +299,23 @@ function getCustomerRecipeTableBody(a) {
         price = parseFloat(price);
         var total = qty * price;
         total = parseFloat(total).toFixed(2);
+        sub = parseFloat(sub) + parseFloat(total);
         total = '$' + total;
         body.push([header[key].recipe_qty, temp, header[key].recipe.total, total]);
       }
     }
   }
+  tax = tax * sub;
+  grand = tax + sub;
+  grand = grand.toFixed(2);
+  tax = tax.toFixed(2);
+  sub = '$' + sub;
+  tax = '$' + tax;
+  grand = '$' + grand;
+  body.push([' ',' ',' ',' ']);
+  body.push(['Subtotal', '', '', sub]);
+  body.push(['Tax', '', '', tax]);
+  body.push(['Grand Total', '', '', grand]);
   return body;
 }
 </script>

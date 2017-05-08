@@ -361,6 +361,9 @@ function GetPDFJSON() {
 	var tax_information = $("select[name=tax-information] option:selected").text();
 	pdf["tax_information"] = tax_information;
 
+	var tax = $("select[name=tax-information] option:selected").attr('data-val');
+	pdf["tax"] = tax;
+
 	var grand_total = $("#grand-total").text();
 	pdf["grand_total"] = grand_total;
 
