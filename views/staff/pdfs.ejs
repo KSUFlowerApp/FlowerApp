@@ -133,6 +133,56 @@ function getContent(type) {
   }
   else {
     content.push({ text: 'Kistner\'s Flowers\n\n', style: 'title' },
+    {
+          columns:
+          [
+            { width: '33%', text: 'Bride:', style: 'bold', alignment: 'center' },
+            { width: '33%', text: 'Groom:', style: 'bold', alignment: 'center' },
+            { width: '33%', text: 'Ceremony Date:', style: 'bold', alignment: 'center' }
+          ]
+        },
+        { text: '\n' },
+        {
+          columns:
+          [
+            { width: '33%', text: pdf.brides_name, style: 'mainInfo', alignment: 'center' },
+            { width: '33%', text: pdf.grooms_name, style: 'mainInfo', alignment: 'center' },
+            { width: '33%', text: pdf.ceremony_date, style: 'mainInfo', alignment: 'center' }
+          ],
+          columnGap: 10
+        },
+        { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+        { text: 'Customer: ' + pdf.customer.firstName + ' ' + pdf.customer.lastName, style: 'bold', alignment: 'center' },
+        { text: '\n' },
+        {
+          columns:
+          [
+            { width: '33%', text: 'Email:\n' + pdf.customer.e_mail, alignment: 'center' },
+            { width: '33%', text: 'Address:\n' + pdf.customer.street_addr + ', ' + pdf.customer.city + ', ' + pdf.customer.state + ' ' + pdf.customer.zip, alignment: 'center' },
+            { width: '33%', text: 'Phone:\n' + pdf.customer.phone, alignment: 'center' }
+          ],
+          columnGap: 10
+        },
+        { text: '\n-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -\n\n', alignment: 'center' },
+        {
+          columns:
+          [
+            { width: '33%', text: 'Ceremony Info:', style: 'bold', alignment: 'left' },
+            { width: '33%', text: 'Reception Info:', style: 'bold', alignment: 'center' },
+            { width: '33%', text: 'Photo, Planner, Delivery, Tax:', style: 'bold', alignment: 'right' }
+          ]
+        },
+        { text: '\n' },
+        {
+          columns:
+          [
+            { width: '33%', text: 'Start Time: ' + pdf.ceremony_start_time + '\n\nAddress: ' + pdf.ceremony_address + ', ' + pdf.ceremony_city + ', ' + pdf.ceremony_state + ' ' + pdf.ceremony_zip + '\n\nColors: ' + pdf.ceremony_colors + '\n\nTheme: ' + pdf.ceremony_theme, alignment: 'left' },
+            { width: '33%', text: 'Date: ' + pdf.reception_date + '\n\nStart Time: ' + pdf.reception_start_time + '\n\nAddress: ' + pdf.reception_address + ', ' + pdf.reception_city + ', ' + pdf.reception_state + ' ' + pdf.reception_zip, alignment: 'center' },
+            { width: '33%', text: 'Photographer: ' + pdf.photographers + '\n\nPhoto Start Time: ' + pdf.photograph_start_time + '\n\nWedding Planner: ' + pdf.wedding_planner + '\n\nDelivery Time: ' + pdf.delivery_time + '\n\nTax: ' + pdf.tax_information, alignment: 'right' },
+          ],
+          columnGap: 10,
+          pageBreak: 'after'
+        },
         { width: '33%', text: "Kistner's Flowers", alignment: 'left' },
         { width: '33%', text: "1901 Pillsbury Drive P.O. Box 926", alignment: 'left' },
         { width: '33%', text: 'Manhattan, KS 66502', alignment: 'left' },
