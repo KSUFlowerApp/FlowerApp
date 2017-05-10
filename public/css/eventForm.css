@@ -165,3 +165,7 @@ div.container {
 	 display: inline;
 	 margin-left: 2px;
  }
+
+ .eventFormId {
+	 display: none;
+ }
