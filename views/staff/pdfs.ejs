@@ -307,11 +307,9 @@ function getCustomerRecipeTableBody(a) {
   }
   tax = tax * sub;
   grand = tax + sub;
-  grand = grand.toFixed(2);
-  tax = tax.toFixed(2);
-  sub = '$' + sub;
-  tax = '$' + tax;
-  grand = '$' + grand;
+  sub = '$' + sub.toFixed(2);
+  tax = '$' + tax.toFixed(2);
+  grand = '$' + grand.toFixed(2);
   body.push([' ',' ',' ',' ']);
   body.push(['Subtotal', '', '', sub]);
   body.push(['Tax', '', '', tax]);
