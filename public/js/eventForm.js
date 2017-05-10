@@ -202,16 +202,28 @@ $(document).on("change", ".taxes", function ()	{
 	updateGrandTotal();
 });
 
+$(document).on("change", "input[name=delivery-fee]", function() {
+	updateGrandTotal();
+});
+
 // update Grand Total
 function updateGrandTotal() {
 	grand_total = 0;
 	$(".recipeQty").each(function() {
+		//console.log(grand_total);
 		var recipe_qty = $(this).val();
 		var recipe_price = $(this).parent().prev().children('.itemTable').find('.recipeTotal').find('.price').text();
 		recipe_price = parseFloat(recipe_price.substring(1, recipe_price.length));
 		recipe_total = recipe_price*recipe_qty;
 		grand_total += recipe_total;
 	});
+	var delivery_fee = parseFloat($("input[name=delivery-fee]").val());
+	if(isNaN(delivery_fee)) {
+		delivery_fee = 0;
+	}
+	grand_total += delivery_fee;
+
+	//console.log(grand_total);
 	var tax_rate = $("select[name=tax-information] option:selected").attr("data-val");
 	if(isNaN(tax_rate)) {
 		tax_rate = 0;
@@ -350,8 +362,14 @@ function GetPDFJSON() {
 	var delivery_time = $("select[name=delivery-time] option:selected").text();
 	pdf["delivery_time"] = delivery_time;
 
+	var delivery_fee = $("input[name=delivery-fee]").val();
+	pdf["delivery_fee"] = delivery_fee;
+
 	var tax_information = $("select[name=tax-information] option:selected").text();
 	pdf["tax_information"] = tax_information;
+
+	var tax = $("select[name=tax-information] option:selected").attr('data-val');
+	pdf["tax"] = tax;
 
 	var grand_total = $("#grand-total").text();
 	pdf["grand_total"] = grand_total;

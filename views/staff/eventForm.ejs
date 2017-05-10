@@ -5,9 +5,9 @@
 	<div class="page-header text-center">
 		<h1><span class="fa fa-calendar"></span> New Event</h1>
 		<% if(form_id) { %>
-			<input type="text" id="form-id" disabled="true" value="<%= form_id %>">
+			<input type="text" id="form-id" disabled="true" class="eventFormId" value="<%= form_id %>">
 		<% } else { %>
-			<input type="text" id="form-id" disabled="true" value="<%= form_id %>">
+			<input type="text" id="form-id" disabled="true" class="eventFormId"  value="<%= form_id %>">
 		<% } %>
 	</div>
 
@@ -133,6 +133,10 @@
 	<div class="form-group col-sm-6">
 		<label>Tax Information</label>
 		<select class="form-control taxes" name="tax-information" data-val="TBA"></select>
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Delivery/Setup Fee</label>
+		<input type="number" class="form-control currency" name="delivery-fee" value="0.00">
 	</div>
 </div>
 
