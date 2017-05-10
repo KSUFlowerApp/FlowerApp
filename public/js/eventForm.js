@@ -210,13 +210,20 @@ $(document).on("change", "input[name=delivery-fee]", function() {
 function updateGrandTotal() {
 	grand_total = 0;
 	$(".recipeQty").each(function() {
+		//console.log(grand_total);
 		var recipe_qty = $(this).val();
 		var recipe_price = $(this).parent().prev().children('.itemTable').find('.recipeTotal').find('.price').text();
 		recipe_price = parseFloat(recipe_price.substring(1, recipe_price.length));
 		recipe_total = recipe_price*recipe_qty;
 		grand_total += recipe_total;
 	});
-	grand_total += $("input[name=delivery-fee]").val();
+	var delivery_fee = parseFloat($("input[name=delivery-fee]").val());
+	if(isNaN(delivery_fee)) {
+		delivery_fee = 0;
+	}
+	grand_total += delivery_fee;
+
+	//console.log(grand_total);
 	var tax_rate = $("select[name=tax-information] option:selected").attr("data-val");
 	if(isNaN(tax_rate)) {
 		tax_rate = 0;
